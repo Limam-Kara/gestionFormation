@@ -1,0 +1,53 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+html, body{height: 100%;}
+table.dataTable.cell-border {
+  border-collapse: collapse !important; /* Override border-collapse */
+}
+.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
+  color: #ffc107 !important;
+  font-weight: 500;
+}
+.dataTables_filter{
+  padding-bottom: 10px;
+
+}
+table.dataTable.cell-border tbody td {
+  border: 1px solid #dee2e6;
+  padding: 15px;
+  font-size: 15px;
+}
+
+
+// Hover Effect on Both Odd and Even Rows
+table.dataTable.cell-border tbody tr:hover td {
+  background-color: #ffb22b !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: white !important;
+  border: 1px solid #ffb22b!important;
+  background-color: #ffb22b!important;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffb22b), color-stop(100%, #ffb22b))!important;
+  background: -webkit-linear-gradient(top, #ffb22b 0%, #ffc107 100%)!important;
+  background: -moz-linear-gradient(top, #ffb22b 0%, #ffb22b 100%)!important;
+  background: -ms-linear-gradient(top, #ffb22b 0%, #ffb22b 100%)!important;
+  background: -o-linear-gradient(top, #ffb22b 0%, #ffb22b 100%)!important;
+  background: linear-gradient(to bottom, #ffb22b 0%, #ffb22b 100%)!important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current{
+  color: white !important;
+  border: 1px solid #ffb22b!important;
+  background-color: #ffb22b!important;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffb22b), color-stop(100%, #ffb22b))!important;
+  background: -webkit-linear-gradient(top, #ffb22b 0%, #ffb22b 100%)!important;
+  background: -moz-linear-gradient(top, #ffb22b 0%, #ffb22b 100%)!important;
+  background: -ms-linear-gradient(top, #ffb22b 0%, #ffb22b 100%)!important;
+  background: -o-linear-gradient(top, #ffb22b 0%, #ffb22b 100%)!important;
+  background: linear-gradient(to bottom, #ffb22b 0%, #ffb22b 100%)!important;
+}
+.dataTables_wrapper .dataTables_length select {
+  border-radius: 3px;
+  padding: 7px !important;
+}
+
+
