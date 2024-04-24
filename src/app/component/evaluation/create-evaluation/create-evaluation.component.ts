@@ -1,21 +1,16 @@
-import { Component, OnInit, OnDestroy,AfterViewInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-declare var $: any;
+import { Component } from '@angular/core';
+import { Formation } from 'src/app/modeles/formation';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: 'app-create-evaluation',
+  templateUrl: './create-evaluation.component.html',
+  styleUrls: ['./create-evaluation.component.scss']
 })
-export class ListComponent {
-  apiData: any;
-
-  constructor(private http: HttpClient,private router:Router) {
+export class CreateEvaluationComponent {
+  formationdata:  Formation[] ;
+  constructor() {
     // Static data definition
-    this.apiData = [
-     
+    this.formationdata = [
       {
         id: 1,
         title: 'Formation en Leadership',
@@ -64,15 +59,11 @@ export class ListComponent {
         endDate: '2024-05-20',
         thematique: 'Gestion du temps',
       },
+    
+  
+     
     ];
-  }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      $('#example').DataTable({
-        "lengthMenu": [[5, 8], [5, 8]] // Customize the number of entries shown
-      });
-    }, 0);
-  }
 
+  }
 }

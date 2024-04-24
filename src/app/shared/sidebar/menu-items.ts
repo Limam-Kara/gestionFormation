@@ -34,14 +34,14 @@ export const ROUTES: RouteInfo[] = [
     extralink: false,
     submenu: []
   },
-  {
-    path: '/component/For.continu',
-    title: 'For.continu',
-    icon: 'bi bi-card-text',
-    class: '',
-    extralink: false,
-    submenu: []
-  },
+  // {
+  //   path: '/component/For.continu',
+  //   title: 'For.continu',
+  //   icon: 'bi bi-card-text',
+  //   class: '',
+  //   extralink: false,
+  //   submenu: []
+  // },
   {
     path: '/component/Affectation',
     title: 'Affectation',

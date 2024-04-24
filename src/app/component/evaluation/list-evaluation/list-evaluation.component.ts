@@ -1,21 +1,27 @@
-import { Component, OnInit, OnDestroy,AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 declare var $: any;
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: 'app-list-evaluation',
+  templateUrl: './list-evaluation.component.html',
+  styleUrls: ['./list-evaluation.component.scss']
 })
-export class ListComponent {
+export class ListEvaluationComponent {
+
+consulterevaluationparthematique(thematiquetitle:string) {
+
+  // console.log(thematiqueid);
+this.router.navigate(['/component/evaluationlist',{Thematiqueid:thematiquetitle}])
+
+
+}
   apiData: any;
 
   constructor(private http: HttpClient,private router:Router) {
     // Static data definition
     this.apiData = [
-     
       {
         id: 1,
         title: 'Formation en Leadership',

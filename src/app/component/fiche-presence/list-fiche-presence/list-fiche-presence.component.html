@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card w-100">
+      <div class="p-3 d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0 text-warning">Fiche Présence</h4>
+        <button
+          class="btn btn-warning"
+          data-bs-toggle="modal"
+          data-bs-target="#CT"
+        >
+          <i class="bi bi-file-earmark-plus"></i> Imprimer
+        </button>
+      </div>
+      <div class="m-5 justify-content-between align-items-center">
+        <form [formGroup]="formationForm" class="row ">
+          <div class="col-md-4">
+          <div class="form-group">
+            <label for="thematique">Sélectionnez une thématique :</label>
+            <select
+              formControlName="thematique"
+              id="thematique"
+              class="form-control"
+              (change)="filterJoursFormation()"
+            >
+              <option value="tt">Choisir une thématique</option>
+              <option
+                *ngFor="let formation of apiData"
+                [value]="formation.thematique"
+              >
+                {{ formation.thematique }}
+              </option>
+            </select>
+          </div>
+          </div>
+          <div class="col-md-4">
+          <div class="form-group" *ngIf="joursFormation.length > 0">
+            <label for="jourFormation"
+              >Sélectionnez un jour de formation :</label
+            >
+            <select
+              formControlName="jourFormation"
+              id="jourFormation"
+              class="form-control"
+            >
+              <option value="">Choisir un jour de formation</option>
+              <option *ngFor="let jour of joursFormation" [value]="jour">
+                {{ jour }}
+              </option>
+            </select>
+            
+          </div>
+          </div>
+          <div class="form-group col-md-4" *ngIf="joursFormation.length > 0">
+            <button
+            class="mt-4 btn btn-warning">Enregister</button>
+        </div>
+        </form>
+      </div>
+      <div class="card-body border-top">
+        <div class="table-responsive">
+          <table
+            id="example"
+            class="display nowrap cell-border"
+            style="width: 100%"
+          >
+            <thead>
+              <tr><th class="text-warning font-medium fs-4">PPR</th>
+                <th class="text-warning font-medium fs-4">CNE</th>
+                
+                <th class="text-warning font-medium fs-4">Nom</th>
+                <th class="text-warning font-medium fs-4">Prénom</th>
+                <th class="text-warning font-medium fs-4">
+                   thématique
+                </th>
+                
+                <th class="text-warning font-medium fs-4">Actions</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr *ngFor="let item of apiDatafr">
+
+                <td>{{ item.ppr }}</td>
+                <td>{{ item.cne }}</td>
+                <td>{{ item.nom }}</td>
+                <td>{{ item.prenom }}</td>
+                <td>{{ item.thematique }}</td>
+
+                <td class="d-flex justify-content-between">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="attendanceSwitch" >
+                    <label class="form-check-label" for="attendanceSwitch">{{ item.isPresent ? 'Present' : 'Absent' }}</label>
+                  </div>
+                
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-imprimer-fiche-presence></app-imprimer-fiche-presence>
