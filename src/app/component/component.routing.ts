@@ -1,48 +1,61 @@
+import { SupprimerEvaluationComponent } from './evaluation/supprimer-evaluation/supprimer-evaluation.component';
+import { ModifierFichePresenceComponent } from './fiche-presence/modifier-fiche-presence/modifier-fiche-presence.component';
 import { Routes } from '@angular/router';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { ListComponent } from './thematique/list/list.component';
 import { CreateThematiquesComponent } from './thematique/create/create.component';
+import { ListBeneficiaiaresComponent } from './beneficiares/list-beneficiaiares/list-beneficiaiares.component';
+import { ListFormationComponent } from './formation/list-formation/list-formation.component';
+import { ListAffectationComponent } from './affectation/list-affectation/list-affectation.component';
+import { ListFichePresenceComponent } from './fiche-presence/list-fiche-presence/list-fiche-presence.component';
+import { ListEvaluationComponent } from './evaluation/list-evaluation/list-evaluation.component';
+import { ListbenificiareEvaluationComponent } from './evaluation/listbenificiare-evaluation/listbenificiare-evaluation.component';
 
 export const ComponentsRoutes: Routes = [
-	{
-		path: '',
-		children: [
-			{
-				path: 'Bilan',
-				component: DashboardComponent
-			},
-			{
-				path: 'For.continu',
-				component: DashboardComponent
-			},
-			{
-				path: 'Fiche.présence',
-				component: DashboardComponent
-			},
-			{
-				path: 'Bénéficiaires',
-				component: DashboardComponent
-			},
-			{
-				path: 'Thématiques',
-				component: ListComponent
-			},
-			{
-				path: 'Affectation',
-				component: DashboardComponent
-			},
-			{
-				path: 'Evaluation',
-				component: DashboardComponent
-			},
-			{
-				path: 'For.initiale',
-				component: DashboardComponent
-			},
+  {
+    path: '',
+    children: [
       {
-        path:'create',
-        component:CreateThematiquesComponent
+        path: 'Bilan',
+        component: DashboardComponent,
       },
-		]
-	}
+      {
+        path: 'For.continu',
+        component: DashboardComponent,
+      },
+      {
+        // ModifierFichePresenceComponent
+        path: 'Fiche.présence',
+        component: ListFichePresenceComponent,
+      },
+      {
+        path: 'Bénéficiaires',
+        component: ListBeneficiaiaresComponent,
+      },
+      {
+        path: 'Thématiques',
+        component: ListComponent,
+      },
+      {
+        path: 'Affectation',
+        component: ListAffectationComponent,
+      },
+      {
+        path: 'Evaluation',
+        component: ListEvaluationComponent,
+      },
+      {
+        path: 'evaluationlist',
+        component: ListbenificiareEvaluationComponent,
+      },
+      {
+        path: 'For.initiale',
+        component: ListFormationComponent,
+      },
+      {
+        path: 'create',
+        component: CreateThematiquesComponent,
+      },
+    ],
+  },
 ];

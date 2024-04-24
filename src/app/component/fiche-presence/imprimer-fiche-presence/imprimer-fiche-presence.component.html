@@ -1,0 +1,67 @@
+<div class="modal fade" id="CT" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Imprimer  Fiche Présence
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+  
+                <form [formGroup]="formationForm" class="row ">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group mb-3">
+                      <label for="thematique">Sélectionnez une thématique :</label>
+                      <select
+                        formControlName="thematique"
+                        id="thematique"
+                        class="form-control"
+                        (change)="filterJoursFormation()"
+                      >
+                        <option value="tt">Choisir une thématique</option>
+                        <option
+                          *ngFor="let formation of apiData"
+                          [value]="formation.thematique"
+                        >
+                          {{ formation.thematique }}
+                        </option>
+                      </select>
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                    <div class="form-group mb-3"*ngIf="joursFormation.length > 0">
+                    
+                      <label for="jourFormation"
+                        >Sélectionnez un jour de formation :</label
+                      >
+                      <select
+                        formControlName="jourFormation"
+                        id="jourFormation"
+                        class="form-control"
+                      >
+                        <option value="">Choisir un jour de formation</option>
+                        <option *ngFor="let jour of joursFormation" [value]="jour">
+                          {{ jour }}
+                        </option>
+                      </select>
+                      
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button  type="submit" class="btn btn-primary addStudent" name="Ajouter" *ngIf="joursFormation.length > 0">Imprimer</button>
+            </div>
+                   
+                  </form>
+               
+               
+               
+              
+        </div>
+    </div>
+  </div>
+  
