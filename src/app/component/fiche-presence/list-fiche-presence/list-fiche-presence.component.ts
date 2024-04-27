@@ -11,14 +11,13 @@ declare var $: any;
   templateUrl: './list-fiche-presence.component.html',
   styleUrls: ['./list-fiche-presence.component.scss'],
 })
-export class ListFichePresenceComponent{
-  apiData:  Formation[] ;
-  apiDatafr!:  Beneficiaire[]  ;
+export class ListFichePresenceComponent {
+  apiData: Formation[];
+  apiDatafr!: Beneficiaire[];
 
-  formationForm!: FormGroup ;
+  formationForm!: FormGroup;
 
   joursFormation: string[] = [];
-
 
   beneficiaires: Beneficiaire[] = [
     {
@@ -28,7 +27,7 @@ export class ListFichePresenceComponent{
       nom: 'Doe',
       prenom: 'John',
       thematique: 'Leadership',
-      isPresent:false
+      isPresent: false,
     },
     {
       id: 2,
@@ -37,7 +36,7 @@ export class ListFichePresenceComponent{
       nom: 'Smith',
       prenom: 'Jane',
       thematique: 'Soft Skills',
-      isPresent:false
+      isPresent: true,
     },
     {
       id: 3,
@@ -46,7 +45,7 @@ export class ListFichePresenceComponent{
       nom: 'Johnson',
       prenom: 'Michael',
       thematique: 'Management',
-      isPresent:false
+      isPresent: false,
     },
     {
       id: 4,
@@ -55,7 +54,7 @@ export class ListFichePresenceComponent{
       nom: 'Wilson',
       prenom: 'Sara',
       thematique: 'Communication interpersonnelle',
-      isPresent:false
+      isPresent: false,
     },
     {
       id: 5,
@@ -64,7 +63,7 @@ export class ListFichePresenceComponent{
       nom: 'Thomas',
       prenom: 'Chris',
       thematique: 'Développement personnel',
-      isPresent:false
+      isPresent: false,
     },
     {
       id: 6,
@@ -73,7 +72,7 @@ export class ListFichePresenceComponent{
       nom: 'Jones',
       prenom: 'Emily',
       thematique: 'Gestion du temps',
-      isPresent:false
+      isPresent: false,
     },
     {
       id: 7,
@@ -82,7 +81,7 @@ export class ListFichePresenceComponent{
       nom: 'Brown',
       prenom: 'Kevin',
       thematique: 'Leadership',
-      isPresent:false
+      isPresent: false,
     },
     {
       id: 8,
@@ -91,7 +90,7 @@ export class ListFichePresenceComponent{
       nom: 'White',
       prenom: 'Lisa',
       thematique: 'Soft Skills',
-      isPresent:false
+      isPresent: false,
     },
     {
       id: 9,
@@ -100,7 +99,7 @@ export class ListFichePresenceComponent{
       nom: 'Miller',
       prenom: 'Adam',
       thematique: 'Management',
-      isPresent:false
+      isPresent: false,
     },
     {
       id: 10,
@@ -109,8 +108,8 @@ export class ListFichePresenceComponent{
       nom: 'Moore',
       prenom: 'Olivia',
       thematique: 'Communication interpersonnelle',
-      isPresent:false
-    }
+      isPresent: false,
+    },
     // Ajoutez d'autres bénéficiaires en fonction de la thématique et de la date choisie
   ];
   thematique_choisi!: string;
@@ -170,35 +169,34 @@ export class ListFichePresenceComponent{
         endDate: '2024-05-20',
         thematique: 'Gestion du temps',
       },
-    
-  
-     
     ];
- this.formationForm = this.fb.group({
+    this.formationForm = this.fb.group({
       thematique: [''], // Contrôle pour la sélection de la thématique
-      jourFormation: [''] // Contrôle pour la sélection du jour de formation
+      jourFormation: [''], // Contrôle pour la sélection du jour de formation
     });
-
   }
 
-
   // ngOnInit(): void {
-   
+
   // }
 
   filterJoursFormation(): void {
-
     this.thematique_choisi = this.formationForm!.get('thematique')?.value;
-    if (this.thematique_choisi=='tt') {
-      this.apiDatafr =[];this.joursFormation = [];
+    if (this.thematique_choisi == 'tt') {
+      this.apiDatafr = [];
+      this.joursFormation = [];
     }
     if (this.thematique_choisi) {
       const selectedFormation = this.apiData.find(
         (data) => data.thematique === this.thematique_choisi
       );
+      // setTimeout(() => {
       this.apiDatafr = this.beneficiaires.filter(
         (data) => data.thematique === this.thematique_choisi
-      );
+      )
+      
+      console.log(this.apiDatafr)
+      // ;}, 1000);
       if (selectedFormation) {
         // Récupérer les jours entre la startDate et la endDate
         const startDate = new Date(selectedFormation.startDate);
@@ -214,37 +212,20 @@ export class ListFichePresenceComponent{
         }
 
         this.joursFormation = joursArray;
-      }} else {
-        this.joursFormation = []; // Réinitialiser la liste des jours de formation si aucune thématique n'est sélectionnée
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    } else {
+      this.joursFormation = []; // Réinitialiser la liste des jours de formation si aucune thématique n'est sélectionnée
+    }
   }
+  toggleAttendance(id: number) {
+    const beneficiaryfr = this.apiDatafr.find((b) => b.id === id);
 
+    // Find the beneficiary by id
+    if (beneficiaryfr) {
+      beneficiaryfr.isPresent = !beneficiaryfr.isPresent;
+      // Toggle the value of isPresent
+    }
+  }
   ngAfterViewInit(): void {
     setTimeout(() => {
       $('#example').DataTable({
