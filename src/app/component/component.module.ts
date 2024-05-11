@@ -27,6 +27,7 @@ import { CreateEvaluationComponent } from './evaluation/create-evaluation/create
 import { SupprimerEvaluationComponent } from './evaluation/supprimer-evaluation/supprimer-evaluation.component';
 import { ListbenificiareEvaluationComponent } from './evaluation/listbenificiare-evaluation/listbenificiare-evaluation.component';
 import { ImprimerFichePresenceComponent } from './fiche-presence/imprimer-fiche-presence/imprimer-fiche-presence.component';
+import { EvalutionFormComponent } from './evalution-form/evalution-form.component';
 
 @NgModule({
   imports: [
@@ -59,7 +60,8 @@ import { ImprimerFichePresenceComponent } from './fiche-presence/imprimer-fiche-
     CreateEvaluationComponent,
     SupprimerEvaluationComponent,
     ListbenificiareEvaluationComponent,
-    ImprimerFichePresenceComponent
+    ImprimerFichePresenceComponent,
+    EvalutionFormComponent
   ],
 })
 export class ComponentsModule { }

@@ -10,6 +10,7 @@ import { ListAffectationComponent } from './affectation/list-affectation/list-af
 import { ListFichePresenceComponent } from './fiche-presence/list-fiche-presence/list-fiche-presence.component';
 import { ListEvaluationComponent } from './evaluation/list-evaluation/list-evaluation.component';
 import { ListbenificiareEvaluationComponent } from './evaluation/listbenificiare-evaluation/listbenificiare-evaluation.component';
+import { EvalutionFormComponent } from './evalution-form/evalution-form.component';
 
 export const ComponentsRoutes: Routes = [
   {
@@ -55,6 +56,10 @@ export const ComponentsRoutes: Routes = [
       {
         path: 'create',
         component: CreateThematiquesComponent,
+      },
+      {
+        path: 'Evaluation.For',
+        component: EvalutionFormComponent,
       },
     ],
   },
