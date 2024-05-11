@@ -1,78 +1,46 @@
-import { Component, OnInit, OnDestroy,AfterViewInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-declare var $: any;
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { ThematiqueService } from '../../services/Thematique/thematique.service';
+import { Thematique } from 'src/app/modeles/Thematique';
+declare var $: any; // Déclarer jQuery
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent {
-  apiData: any;
+export class ListComponent implements OnInit {
+  apiData: Thematique[] = [];
 
-  constructor(private http: HttpClient,private router:Router) {
-    // Static data definition
-    this.apiData = [
-     
-      {
-        id: 1,
-        title: 'Formation en Leadership',
-        body: 'Description de la formation en leadership',
-        startDate: '2024-04-21',
-        endDate: '2024-04-30',
-        thematique: 'Leadership',
-      },
-      {
-        id: 2,
-        title: 'Formation en Soft Skills',
-        body: 'Description de la formation en soft skills',
-        startDate: '2024-05-12',
-        endDate: '2024-05-19',
-        thematique: 'Soft Skills',
-      },
-      {
-        id: 3,
-        title: 'Formation en Management',
-        body: 'Description de la formation en management',
-        startDate: '2024-05-10',
-        endDate: '2024-05-20',
-        thematique: 'Management',
-      },
-      {
-        id: 4,
-        title: 'Formation en Communication interpersonnelle',
-        body: 'Description de la formation en communication interpersonnelle',
-        startDate: '2024-04-11',
-        endDate: '2024-04-30',
-        thematique: 'Communication interpersonnelle',
-      },
-      {
-        id: 5,
-        title: 'Formation en Développement personnel',
-        body: 'Description de la formation en développement personnel',
-        startDate: '2024-05-01',
-        endDate: '2024-05-10',
-        thematique: 'Développement personnel',
-      },
-      {
-        id: 6,
-        title: 'Formation en Gestion du temps',
-        body: 'Description de la formation en gestion du temps',
-        startDate: '2024-05-15',
-        endDate: '2024-05-20',
-        thematique: 'Gestion du temps',
-      },
-    ];
+  constructor(private thematiqueService: ThematiqueService) {}
+
+  ngOnInit(): void {
+    this.loadThematiques();
   }
 
-  ngAfterViewInit(): void {
+  // ngAfterViewInit(): void {
+  //   this.initializeDataTables();
+  // }
+
+  loadThematiques(): void {
+    this.thematiqueService.getAllThematiques().subscribe(
+      (thematiques: Thematique[]) => {
+        this.apiData = thematiques;
+        console.log('Thematiques:', this.apiData);
+        // Réinitialiser DataTables une fois que les données sont chargées
+        this.initializeDataTables();
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des thématiques:', error);
+      }
+    );
+  }
+
+  initializeDataTables(): void {
+    // Utiliser setTimeout pour garantir que DataTables est initialisé après le rendu de la vue Angular
     setTimeout(() => {
       $('#example').DataTable({
-        "lengthMenu": [[5, 8], [5, 8]] // Customize the number of entries shown
+        "lengthMenu": [[5, 8], [5, 8]],
       });
     }, 0);
   }
-
 }

@@ -22,9 +22,9 @@
             <tbody>
               <tr *ngFor="let item of apiData">
                 <td>{{ item.id }}</td>
-                <td>{{ item.title }}</td>
-                <td>{{ item.startDate }}</td>
-                <td>{{ item.endDate }}</td>
+                <td>{{ item.intitule}}</td>
+                <td>{{ item.dateDebut | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ item.dateFin | date: 'dd/MM/yyyy' }}</td>
                 <td class="d-flex justify-content-between">
                   <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#CT"><i class="bi bi-eye-fill"></i></button>
                   <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#MT"><i class="bi bi-pencil-square"></i></button>

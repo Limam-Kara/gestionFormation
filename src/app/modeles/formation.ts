@@ -5,5 +5,4 @@ export interface Formation {
     startDate: string;
     endDate: string;
     thematique: string;
-  
 }
