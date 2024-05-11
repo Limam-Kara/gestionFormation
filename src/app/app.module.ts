@@ -23,7 +23,7 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from './Authentication/login/login.component';
 import { ForgetPassComponent } from './Authentication/forget-pass/forget-pass.component';
 import { ResetPassComponent } from './Authentication/reset-pass/reset-pass.component';
-
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -45,6 +45,14 @@ import { ResetPassComponent } from './Authentication/reset-pass/reset-pass.compo
     FullComponent,
     NavigationComponent,
     SidebarComponent,
+    ToastrModule.forRoot(
+      {preventDuplicates: true,
+        easing: 'ease-in',
+        progressBar:true,
+        closeButton: true,
+        timeOut:3000
+      }
+    ),
   ],
   providers: [
     {
