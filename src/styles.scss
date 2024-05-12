@@ -50,5 +50,17 @@ table.dataTable.cell-border tbody tr:hover td {
   border-radius: 3px;
   padding: 7px !important;
 }
-
+.ngx-toastr {
+  width: 350px !important;
+}
+button.toast-close-button{
+  font-size: 17px;
+}
+.toast-container .ngx-toastr:hover {
+  box-shadow: 0 0 10px #0c0c0c8e !important;
+}
+#toast-container > .toast-error { background-color: #ff453f; }
+#toast-container > .toast-info { background-color: #49beff; }
+#toast-container > .toast-success { background-color: #5db547; }
+#toast-container > .toast-warning { background-color: #ffae1f; }
 

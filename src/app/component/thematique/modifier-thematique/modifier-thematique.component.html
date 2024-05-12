@@ -7,115 +7,120 @@
           </div>
           <div class="modal-body">
 
-              <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group mb-3">
-                          <label for="code">Intitulé de la thématique</label>
-                          <input type="text"  class="form-control" id="code" placeholder="Enter Intitulé de la thématique" aria-describedby="helpId">
-                      </div>
-                  </div>
-                  <!-- <div class="col-md-4">
-                      <div class="form-group mb-3">
-                          <label for="cne">CNE</label>
-                          <input type="text"  class="form-control" id="cne" placeholder="Enter CNE" aria-describedby="helpId">
-                      </div>
-                  </div> -->
-                  <div class="col-md-6">
-                    <div class="form-group mb-3">
-                      <label for="code">Prestataire</label>
-                      <input type="text" class="form-control" id="code" placeholder="Enter Prestataire" aria-describedby="helpId">
-                    </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="intitule">Intitulé de la thématique</label>
+                  <input type="text" class="form-control" id="intitule" placeholder="Enter Intitulé de la thématique"
+                    aria-describedby="helpId"  [(ngModel)]="selectedThematique.intitule" name="intitule" >
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group mb-3">
-                      <label for="code">Domaine de formation</label>
-                      <input type="text"  class="form-control" id="code" placeholder="Enter Domaine de formation" aria-describedby="helpId">
-                  </div>
-              </div>
-                  <div class="col-md-6">
-                    <div class="form-group mb-3">
-                      <label for="code">Population cible par groupe</label>
-                      <input type="number" min="0"  class="form-control" id="code" placeholder="Population cible par groupe" aria-describedby="helpId">
-                    </div>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group mb-3">
-                        <label for="code">Nombre de groupes</label>
-                        <input type="number" min="0"  class="form-control" id="code" placeholder="Enter Nombre de groupes" aria-describedby="helpId">
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <div class="form-group mb-3">
-                        <label for="code">Nombre de jours</label>
-                        <input type="number" min="0"  class="form-control" id="code" placeholder="Enter Nombre de jours" aria-describedby="helpId">
-                      </div>
-                  </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                      <label for="code">Nombre de formateurs internes</label>
-                      <input type="number" min="0"  class="form-control" id="code" placeholder="Enter Nombre de formateurs internes" aria-describedby="helpId">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                      <label for="code">Nombre de formateurs internes</label>
-                      <input type="number" min="0"  class="form-control" id="code" placeholder="Enter Nombre de formateurs internes" aria-describedby="helpId">
-                    </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="prestataire">Prestataire</label>
+                  <input type="text" class="form-control" id="prestataire" placeholder="Enter Prestataire"
+                    aria-describedby="helpId" [(ngModel)]="selectedThematique.prestataire" name="prestataire">
                 </div>
               </div>
-              <div class="row">
-                <div class="col">
-                    <div class="form-group mb-3">
-                      <label for="Objectif">Objectif</label>
-                      <select class="form-select"  id="Objectif">
-                          <option value="">a</option>
-                          <option value="">z</option>
-                          <option value="">x</option>
-                          <option value="">v</option>
-                          <option value="">d</option>
-                      </select>
-                    </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="domaine">Domaine de formation</label>
+                  <input type="text" class="form-control" id="domaine" placeholder="Enter Domaine de formation"
+                    aria-describedby="helpId" [(ngModel)]="selectedThematique.domaineFormation" name="domaine">
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                      <label for="code">Côut logistique</label>
-                      <input type="number" min="0"  class="form-control" id="code" placeholder="Enter Côut pédagogique" aria-describedby="helpId">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                      <label for="code">Côut pédagogique</label>
-                      <input type="number" min="0"  class="form-control" id="code" placeholder="Enter Côut pédagogique" aria-describedby="helpId">
-                    </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="population">Population cible par groupe</label>
+                  <input type="number" min="0" class="form-control" id="population"
+                    placeholder="Population cible par groupe" aria-describedby="helpId" [(ngModel)]="selectedThematique.populationCible"
+                    name="population">
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                      <label for="code">Date du début d'action de la formation</label>
-                      <input type="date" class="form-control" id="code" placeholder="Enter Date du début d'action de la formation" aria-describedby="helpId">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mb-3">
-                      <label for="code">Date du début d'action de la formation</label>
-                      <input type="date"  class="form-control" id="code" placeholder="Enter Date du début d'action de la formation" aria-describedby="helpId">
-                    </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="nombreGroupes">Nombre de groupes</label>
+                  <input type="number" min="0" class="form-control" id="nombreGroupes" placeholder="Enter Nombre de groupes"
+                    aria-describedby="helpId" [(ngModel)]="selectedThematique.nbrGroupe" name="nombreGroupes">
                 </div>
               </div>
-          </div>
-          <div class="modal-footer">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="nombreJours">Nombre de jours</label>
+                  <input type="number" min="0" class="form-control" id="nombreJours" placeholder="Enter Nombre de jours"
+                    aria-describedby="helpId" [(ngModel)]="selectedThematique.nbrJoursFormation" name="nombreJours">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="formateursInternes">Nombre de formateurs internes</label>
+                  <input type="number" min="0" class="form-control" id="formateursInternes"
+                    placeholder="Enter Nombre de formateurs internes" aria-describedby="helpId"
+                    [(ngModel)]="selectedThematique.nbrFormateurIntr" name="formateursInternes">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="formateursInternes">Nombre de formateurs externes</label>
+                  <input type="number" min="0" class="form-control" id="formateursInternes"
+                    placeholder="Enter Nombre de formateurs externes" aria-describedby="helpId"
+                    [(ngModel)]="selectedThematique.nbrFormateurExtr" name="formateursInternes">
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="coutLogistique">Coût logistique</label>
+                  <input type="number" min="0" class="form-control" id="coutLogistique" placeholder="Enter Coût logistique"
+                    aria-describedby="helpId" [(ngModel)]="selectedThematique.coutLogistique" name="coutLogistique">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="coutPedagogique">Coût pédagogique</label>
+                  <input type="number" min="0" class="form-control" id="coutPedagogique" placeholder="Enter Coût pédagogique"
+                    aria-describedby="helpId" [(ngModel)]="selectedThematique.coutPedagogique" name="coutPedagogique">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="dateDebut">Date du début d'action de la formation</label>
+                  <input type="date" class="form-control" id="dateDebut" placeholder="Enter Date du début d'action de la formation"
+                    aria-describedby="helpId" [(ngModel)]="selectedThematique.dateDebut" name="dateDebut">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="dateFin">Date de fin d'action de la formation</label>
+                  <input type="date" class="form-control" id="dateFin" placeholder="Enter Date de fin d'action de la formation"
+                    aria-describedby="helpId" [(ngModel)]="selectedThematique.dateFin" name="dateFin">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mb-3">
+                  <label for="objectif">Objectif</label>
+                  <input type="text" class="form-control" id="objectif" placeholder="Enter Objectif de formation"
+                    aria-describedby="helpId" [(ngModel)]="selectedThematique.objectif" name="objectif">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button  type="submit" class="btn btn-primary addStudent" name="Modifier">Modifier</button>
-          </div>
+              <button  type="submit" class="btn btn-primary addStudent" name="Modifier" (click)="onSubmit()">Modifier</button>
+            </div>
+        </div>
       </div>
   </div>
 </div>

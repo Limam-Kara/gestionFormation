@@ -26,9 +26,9 @@
                 <td>{{ item.dateDebut | date: 'dd/MM/yyyy' }}</td>
                 <td>{{ item.dateFin | date: 'dd/MM/yyyy' }}</td>
                 <td class="d-flex justify-content-between">
-                  <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#CT"><i class="bi bi-eye-fill"></i></button>
-                  <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#MT"><i class="bi bi-pencil-square"></i></button>
-                  <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ST"><i class="bi bi-trash3-fill"></i></button>
+                  <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#DT" (click)="setSelectedThematiqueCode(item?.id)"><i class="bi bi-eye-fill"></i></button>
+                  <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#MT" (click)="setSelectedThematiqueCode(item?.id)"><i class="bi bi-pencil-square"></i></button>
+                  <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ST" (click)="setSelectedThematiqueCode(item?.id)"><i class="bi bi-trash3-fill"></i></button>
                 </td>
               </tr>
             </tbody>
@@ -38,6 +38,7 @@
     </div>
   </div>
 </div>
-<app-supprimer-thematique></app-supprimer-thematique>
-<app-modifier-thematique></app-modifier-thematique>
-<app-create-thematiques></app-create-thematiques>
+<app-supprimer-thematique [selectedThematique]="selectedThematique" (thematiqueDelete)="onThematiqueDeleted()"></app-supprimer-thematique>
+<app-modifier-thematique [selectedThematique]="selectedThematique" (thematiqueUpdate)="onThematiqueUpdated()"></app-modifier-thematique>
+<app-detail-thematique [selectedThematique]="selectedThematique"></app-detail-thematique>
+<app-create-thematiques (thematiqueAdded)="onThematiqueAdded()"></app-create-thematiques>

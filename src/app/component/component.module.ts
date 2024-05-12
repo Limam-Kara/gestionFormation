@@ -28,6 +28,7 @@ import { SupprimerEvaluationComponent } from './evaluation/supprimer-evaluation/
 import { ListbenificiareEvaluationComponent } from './evaluation/listbenificiare-evaluation/listbenificiare-evaluation.component';
 import { ImprimerFichePresenceComponent } from './fiche-presence/imprimer-fiche-presence/imprimer-fiche-presence.component';
 import { EvalutionFormComponent } from './evalution-form/evalution-form.component';
+import { DetailThematiqueComponent } from './thematique/detail/detail.component';
 
 @NgModule({
   imports: [
@@ -61,7 +62,8 @@ import { EvalutionFormComponent } from './evalution-form/evalution-form.componen
     SupprimerEvaluationComponent,
     ListbenificiareEvaluationComponent,
     ImprimerFichePresenceComponent,
-    EvalutionFormComponent
+    EvalutionFormComponent,
+    DetailThematiqueComponent
   ],
 })
 export class ComponentsModule { }

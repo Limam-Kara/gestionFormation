@@ -35,13 +35,14 @@
             ],
             "styles": [
               "src/assets/scss/style.scss",
-              "src/styles.scss"
-
+              "src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/datatables.net/js/jquery.dataTables.min.js"
+              "node_modules/datatables.net/js/jquery.dataTables.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {
