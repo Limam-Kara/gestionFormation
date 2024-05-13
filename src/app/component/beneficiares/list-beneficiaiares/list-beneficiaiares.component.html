@@ -47,7 +47,7 @@
                   <button
                     class="btn btn-info btn-sm me-2"
                     data-bs-toggle="modal"
-                    data-bs-target="#CT"
+                    data-bs-target="#DT"
                     (click)="setSelectedUtilisateurCode(item?.id)"
                   >
                     <i class="bi bi-eye-fill"></i>
@@ -80,3 +80,4 @@
 <app-create-beneficiaiares (utilisateurAdded)="onUtilisateurAdded()"></app-create-beneficiaiares>
 <app-modifier-beneficiaiares [selectedUtilisateur]="selectedUtilisateur" (utilisateurUpdated)="onUtilisateurUpdated()"></app-modifier-beneficiaiares>
 <app-supprimer-beneficiaiares [selectedUtilisateur]="selectedUtilisateur" (utilisateurDelete)="onUtilisateurUpdated()"></app-supprimer-beneficiaiares>
+<app-detail-beneficiaiares [selectedUtilisateur]="selectedUtilisateur"></app-detail-beneficiaiares>

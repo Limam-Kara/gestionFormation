@@ -12,14 +12,14 @@
               <div class="form-group mb-3">
                 <label for="intitule">Intitulé de la thématique</label>
                 <input type="text" class="form-control" id="intitule" placeholder="Enter Intitulé de la thématique"
-                  aria-describedby="helpId"  [(ngModel)]="selectedThematique.intitule" name="intitule" >
+                  aria-describedby="helpId"  [(ngModel)]="selectedThematique.intitule" name="intitule" disabled>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group mb-3">
                 <label for="prestataire">Prestataire</label>
                 <input type="text" class="form-control" id="prestataire" placeholder="Enter Prestataire"
-                  aria-describedby="helpId" [(ngModel)]="selectedThematique.prestataire" name="prestataire">
+                  aria-describedby="helpId" [(ngModel)]="selectedThematique.prestataire" name="prestataire"  disabled>
               </div>
             </div>
           </div>
@@ -28,7 +28,7 @@
               <div class="form-group mb-3">
                 <label for="domaine">Domaine de formation</label>
                 <input type="text" class="form-control" id="domaine" placeholder="Enter Domaine de formation"
-                  aria-describedby="helpId" [(ngModel)]="selectedThematique.domaineFormation" name="domaine">
+                  aria-describedby="helpId" [(ngModel)]="selectedThematique.domaineFormation" name="domaine"  disabled>
               </div>
             </div>
             <div class="col-md-6">
@@ -36,7 +36,7 @@
                 <label for="population">Population cible par groupe</label>
                 <input type="number" min="0" class="form-control" id="population"
                   placeholder="Population cible par groupe" aria-describedby="helpId" [(ngModel)]="selectedThematique.populationCible"
-                  name="population">
+                  name="population"  disabled>
               </div>
             </div>
           </div>
@@ -45,14 +45,14 @@
               <div class="form-group mb-3">
                 <label for="nombreGroupes">Nombre de groupes</label>
                 <input type="number" min="0" class="form-control" id="nombreGroupes" placeholder="Enter Nombre de groupes"
-                  aria-describedby="helpId" [(ngModel)]="selectedThematique.nbrGroupe" name="nombreGroupes">
+                  aria-describedby="helpId" [(ngModel)]="selectedThematique.nbrGroupe" name="nombreGroupes"  disabled>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group mb-3">
                 <label for="nombreJours">Nombre de jours</label>
                 <input type="number" min="0" class="form-control" id="nombreJours" placeholder="Enter Nombre de jours"
-                  aria-describedby="helpId" [(ngModel)]="selectedThematique.nbrJoursFormation" name="nombreJours">
+                  aria-describedby="helpId" [(ngModel)]="selectedThematique.nbrJoursFormation" name="nombreJours"  disabled>
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@
                 <label for="formateursInternes">Nombre de formateurs internes</label>
                 <input type="number" min="0" class="form-control" id="formateursInternes"
                   placeholder="Enter Nombre de formateurs internes" aria-describedby="helpId"
-                  [(ngModel)]="selectedThematique.nbrFormateurIntr" name="formateursInternes">
+                  [(ngModel)]="selectedThematique.nbrFormateurIntr" name="formateursInternes"  disabled>
               </div>
             </div>
             <div class="col-md-6">
@@ -70,7 +70,7 @@
                 <label for="formateursInternes">Nombre de formateurs externes</label>
                 <input type="number" min="0" class="form-control" id="formateursInternes"
                   placeholder="Enter Nombre de formateurs externes" aria-describedby="helpId"
-                  [(ngModel)]="selectedThematique.nbrFormateurExtr" name="formateursInternes">
+                  [(ngModel)]="selectedThematique.nbrFormateurExtr" name="formateursInternes"  disabled>
               </div>
             </div>
 
@@ -80,14 +80,14 @@
               <div class="form-group mb-3">
                 <label for="coutLogistique">Coût logistique</label>
                 <input type="number" min="0" class="form-control" id="coutLogistique" placeholder="Enter Coût logistique"
-                  aria-describedby="helpId" [(ngModel)]="selectedThematique.coutLogistique" name="coutLogistique">
+                  aria-describedby="helpId" [(ngModel)]="selectedThematique.coutLogistique" name="coutLogistique" disabled>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group mb-3">
                 <label for="coutPedagogique">Coût pédagogique</label>
                 <input type="number" min="0" class="form-control" id="coutPedagogique" placeholder="Enter Coût pédagogique"
-                  aria-describedby="helpId" [(ngModel)]="selectedThematique.coutPedagogique" name="coutPedagogique">
+                  aria-describedby="helpId" [(ngModel)]="selectedThematique.coutPedagogique" name="coutPedagogique" disabled>
               </div>
             </div>
           </div>
@@ -95,15 +95,15 @@
             <div class="col-md-6">
               <div class="form-group mb-3">
                 <label for="dateDebut">Date du début d'action de la formation</label>
-                <input type="date" class="form-control" id="dateDebut" placeholder="Enter Date du début d'action de la formation"
-                  aria-describedby="helpId" [(ngModel)]="selectedThematique.dateDebut" name="dateDebut">
+                <input type="text" class="form-control" id="dateDebut" placeholder="Enter Date du début d'action de la formation"
+                  aria-describedby="helpId" [(ngModel)]="selectedThematique.dateDebut" name="dateDebut" disabled>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group mb-3">
                 <label for="dateFin">Date de fin d'action de la formation</label>
-                <input type="date" class="form-control" id="dateFin" placeholder="Enter Date de fin d'action de la formation"
-                  aria-describedby="helpId" [(ngModel)]="selectedThematique.dateFin" name="dateFin">
+                <input type="text" class="form-control" id="dateFin" placeholder="Enter Date de fin d'action de la formation"
+                  aria-describedby="helpId" [(ngModel)]="selectedThematique.dateFin" name="dateFin" disabled>
               </div>
             </div>
           </div>
@@ -112,7 +112,7 @@
               <div class="form-group mb-3">
                 <label for="objectif">Objectif</label>
                 <input type="text" class="form-control" id="objectif" placeholder="Enter Objectif de formation"
-                  aria-describedby="helpId" [(ngModel)]="selectedThematique.objectif" name="objectif">
+                  aria-describedby="helpId" [(ngModel)]="selectedThematique.objectif" name="objectif" disabled>
               </div>
             </div>
           </div>

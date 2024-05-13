@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Utilisateur } from 'src/app/modeles/Utilisateur';
+import { UserService } from './../../services/User/user.service';
+import { ToastrService } from 'ngx-toastr';
+import { Formation } from 'src/app/modeles/Formations';
 declare var $: any;
 
 @Component({
@@ -9,119 +13,130 @@ declare var $: any;
   styleUrls: ['./list-formation.component.scss']
 })
 export class ListFormationComponent {
-  apiData: any;
+  selectedUtilisateur: Utilisateur = {};
+  selectedFormationId : number = 0;
+  // setSelectedFormationId (id: number | undefined): void {
+  //   if (id !== undefined) {
+  //     this.selectedFormationId=id;
+  //     console.log(this.selectedFormationId);
+  //     console.log(this.selectedUtilisateur)
+  //     if (this.selectedUtilisateur.formations) {
+  //       const selectedFormation = this.selectedUtilisateur.formations.find(
+  //         (formation) => formation.id === this.selectedFormationId
+  //       );
+  //       if (selectedFormation) {
+  //         this.formation = selectedFormation ;
+  //       } else {
+  //         this.toastr.error('Formation not found.');
+  //       }
+  //     } else {
+  //       this.toastr.error('User or formations not provided.');
+  //     }
+  //   }
 
-  constructor(private http: HttpClient,private router:Router) {
-    // Static data definition
-    this.apiData = [
-      {
-        id: 1,
-        cne: 'A123456',
-        ppr: '123456789',
-        nom: 'Doe',
-        prenom: 'John',
-        diplome: 'Master en Gestion des Ressources Humaines',
-        specialite: 'Gestion stratégique',
-        niveau_etude: 'Bac+5'
-      },
-      {
-        id: 2,
-        cne: 'B654321',
-        ppr: '987654321',
-        nom: 'Smith',
-        prenom: 'Jane',
-        diplome: 'Licence en Marketing',
-        specialite: 'Marketing Digital',
-        niveau_etude: 'Bac+3'
-      },
-      {
-        id: 3,
-        cne: 'C789123',
-        ppr: '456123789',
-        nom: 'Johnson',
-        prenom: 'Michael',
-        diplome: 'Doctorat en Informatique',
-        specialite: 'Intelligence Artificielle',
-        niveau_etude: 'Bac+8'
-      },
-      {
-        id: 4,
-        cne: 'D456789',
-        ppr: '789123456',
-        nom: 'Wilson',
-        prenom: 'Sara',
-        diplome: 'technicien spécialisé en Finance',
-        specialite: 'Analyse Financière',
-        niveau_etude: 'Bac+2'
-      },
-      {
-        id: 5,
-        cne: 'E987654',
-        ppr: '321654987',
-        nom: 'Thomas',
-        prenom: 'Chris',
-        diplome: 'technicien spécialisé en Informatique',
-        specialite: 'Développement Web',
-        niveau_etude: 'Bac+2'
-      },
-      {
-        id: 6,
-        cne: 'F123789',
-        ppr: '654789123',
-        nom: 'Jones',
-        prenom: 'Emily',
-        diplome: 'Master en Communication',
-        specialite: 'Relations Publiques',
-        niveau_etude: 'Bac+5'
-      },
-      {
-        id: 7,
-        cne: 'G468123',
-        ppr: '159753468',
-        nom: 'Brown',
-        prenom: 'Kevin',
-        diplome: 'Doctorat en Management',
-        specialite: 'Stratégie d\'Entreprise',
-        niveau_etude: 'Bac+8'
-      },
-      {
-        id: 8,
-        cne: 'H147852',
-        ppr: '369852147',
-        nom: 'White',
-        prenom: 'Lisa',
-        diplome: 'Licence en Ressources Humaines',
-        specialite: 'Gestion du Personnel',
-        niveau_etude: 'Bac+3'
-      },
-      {
-        id: 9,
-        cne: 'I369147',
-        ppr: '258147369',
-        nom: 'Miller',
-        prenom: 'Adam',
-        diplome: 'technicien spécialisé en Économie',
-        specialite: 'Analyse Macroéconomique',
-        niveau_etude: 'Bac+2'
-      },
-      {
-        id: 10,
-        cne: 'J963258',
-        ppr: '741258963',
-        nom: 'Moore',
-        prenom: 'Olivia',
-        diplome: 'Licence en Psychologie',
-        specialite: 'Psychologie Cognitive',
-        niveau_etude: 'Bac+3'
-      }
-      // Add more static data as needed
-    ];
+  // }
+  formation: Formation = {};
+  apiData: Utilisateur[] = [];
+  onFormationAdded(): void {
+    // Refresh the list after adding a thematique
+    // this.load();
+    $('#CT').modal('hide');
+
+    // Remove the modal backdrop manually
+    $('.modal-backdrop').remove();
+
+    // Optionally, you can also reset the body class to remove the modal-open class
+    $('body').removeClass('modal-open');
+
+    this.toastr.success('Formation ajoutée avec succès.', 'Succès');
+    this.ngOnInit();
+  }
+  setSelectedUtilisateurCode(id: number | undefined,idF: number | undefined): void {
+
+    if (id !== undefined && idF !== undefined) {
+      this.selectedFormationId=idF
+      this.utilisateurService.getUtilisateurById(id).subscribe(
+        (utilisateur: Utilisateur) => {
+          this.selectedUtilisateur = utilisateur;
+          console.log(this.selectedUtilisateur);
+          if (this.selectedUtilisateur.formations) {
+            const selectedFormation = this.selectedUtilisateur.formations.find(
+              (formation) => formation.id === this.selectedFormationId
+            );
+            if (selectedFormation) {
+              this.formation = selectedFormation ;
+            } else {
+              this.toastr.error('Formation not found.');
+            }
+          } else {
+            this.toastr.error('User or formations not provided.');
+          }
+        },
+        (error) => {
+          console.error('Erreur lors du chargement de la thématique:', error);
+        }
+      );
+    } else {
+      console.warn('ID de thématique est indéfini.');
+    }
+  }
+  onFormationUpdated(): void {
+    // Refresh the list after adding a thematique
+    // this.load();
+    $('#MT').modal('hide');
+
+    // Remove the modal backdrop manually
+    $('.modal-backdrop').remove();
+
+    // Optionally, you can also reset the body class to remove the modal-open class
+    $('body').removeClass('modal-open');
+
+    this.toastr.success('Formation mise à jour avec succès', 'Succès');
+    this.ngOnInit();
+  }
+  onFormationDeleted(): void {
+    // Refresh the list after adding a thematique
+    // this.load();
+    $('#ST').modal('hide');
+
+    // Remove the modal backdrop manually
+    $('.modal-backdrop').remove();
+
+    // Optionally, you can also reset the body class to remove the modal-open class
+    $('body').removeClass('modal-open');
+
+    this.toastr.success('Formation supprimée avec succès', 'Succès');
+    this.ngOnInit();
+  }
+  constructor(private utilisateurService: UserService, private toastr: ToastrService, private router: Router) { }
+  ngOnInit(): void {
+    this.loadBeneficiaiares();
   }
 
-  ngAfterViewInit(): void {
+  loadBeneficiaiares(): void {
+    this.utilisateurService.getAllUtilisateurs().subscribe(
+      (utilisateur: Utilisateur[]) => {
+        this.apiData = utilisateur;
+        // console.log('Utilisateur:', this.apiData);
+        // Réinitialiser DataTables une fois que les données sont chargées
+        this.initializeDataTables();
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des Utilisateur:', error);
+      }
+    );
+  }
+  initializeDataTables(): void {
+    const table = $('#example').DataTable();
+
+    if (table && $.fn.DataTable.isDataTable('#example')) {
+      // DataTable instance exists, destroy it before reinitializing
+      table.destroy();
+    }
+    // Utiliser setTimeout pour garantir que DataTables est initialisé après le rendu de la vue Angular
     setTimeout(() => {
       $('#example').DataTable({
-        "lengthMenu": [[5, 8], [5, 8]] // Customize the number of entries shown
+        "lengthMenu": [[5, 8], [5, 8]],
       });
     }, 0);
   }

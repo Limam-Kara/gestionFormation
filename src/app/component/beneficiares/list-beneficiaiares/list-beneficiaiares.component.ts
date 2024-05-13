@@ -11,10 +11,12 @@ declare var $: any;
   templateUrl: './list-beneficiaiares.component.html',
   styleUrls: ['./list-beneficiaiares.component.scss'],
 })
-export class ListBeneficiaiaresComponent implements OnInit{
+export class ListBeneficiaiaresComponent implements OnInit {
+
   apiData: Utilisateur[] = [];
-  selectedUtilisateur:Utilisateur= {};
-  constructor(private utilisateurService: UserService,private toastr: ToastrService,private router: Router) {}
+  selectedUtilisateur: Utilisateur = {};
+  constructor(private utilisateurService: UserService, private toastr: ToastrService, private router: Router) { }
+  
   onUtilisateurAdded(): void {
     // Refresh the list after adding a thematique
     // this.load();
@@ -57,51 +59,51 @@ export class ListBeneficiaiaresComponent implements OnInit{
     this.toastr.success('Utilisateur supprimée avec succès', 'Succès');
     this.ngOnInit();
   }
-    // Static data definition
-    setSelectedUtilisateurCode(id: number | undefined): void {
-      if (id !== undefined) {
-        this.utilisateurService.getUtilisateurById(id).subscribe(
-          (utilisateur: Utilisateur) => {
-            this.selectedUtilisateur = utilisateur;
-            console.log(this.selectedUtilisateur);
-          },
-          (error) => {
-            console.error('Erreur lors du chargement de la thématique:', error);
-          }
-        );
-      } else {
-        console.warn('ID de thématique est indéfini.');
-      }
-    }
-    ngOnInit(): void {
-      this.loadBeneficiaiares();
-    }
-    loadBeneficiaiares(): void {
-      this.utilisateurService.getAllUtilisateurs().subscribe(
-        (utilisateur: Utilisateur[]) => {
-          this.apiData = utilisateur;
-          console.log('Utilisateur:', this.apiData);
-          // Réinitialiser DataTables une fois que les données sont chargées
-          this.initializeDataTables();
+  // Static data definition
+  setSelectedUtilisateurCode(id: number | undefined): void {
+    if (id !== undefined) {
+      this.utilisateurService.getUtilisateurById(id).subscribe(
+        (utilisateur: Utilisateur) => {
+          this.selectedUtilisateur = utilisateur;
+          console.log(this.selectedUtilisateur);
         },
         (error) => {
-          console.error('Erreur lors du chargement des Utilisateur:', error);
+          console.error('Erreur lors du chargement de la thématique:', error);
         }
       );
+    } else {
+      console.warn('ID de thématique est indéfini.');
     }
-    initializeDataTables(): void {
-      const table = $('#example').DataTable();
-
-      if (table && $.fn.DataTable.isDataTable('#example')) {
-        // DataTable instance exists, destroy it before reinitializing
-        table.destroy();
+  }
+  ngOnInit(): void {
+    this.loadBeneficiaiares();
+  }
+  loadBeneficiaiares(): void {
+    this.utilisateurService.getAllUtilisateurs().subscribe(
+      (utilisateur: Utilisateur[]) => {
+        this.apiData = utilisateur;
+        console.log('Utilisateur:', this.apiData);
+        // Réinitialiser DataTables une fois que les données sont chargées
+        this.initializeDataTables();
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des Utilisateur:', error);
       }
-      // Utiliser setTimeout pour garantir que DataTables est initialisé après le rendu de la vue Angular
-      setTimeout(() => {
-        $('#example').DataTable({
-          "lengthMenu": [[5, 8], [5, 8]],
-        });
-      }, 0);
+    );
+  }
+  initializeDataTables(): void {
+    const table = $('#example').DataTable();
+
+    if (table && $.fn.DataTable.isDataTable('#example')) {
+      // DataTable instance exists, destroy it before reinitializing
+      table.destroy();
     }
+    // Utiliser setTimeout pour garantir que DataTables est initialisé après le rendu de la vue Angular
+    setTimeout(() => {
+      $('#example').DataTable({
+        "lengthMenu": [[5, 8], [5, 8]],
+      });
+    }, 0);
+  }
 
 }

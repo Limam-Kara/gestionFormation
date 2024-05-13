@@ -1,0 +1,42 @@
+<div class="modal fade" id="DT" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Detail Formation de Bénéficiare</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col">
+                <div class="form-group mb-3">
+                  <label for="niveauEtude">Niveau d'Étude</label>
+                  <input type="text" class="form-control" id="niveauEtude" placeholder="Enter Niveau d'Étude"
+                  aria-describedby="niveauEtudeHelp" [(ngModel)]="formation.niveauEtude" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group mb-3">
+                  <label for="diplome">Diplôme</label>
+                  <input type="text" class="form-control" id="diplome" placeholder="Enter Diplôme" aria-describedby="diplomeHelp"
+                    [(ngModel)]="formation.diplome" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group mb-3">
+                  <label for="specialite">Spécialité</label>
+                  <input type="text" class="form-control" id="specialite" placeholder="Enter Spécialité"
+                  aria-describedby="specialiteHelp" [(ngModel)]="formation.specialite" disabled>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          </div>
+      </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 })
 export class FormationService {
 
-  private baseUrl = environment.baseUrl + '/formations';
+  private baseUrl = environment.baseUrl + 'formations';
 
   constructor(private http: HttpClient) { }
 
@@ -43,7 +43,7 @@ export class FormationService {
   }
 
   getFormationsByUtilisateurId(utilisateurId: number): Observable<Formation[]> {
-    return this.http.get<Formation[]>(`${this.baseUrl}/utilisateur/${utilisateurId}`)
+    return this.http.get<Formation[]>(`${this.baseUrl}utilisateur/${utilisateurId}`)
       .pipe(
         catchError(this.handleError)
       );

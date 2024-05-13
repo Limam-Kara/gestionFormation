@@ -1,53 +1,56 @@
 <div class="row">
-    <div class="col-lg-12">
-      <div class="card w-100">
-        <div class="p-3 d-flex justify-content-between align-items-center">
-          <h4 class="card-title mb-0 text-warning">Formation</h4>
-          <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#CT">
-            <i class="bi bi-file-earmark-plus"></i> Ajouter
-          </button>
-        </div>
-        <div class="card-body border-top">
-          <div class="table-responsive">
-            <table id="example" class="display nowrap cell-border" style="width: 100%;">
-              <thead>
-                <tr>
-                   <th class="text-warning font-medium fs-4">CNE</th>
-                   <th class="text-warning font-medium fs-4">PPR</th>
-                   <th class="text-warning font-medium fs-4">Nom</th>
-                   <th class="text-warning font-medium fs-4">Prénom</th>
-                   <th class="text-warning font-medium fs-4">Diplôme</th>
-                   <th class="text-warning font-medium fs-4">Spécialité</th>
-                   <th class="text-warning font-medium fs-4">Niveau d'Étude</th>
-                   <th class="text-warning font-medium fs-4">Action</th>
-
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of apiData">
-                    <td>{{ item.ppr }}</td>
-                  <td>{{ item.cne }}</td>
-                 
-                  <td>{{ item.nom }}</td>
-                  <td>{{ item.prenom }}</td>
-                  <td>{{ item.diplome }}</td>
-                  <td>{{ item.specialite }}</td>
-                  <td>{{ item.niveau_etude }}</td>
-                  
+  <div class="col-lg-12">
+    <div class="card w-100">
+      <div class="p-3 d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0 text-warning">Formations</h4>
+        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#CT">
+          <i class="bi bi-file-earmark-plus"></i> Ajouter
+        </button>
+      </div>
+      <div class="card-body border-top">
+        <div class="table-responsive">
+          <table id="example" class="display nowrap cell-border" style="width: 100%">
+            <thead>
+              <tr>
+                <th class="text-warning font-medium fs-4">ID</th>
+                <th class="text-warning font-medium fs-4">PPR</th>
+                <th class="text-warning font-medium fs-4">Nom Complet</th>
+                <th class="text-warning font-medium fs-4">Diplôme</th>
+                <th class="text-warning font-medium fs-4">Spécialité</th>
+                <th class="text-warning font-medium fs-4">Niveau d'Étude</th>
+                <th class="text-warning font-medium fs-4">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let item of apiData">
+                <tr *ngFor="let formation of item.formations">
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.ppr }}</td>
+                  <td>{{ item.nom }} {{ item.prenom }}</td>
+                  <td>{{ formation?.diplome }}</td>
+                  <td>{{ formation.specialite }}</td>
+                  <td>{{ formation.niveauEtude }}</td>
                   <td class="d-flex justify-content-between">
-                    <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#CT"><i class="bi bi-eye-fill"></i></button>
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#MT"><i class="bi bi-pencil-square"></i></button>
-                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ST"><i class="bi bi-trash3-fill"></i></button>
+                    <button class="btn btn-info btn-sm me-2" data-bs-toggle="modal" data-bs-target="#DT" (click)="setSelectedUtilisateurCode(item?.id,formation?.id)">
+                      <i class="bi bi-eye-fill"></i>
+                    </button>
+                    <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#MT" (click)="setSelectedUtilisateurCode(item?.id,formation?.id)">
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ST" (click)="setSelectedUtilisateurCode(item?.id,formation?.id)">
+                      <i class="bi bi-trash3-fill"></i>
+                    </button>
                   </td>
                 </tr>
-              </tbody>
-            </table>
-          </div>
+              </ng-container>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
-  <app-modifier-formation></app-modifier-formation>
-  <app-supprimer-formation></app-supprimer-formation>
-  <app-create-formation></app-create-formation>
-  
+</div>
+<app-detail-formation  [formation]="formation"  [selectedUtilisateur]="selectedUtilisateur" [selectedFormationId]="selectedFormationId"></app-detail-formation>
+<app-modifier-formation  [formation]="formation"  [selectedUtilisateur]="selectedUtilisateur" [selectedFormationId]="selectedFormationId" (formationUpdated)="onFormationUpdated()"></app-modifier-formation>
+<app-supprimer-formation  [formation]="formation"  [selectedUtilisateur]="selectedUtilisateur" [selectedFormationId]="selectedFormationId" (formationDeleted)="onFormationDeleted()"></app-supprimer-formation>
+<app-create-formation (formationAdded)="onFormationAdded()"></app-create-formation>
