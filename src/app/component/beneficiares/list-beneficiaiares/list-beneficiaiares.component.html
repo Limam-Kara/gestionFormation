@@ -22,13 +22,11 @@
               <tr>
                 <th class="text-warning font-medium fs-4">ID</th>
                 <th class="text-warning font-medium fs-4">PPR</th>
-                <th class="text-warning font-medium fs-4">CNE</th>
+                <th class="text-warning font-medium fs-4">Nom Complet</th>
                 <th class="text-warning font-medium fs-4">Date de Naissance</th>
                 <th class="text-warning font-medium fs-4">Email</th>
                 <th class="text-warning font-medium fs-4">Fonction</th>
                 <th class="text-warning font-medium fs-4">Genre</th>
-                <th class="text-warning font-medium fs-4">Nom</th>
-                <th class="text-warning font-medium fs-4">Prénom</th>
                 <th class="text-warning font-medium fs-4">Téléphone</th>
                 <th class="text-warning font-medium fs-4">Action</th>
               </tr>
@@ -37,27 +35,28 @@
               <tr *ngFor="let item of apiData">
                 <td>{{ item.id }}</td>
                 <td>{{ item.ppr }}</td>
-                <td>{{ item.cne }}</td>
-                <td>{{ item.date_naissance }}</td>
+                <td>{{ item.nom }}{{ item.prenom }}</td>
+                <td>{{ item.dateDeNaissance | date: 'dd/MM/yyyy' }}</td>
                 <td>{{ item.email }}</td>
                 <td>{{ item.fonction }}</td>
                 <td>{{ item.genre }}</td>
-                <td>{{ item.nom }}</td>
-                <td>{{ item.prenom }}</td>
-                <td>{{ item.telephone }}</td>
+
+                <td>{{ item.tel }}</td>
 
                 <td class="d-flex justify-content-between">
                   <button
-                    class="btn btn-info btn-sm"
+                    class="btn btn-info btn-sm me-2"
                     data-bs-toggle="modal"
                     data-bs-target="#CT"
+                    (click)="setSelectedUtilisateurCode(item?.id)"
                   >
                     <i class="bi bi-eye-fill"></i>
                   </button>
                   <button
-                    class="btn btn-primary btn-sm"
+                    class="btn btn-primary btn-sm me-2"
                     data-bs-toggle="modal"
                     data-bs-target="#MT"
+                    (click)="setSelectedUtilisateurCode(item?.id)"
                   >
                     <i class="bi bi-pencil-square"></i>
                   </button>
@@ -65,6 +64,7 @@
                     class="btn btn-danger btn-sm"
                     data-bs-toggle="modal"
                     data-bs-target="#ST"
+                    (click)="setSelectedUtilisateurCode(item?.id)"
                   >
                     <i class="bi bi-trash3-fill"></i>
                   </button>
@@ -77,6 +77,6 @@
     </div>
   </div>
 </div>
-<app-create-beneficiaiares></app-create-beneficiaiares>
-<app-modifier-beneficiaiares></app-modifier-beneficiaiares>
-<app-supprimer-beneficiaiares></app-supprimer-beneficiaiares>
+<app-create-beneficiaiares (utilisateurAdded)="onUtilisateurAdded()"></app-create-beneficiaiares>
+<app-modifier-beneficiaiares [selectedUtilisateur]="selectedUtilisateur" (utilisateurUpdated)="onUtilisateurUpdated()"></app-modifier-beneficiaiares>
+<app-supprimer-beneficiaiares [selectedUtilisateur]="selectedUtilisateur" (utilisateurDelete)="onUtilisateurUpdated()"></app-supprimer-beneficiaiares>

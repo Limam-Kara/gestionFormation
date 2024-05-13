@@ -1,0 +1,39 @@
+// Table Styling
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+// Table Header Styling
+thead th {
+  background-color: #f8f9fa;
+  color: #343a40;
+  border: 1px solid #dee2e6;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+
+}
+
+// Table Body Styling
+tbody td {
+  border: 1px solid #dee2e6;
+  padding: 10px;
+  font-size: 14px;
+}
+
+// Alternating Row Background
+tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+// Hover Effect
+tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+.text-warning{
+  color: #ffb22b;
+  font-weight: bold;
+
+}

@@ -27,6 +27,13 @@ export class UserService {
       );
   }
 
+  getUtilisateurById(id: number): Observable<Utilisateur> {
+    return this.http.get<Utilisateur>(`${this.baseUrl}`+"/byId/"+`${id}`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   getAllUtilisateurs(): Observable<Utilisateur[]> {
     return this.http.get<Utilisateur[]>(`${this.baseUrl}`+"/all")
       .pipe(
