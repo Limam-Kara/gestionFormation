@@ -48,7 +48,10 @@ export class ThematiqueService {
         catchError(this.handleError)
       );
   }
-
+  getThematiqueByGroupeId(thematiqueId: number): Observable<Thematique> {
+    const url = `${this.baseUrl}/${thematiqueId}/thematique`;
+    return this.http.get<Thematique>(url);
+  }
   private handleError(error: any) {
     console.error('An error occurred:', error);
     return throwError(error);

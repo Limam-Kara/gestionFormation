@@ -6,72 +6,52 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group mb-3">
-                          <label for="Objectif">Beneficiare Par PPR</label>
-                          <select class="form-select"  id="Objectif">
-                              <option value="">a</option>
-                              <option value="">z</option>
-                              <option value="">x</option>
-                              <option value="">v</option>
-                              <option value="">d</option>
-                          </select>
-                        </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <div class="form-group mb-3">
-                          <label for="code">Cne</label>
-                          <input type="text"  class="form-control" id="code" placeholder="Enter Cne" aria-describedby="helpId">
-                      </div>
-                  </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group mb-3">
-                          <label for="code">Prénom</label>
-                          <input type="text"  class="form-control" id="code" placeholder="Enter Prénom" aria-describedby="helpId">
-                      </div>
-                  </div>
-                      <div class="col-md-6">
-                        <div class="form-group mb-3">
-                          <label for="code">Nom</label>
-                          <input type="number" min="0"  class="form-control" id="code" placeholder="Entrer Nom" aria-describedby="helpId">
-                        </div>
-                      </div>
-                  </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group mb-3">
-                            <label for="code">Thématique</label>
-                            <input type="text"  class="form-control" id="code" placeholder="Enter Diplome" aria-describedby="helpId">
-                        </div>
-                    </div>
-                    <!-- <div class="col-md-4">
-                        <div class="form-group mb-3">
-                            <label for="cne">CNE</label>
-                            <input type="text"  class="form-control" id="cne" placeholder="Enter CNE" aria-describedby="helpId">
-                        </div>
-                    </div> -->
-                    <div class="col-md-6">
-                      <div class="form-group mb-3">
-                        <label for="code">groupe</label>
-                        <input type="text" class="form-control" id="code" placeholder="Enter Spécialité" aria-describedby="helpId">
-                      </div>
+              <div class="row">
+                <div class="form-group mb-3">
+                  <label for="Objectif">Beneficiare Par PPR  </label>
+                  <select class="form-select" id="beneficiarePpr" >
+                    <option *ngFor="let user of apiData" [ngValue]="user.id">
+                      {{ user.ppr }} {{user.nom}} {{user.prenom}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group mb-3">
+                    <label for="code">Thématique</label>
+                    <select class="form-select" id="beneficiarePpr" [(ngModel)]="selectedThematique" (change)="onThematiqueChange()">
+                      <option *ngFor="let them of apiDatathematique" [ngValue]="them"  >
+                        {{ them.intitule }}
+                      </option>
+                    </select>
                   </div>
                 </div>
-                
-              
-              
-               
-               
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button  type="submit" class="btn btn-warning" name="Ajouter">Modifier</button>
-            </div>
+                <div class="row" *ngIf="selectedThematique">
+                  <div class="col">
+                    <div class="form-group mb-3">
+                      <label for="code">groupe</label>
+                      <select class="form-select" id="beneficiarePpr" [(ngModel)]="selectedGroupe">
+                        <option *ngFor="let group of selectedThematique?.groupes" [ngValue]="group.id">
+                          {{ group.numGroupe }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Fermer
+                </button>
+                <button type="submit" class="btn btn-warning" name="Ajouter" (click)="afecterUserToGroup() ">
+                  Ajouter
+                </button>
+              </div>
         </div>
     </div>
   </div>
