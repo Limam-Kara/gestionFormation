@@ -11,7 +11,7 @@ import { Utilisateur } from 'src/app/modeles/Utilisateur';
 })
 export class GroupService {
 
-  private baseUrl = environment.baseUrl + '/groups';
+  private baseUrl = environment.baseUrl + 'groups';
 
   constructor(private http: HttpClient) { }
 
@@ -43,8 +43,8 @@ export class GroupService {
       );
   }
 
-  getGroupById(groupId: number): Observable<Group | string> {
-    return this.http.get<Group>(`${this.baseUrl}/${groupId}`)
+  getGroupById(groupId: number): Observable<Group[]> {
+    return this.http.get<Group[]>(`${this.baseUrl}/${groupId}`)
       .pipe(
         catchError(this.handleError)
       );
