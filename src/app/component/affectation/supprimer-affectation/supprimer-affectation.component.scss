@@ -1,0 +1,36 @@
+input.form-control:focus,
+input[type="text"]:focus,
+[type="text"].form-control:focus,
+[contenteditable].form-control:focus {
+    box-shadow: inset 0 -1px 0 #ddd;
+    border-color: #ffb22b;
+}
+select:focus {
+    box-shadow: inset 0 -1px 0 #ddd;
+    border-color: #ffb22b;
+}
+
+.btn:focus,
+.btn:active {
+    outline: none !important;
+    box-shadow: none;
+}
+.addStudent{
+    background-color: #ffb22b;
+    border: none;
+}
+.addStudent:hover{
+    background-color: #ffcc66;
+    border: none;
+}
+label{
+    font-size: 14px;
+    color: #ffb22b;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+.modal-title{
+  color: #ffb22b;
+  font-weight: bold;
+  font-size: 18px;
+}

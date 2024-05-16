@@ -8,11 +8,12 @@ import { GroupService } from '../../services/Group/group.service';
 import { ThematiqueService } from '../../services/Thematique/thematique.service';
 import { UserService } from '../../services/User/user.service';
 interface Them {
-  ppr: any;
-  nom: any;
-  prenom: any;
-  intitule: any;
-  groupe: any;
+  ppr?: any;
+  nom?: any;
+  prenom?: any;
+  intitule?: any;
+  groupe?: any;
+  id_groupe?: any;
 }
 @Component({
   selector: 'app-modifier-affectation',
@@ -26,18 +27,32 @@ export class ModifierAffectationComponent {
     private groupservice: GroupService,
     private toastr: ToastrService,
     private router: Router
-  ) {}
+  ) { }
   selectedbeneficiare: any;
   selectedThematique: any;
   selectedGroupe: any;
   apiData: Utilisateur[] = [];
   apiDatathematique: Thematique[] = [];
   apiDatagroup: Group[] = [];
-
+  @Input() user: Them = {
+    ppr: {
+      id: 1,
+      ppr: "12345",
+      nom: "Doe",
+      prenom: "John",
+      fonction: "Developer",
+      // Other properties...
+    },
+    nom: "Doe",
+    prenom: "John",
+    intitule: "Advanced Java Programming",
+    groupe: "Groupe 1"
+  };
   ngOnInit(): void {
     this.loadBeneficiaiares();
     this.loadThematiques();
     // console.log(this.user)
+    console.log('User in parent component:', this.user);
   }
 
   loadBeneficiaiares(): void {
@@ -55,33 +70,44 @@ export class ModifierAffectationComponent {
     this.thematiqueService.getAllThematiques().subscribe(
       (thematiques: Thematique[]) => {
         this.apiDatathematique = thematiques;
-        // console.log('Thematiques:', this.apiDatathematique);
+
+        // Ensure user.prenom and thematique.id are both strings for comparison
+        if (this.user && this.user.prenom) {
+          this.selectedThematique = this.apiDatathematique.find((thematique) =>
+            thematique.id?.toString() === this.user.prenom.toString()
+          );
+        }
+
+        if (this.selectedThematique) {
+          console.log('Thematiques:', this.selectedThematique);
+        } else {
+          console.log('No matching thematique found for user prenom:', this.user?.prenom);
+        }
       },
       (error) => {
         console.error('Erreur lors du chargement des thématiques:', error);
       }
     );
   }
-
+  @Output() utilisateurUpdated: EventEmitter<void> = new EventEmitter<void>();
   onThematiqueChange() {
     this.selectedGroupe = this.selectedThematique.groupes[0]; // Assuming you want to select the first groupe by default
   }
-
-  afecterUserToGroup() {
-    if (
-      !this.selectedGroupe ||
-      !this.selectedThematique ||
-      !this.selectedbeneficiare
-    ) {
-      this.toastr.warning(
-        'Veuillez remplir tous les champs requis.',
-        'Champs requis manquants'
-      );
-      return;
-    }
-
+  updateUserToGroup() {
+    console.log(this.user.ppr.id,this.user.id_groupe)
+    // if (
+    //   !this.selectedGroupe ||
+    //   !this.selectedThematique ||
+    //   !this.selectedbeneficiare
+    // ) {
+    //   this.toastr.warning(
+    //     'Veuillez remplir tous les champs requis.',
+    //     'Champs requis manquants'
+    //   );
+    //   return;
+    // }
     this.groupservice
-      .assignUserToGroup(this.selectedbeneficiare, this.selectedGroupe)
+      .updateGroupAndAssignUser(this.user.ppr.id, this.user.id_groupe)
       .subscribe(
         (data) => {
           console.log('Bénéficiare affecté au groupe avec succès !', data);
@@ -96,10 +122,8 @@ export class ModifierAffectationComponent {
             this.toastr.error(error.error, 'Erreur');
           }
           if (error.status === 200) {
-            this.toastr.success(
-              'Bénéficiare affecté au groupe avec succès !',
-              'Succès'
-            );
+            this.utilisateurUpdated.emit()
+
           }
 
         }

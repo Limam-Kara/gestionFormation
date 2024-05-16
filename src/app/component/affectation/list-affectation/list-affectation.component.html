@@ -46,7 +46,7 @@
                     class="btn btn-primary btn-sm"
                     data-bs-toggle="modal"
                     data-bs-target="#MT"
-                    (click)="setSelectedUtilisateurCode(utilisateur.ppr)"
+                    (click)="setSelectedUtilisateurCode(utilisateur.groupe,utilisateur.intitule,utilisateur.ppr)"
                   >
                     <i class="bi bi-pencil-square"></i>
                   </button>
@@ -54,7 +54,7 @@
                     class="btn btn-danger btn-sm"
                     data-bs-toggle="modal"
                     data-bs-target="#ST"
-                    (click)="setSelectedUtilisateurCode(utilisateur.ppr)"
+                    (click)="setSelectedUtilisateurCode(utilisateur.groupe,utilisateur.intitule,utilisateur.ppr)"
                   >
                     <i class="bi bi-trash3-fill"></i>
                   </button>
@@ -67,6 +67,6 @@
     </div>
   </div>
 </div>
-<app-create-affectation></app-create-affectation>
-<app-supprimer-affectation></app-supprimer-affectation>
-<app-modifier-affectation></app-modifier-affectation>
+<app-create-affectation (utilisateurAdded)="onUtilisateurAdded()"></app-create-affectation>
+<app-supprimer-affectation [user]="user" (utilisateurdeleted)="onUtilisateurDeleted()"></app-supprimer-affectation>
+<app-modifier-affectation [user]="user" (utilisateurUpdated)="onUtilisateurUpdated()"></app-modifier-affectation>

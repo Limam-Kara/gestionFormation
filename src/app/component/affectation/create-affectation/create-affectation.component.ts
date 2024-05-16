@@ -33,7 +33,6 @@ export class CreateAffectationComponent {
     this.loadBeneficiaiares();
     this.loadThematiques();
   }
-
   loadBeneficiaiares(): void {
     this.utilisateurService.getAllUtilisateurs().subscribe(
       (utilisateur: Utilisateur[]) => {
@@ -56,7 +55,6 @@ export class CreateAffectationComponent {
       }
     );
   }
-
   onThematiqueChange() {
     this.selectedGroupe = this.selectedThematique.groupes[0]; // Assuming you want to select the first groupe by default
   }
@@ -73,17 +71,11 @@ export class CreateAffectationComponent {
       );
       return;
     }
-
     this.groupservice
       .assignUserToGroup(this.selectedbeneficiare, this.selectedGroupe)
       .subscribe(
         (data) => {
           console.log('Bénéficiare affecté au groupe avec succès !', data);
-          this.toastr.success(
-            'Bénéficiare affecté au groupe avec succès !',
-            'Succès'
-          );
-          this.utilisateurAdded.emit();
         },
         (error) => {
           console.error('Error during affectation:', error);
@@ -91,39 +83,9 @@ export class CreateAffectationComponent {
             this.toastr.error(error.error, 'Erreur');
           }
           if (error.status === 200) {
-            this.toastr.success(
-              'Bénéficiare affecté au groupe avec succès !',
-              'Succès'
-            );
+            this.utilisateurAdded.emit();
           }
-          // else {
-          //   this.toastr.error(
-          //     "Une erreur  lors de affectation.",
-          //     'Erreur'
-          //   );
-          //   console.log('sdfsdfsdfsd')
-          //   console.log(this.selectedGroupe)
-          //   console.log(this.selectedbeneficiare)
-          // }
         }
-      );        this.initializeDataTables();
-
-  }
-  initializeDataTables(): void {
-    const table = $('#example').DataTable();
-
-    if (table && $.fn.DataTable.isDataTable('#example')) {
-      // DataTable instance exists, destroy it before reinitializing
-      table.destroy();
-    }
-    // Utiliser setTimeout pour garantir que DataTables est initialisé après le rendu de la vue Angular
-    setTimeout(() => {
-      $('#example').DataTable({
-        lengthMenu: [
-          [5, 8],
-          [5, 8],
-        ],
-      });
-    }, 0);
+      );
   }
 }

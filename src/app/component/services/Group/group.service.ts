@@ -22,8 +22,15 @@ export class GroupService {
       );
   }
 
-  updateGroup(groupId: number, group: Group): Observable<string> {
-    return this.http.put<string>(`${this.baseUrl}/update/${groupId}`, group)
+  updateGroupAndAssignUser(userId: number, groupId: number): Observable<string> {
+    return this.http.put<string>(`${this.baseUrl}/updateAndAssignUser?userId=${userId}&groupId=${groupId}`, {})
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  removeUserFromGroup(userId: number, groupId: number): Observable<string> {
+    return this.http.delete<string>(`${this.baseUrl}/removeUser?userId=${userId}&groupId=${groupId}`, {})
       .pipe(
         catchError(this.handleError)
       );

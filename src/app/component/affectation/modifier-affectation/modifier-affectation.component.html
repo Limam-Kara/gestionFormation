@@ -8,31 +8,27 @@
             <div class="modal-body">
               <div class="row">
                 <div class="form-group mb-3">
-                  <label for="Objectif">Beneficiare Par PPR  </label>
-                  <select class="form-select" id="beneficiarePpr" >
-                    <option *ngFor="let user of apiData" [ngValue]="user.id">
-                      {{ user.ppr }} {{user.nom}} {{user.prenom}}
-                    </option>
-                  </select>
+                  <label for="Objectif">Beneficiare Par PPR</label>
+                  <input type="text" class="form-control" id="niveauEtude" placeholder="Beneficiare Par PPR"
+                         aria-describedby="niveauEtudeHelp" [ngModel]="user.ppr?.ppr" disabled>
                 </div>
+
+
               </div>
               <div class="row">
                 <div class="col">
                   <div class="form-group mb-3">
                     <label for="code">Thématique</label>
-                    <select class="form-select" id="beneficiarePpr" [(ngModel)]="selectedThematique" (change)="onThematiqueChange()">
-                      <option *ngFor="let them of apiDatathematique" [ngValue]="them"  >
-                        {{ them.intitule }}
-                      </option>
-                    </select>
+                    <input type="text" class="form-control" id="niveauEtude" placeholder="Beneficiare Par PPR"
+                    aria-describedby="niveauEtudeHelp" [(ngModel)]="user.intitule"  disabled>
                   </div>
                 </div>
-                <div class="row" *ngIf="selectedThematique">
+                <div class="row" >
                   <div class="col">
                     <div class="form-group mb-3">
                       <label for="code">groupe</label>
-                      <select class="form-select" id="beneficiarePpr" [(ngModel)]="selectedGroupe">
-                        <option *ngFor="let group of selectedThematique?.groupes" [ngValue]="group.id">
+                      <select class="form-select" id="beneficiarePpr" [(ngModel)]="user.id_groupe">
+                        <option *ngFor="let group of user.nom" [ngValue]="group.id">
                           {{ group.numGroupe }}
                         </option>
                       </select>
@@ -48,7 +44,7 @@
                 >
                   Fermer
                 </button>
-                <button type="submit" class="btn btn-warning" name="Ajouter" (click)="afecterUserToGroup() ">
+                <button type="submit" class="btn btn-warning" name="Ajouter" (click)="updateUserToGroup() ">
                   Ajouter
                 </button>
               </div>
