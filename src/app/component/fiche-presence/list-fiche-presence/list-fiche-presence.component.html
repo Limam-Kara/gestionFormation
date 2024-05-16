@@ -3,98 +3,127 @@
     <div class="card w-100">
       <div class="p-3 d-flex justify-content-between align-items-center">
         <h4 class="card-title mb-0 text-warning">Fiche Présence</h4>
-        <button
-          class="btn btn-warning"
-          data-bs-toggle="modal"
-          data-bs-target="#CT"
-        >
+        <button class="btn btn-warning" (click)="printSection()">
           <i class="bi bi-file-earmark-plus"></i> Imprimer
         </button>
       </div>
-      <div class="m-5 justify-content-between align-items-center">
-        <form [formGroup]="formationForm" class="row ">
+
+      <div class="m-5">
+        <div class="row g-3 align-items-center">
           <div class="col-md-4">
-          <div class="form-group">
-            <label for="thematique">Sélectionnez une thématique :</label>
-            <select
-              formControlName="thematique"
-              id="thematique"
-              class="form-control"
-              (change)="filterJoursFormation()"
-            >
-              <option value="tt">Choisir une thématique</option>
-              <option
-                *ngFor="let formation of apiData"
-                [value]="formation.thematique"
+            <div class="form-group mb-3">
+              <label for="beneficiarePpr">Thématique</label>
+              <select
+                class="form-select"
+                id="beneficiarePpr"
+                [(ngModel)]="selectedThematique"
+                (change)="onThematiqueChange(); filterJoursFormation()"
               >
-                {{ formation.thematique }}
-              </option>
-            </select>
+                <option *ngFor="let them of apiData" [ngValue]="them">
+                  {{ them.intitule }}
+                </option>
+              </select>
+            </div>
           </div>
+          <div class="col-md-4" *ngIf="selectedThematique">
+            <div class="form-group mb-3">
+              <label for="beneficiareGroupe">Groupe</label>
+              <select
+                class="form-select"
+                id="beneficiareGroupe"
+                [(ngModel)]="selectedGroupe"
+                (change)="ff()"
+              >
+                <option
+                  *ngFor="let group of selectedThematique?.groupes"
+                  [ngValue]="group"
+                >
+                  {{ group.numGroupe }}
+                </option>
+              </select>
+            </div>
           </div>
-          <div class="col-md-4">
-          <div class="form-group" *ngIf="joursFormation.length > 0">
-            <label for="jourFormation"
-              >Sélectionnez un jour de formation :</label
-            >
-            <select
-              formControlName="jourFormation"
-              id="jourFormation"
-              class="form-control"
-            >
-              <option value="">Choisir un jour de formation</option>
-              <option *ngFor="let jour of joursFormation" [value]="jour">
-                {{ jour }}
-              </option>
-            </select>
-            
+          <div class="col-md-4" *ngIf="selectedThematique">
+            <div class="form-group mb-3">
+              <label for="beneficiareJour">Choisir un jour de formation</label>
+              <select
+                class="form-select"
+                id="beneficiareJour"
+                [(ngModel)]="selecteddate"
+                (change)="getuserbygroupe()"
+              >
+                <option *ngFor="let jour of joursFormation" [value]="jour">
+                  {{ jour }}
+                </option>
+              </select>
+            </div>
           </div>
-          </div>
-          <div class="form-group col-md-4" *ngIf="joursFormation.length > 0">
-            <button
-            class="mt-4 btn btn-warning">Enregister</button>
         </div>
-        </form>
+        <div class="d-flex justify-content-center">
+          <button class="mt-4 btn btn-warning"
+          (click)="saveabsence()">
+            Enregistrer
+          </button>
+        </div>
       </div>
-      <div class="card-body border-top">
+  <h4 *ngIf="selecteddate" class="card-title mb-0 text-warning text-center">
+          {{ title }}
+        </h4>
+      <div class="card-body border-top " >
+
+
         <div class="table-responsive">
           <table
-            id="example"
+            id="lexample"
             class="display nowrap cell-border"
             style="width: 100%"
+            *ngIf="selecteddate"
           >
             <thead>
-              <tr><th class="text-warning font-medium fs-4">PPR</th>
+              <tr>
+                <th class="text-warning font-medium fs-4">PPR</th>
                 <th class="text-warning font-medium fs-4">CNE</th>
-                
+
                 <th class="text-warning font-medium fs-4">Nom</th>
                 <th class="text-warning font-medium fs-4">Prénom</th>
-                <th class="text-warning font-medium fs-4">
-                   thématique
-                </th>
-                
+                <th class="text-warning font-medium fs-4">thématique</th>
+
                 <th class="text-warning font-medium fs-4">Actions</th>
               </tr>
             </thead>
-            <tbody >
-              <tr *ngFor="let item of apiDatafr">
 
-                <td>{{ item.ppr }}</td>
-                <td>{{ item.cne }}</td>
-                <td>{{ item.nom }}</td>
-                <td>{{ item.prenom }}</td>
-                <td>{{ item.thematique }}</td>
-
+            <tbody           id="prt"
+            >
+              <tr *ngFor="let utilisateur of themfltr">
+                <td>{{ utilisateur.ppr }}</td>
+                <td>{{ utilisateur.nom }}</td>
+                <td>{{ utilisateur.prenom }}</td>
+                <td>{{ utilisateur.intitule }}</td>
+                <td>{{ utilisateur.groupe }} </td>
                 <td class="d-flex justify-content-between">
                   <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="attendanceSwitch" [checked]="item.isPresent" (change)="toggleAttendance(item.id)" >
-                    <label class="form-check-label" for="attendanceSwitch">{{ item.isPresent ? 'Present' : 'Absent' }}</label>
+                    <input
+                      class="form-check-input"
+
+
+                      type="checkbox"
+                       [id]="utilisateur.isPresent? 'flexSwitchCheckChecked' : 'flexSwitchCheckDefault' "
+                     (change)="toggleAttendance(utilisateur.ppr)"
+                    />
+
+                    <label
+                      class="form-check-label"
+                      [for]="'attendanceSwitch_' + utilisateur.ppr"
+                    >
+                      {{ utilisateur.isPresent  }}
+                    </label>
+
                   </div>
-                
                 </td>
               </tr>
             </tbody>
           </table>
+
         </div>
       </div>
     </div>

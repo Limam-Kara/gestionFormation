@@ -7,4 +7,5 @@ export interface Absence {
   dateAbsence: Date;
   utilisateur: Utilisateur;
   thematique: Thematique;
+  id_group:number
 }
