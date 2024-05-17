@@ -28,12 +28,14 @@ export class ListAffectationComponent {
   selectedbeneficiare: any;
   selectedThematique: any;
   selectedGroupe: any;
-  selectedUtilisateur: Utilisateur = {};
+  selectedUtilisateur: Utilisateur = {
+  };
   apiDatagroup: Group[] = [];
   them: Them[] = [];
   themT: Them[] = [];
   user: Them = {};
   dataTableInitialized = false;
+
   setSelectedUtilisateurCode(groupe: any, intitule: any, ppr: any): void {
     // Check if all parameters are defined and non-empty
     if (groupe && intitule && ppr && this.themT.length > 0) {
