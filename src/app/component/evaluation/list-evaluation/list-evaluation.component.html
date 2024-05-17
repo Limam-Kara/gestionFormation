@@ -6,38 +6,50 @@
           <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#CT">
             <i class="bi bi-file-earmark-plus"></i> Ajouter
           </button>
-        </div>
+          <div>
+            <h2>Add Evaluation</h2>
+            <button (click)="addEvaluation(7, 4, [ 'Response 2', 'Response 3', 'Response 2', 'Response 3'])">Add Evaluation</button>
+
+            <div *ngIf="evaluation">
+              <h3>Evaluation Added:</h3>
+              <pre>{{ evaluation | json }}</pre>
+            </div>
+
+
+            <!-- <div *ngIf="responses.length > 0">
+              <h3>Responses:</h3>
+              <pre>{{ responses | json }}</pre>
+            </div> -->
+</div>
+        </div> <h2>Get Responses</h2>
+            <button (click)="getResponses(1)">Get Responses for Evaluation ID 1</button>
+
         <div class="card-body border-top">
           <div class="table-responsive">
-            <table id="example" class="display nowrap cell-border" style="width: 100%;">
+            <table *ngIf="responses.length > 0" id="example" class="display nowrap cell-border" style="width: 100%;">
               <thead>
                 <tr>
                   <th class="text-warning font-medium fs-4">N°</th>
-                  <th class="text-warning font-medium fs-4">Intitulé de la thématique</th>
-                  <th class="text-warning font-medium fs-4">Date Début</th>
-                  <th class="text-warning font-medium fs-4">Date Fin</th>
-                  <th class="text-warning font-medium fs-4">Actions</th>
+                  <th class="text-warning font-medium fs-4">question</th>
+                  <th class="text-warning font-medium fs-4">reponse</th>
+
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of apiData">
+                <tr *ngFor="let item of responses">
                   <td>{{ item.id }}</td>
-                  <td>{{ item.title }}</td>
-                  <td>{{ item.startDate }}</td>
-                  <td>{{ item.endDate }}</td>
-                  <td class="d-flex justify-content-between">
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" (click)="consulterevaluationparthematique(item.thematique)"><i class="bi bi-pencil-square"></i></button>
-                    
-                
-                  </td>
+                  <td>{{ item.question.questionText }}</td>
+                  <td>{{ item.reponse }}</td>
+
                 </tr>
               </tbody>
             </table>
           </div>
+
+
         </div>
       </div>
     </div>
   </div>
-  
+
   <app-create-evaluation></app-create-evaluation>
-  
