@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2>Bilan de l’année en cour</h2><!-- Print button -->
+      <button (click)="printSection()" class="btn btn-primary">Print</button>
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Cout Logistique</th>
+            <th>Cout Pedagogique</th>
+            <th>Nombre de Groupes</th>
+            <th>Nombre de Jours de Formation</th>
+            <th>Date Debut</th>
+            <th>Date Fin</th>
+            <th>Domaine de Formation</th>
+            <th>Prestataire</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let thematique of currentYearData">
+            <td>{{ thematique.coutLogistique }}</td>
+            <td>{{ thematique.coutPedagogique }}</td>
+            <td>{{ thematique.nbrGroupe }}</td>
+            <td>{{ thematique.nbrJoursFormation }}</td>
+            <td>{{ thematique.dateDebut | date }}</td>
+            <td>{{ thematique.dateFin | date }}</td>
+            <td>{{ thematique.domaineFormation }}</td>
+            <td>{{ thematique.prestataire }}</td>
+            <!-- <td></td> This cell is intentionally left blank for the row data -->
+          </tr>
+          <tr>
+            <td colspan="3">Total Logistique pour cette année :</td>
+            <td>{{ totalCoutLogistique }}</td>
+            <td colspan="3">Total Pedagogique  pour cette année :</td>
+
+            <td>{{ totalCoutPedagogique }}</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

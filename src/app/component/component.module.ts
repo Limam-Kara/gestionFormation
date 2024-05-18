@@ -31,6 +31,7 @@ import { EvalutionFormComponent } from './evalution-form/evalution-form.componen
 import { DetailThematiqueComponent } from './thematique/detail/detail.component';
 import { DetailBeneficiaiaresComponent } from './beneficiares/detail-beneficiaiares/detail-beneficiaiares.component';
 import { DetailFormationComponent } from './formation/detail-formation/detail-formation.component';
+import { ListBilanComponent } from './Bilan/list-bilan/list-bilan.component';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { DetailFormationComponent } from './formation/detail-formation/detail-fo
     DetailThematiqueComponent,
     DetailBeneficiaiaresComponent,
     DetailFormationComponent,
-  
+    ListBilanComponent,
+
   ],
 })
 export class ComponentsModule { }

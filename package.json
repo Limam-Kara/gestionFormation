@@ -26,6 +26,7 @@
     "apexcharts": "^3.40.0",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.11.3",
+    "chart.js": "^4.4.3",
     "datatables.net": "^1.13.11",
     "datatables.net-bs5": "^1.11.3",
     "install": "^0.13.0",

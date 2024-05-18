@@ -11,6 +11,7 @@ import { ListFichePresenceComponent } from './fiche-presence/list-fiche-presence
 import { ListEvaluationComponent } from './evaluation/list-evaluation/list-evaluation.component';
 import { ListbenificiareEvaluationComponent } from './evaluation/listbenificiare-evaluation/listbenificiare-evaluation.component';
 import { EvalutionFormComponent } from './evalution-form/evalution-form.component';
+import { ListBilanComponent } from './Bilan/list-bilan/list-bilan.component';
 
 export const ComponentsRoutes: Routes = [
   {
@@ -18,7 +19,7 @@ export const ComponentsRoutes: Routes = [
     children: [
       {
         path: 'Bilan',
-        component: DashboardComponent,
+        component: ListBilanComponent,
       },
       {
         path: 'For.continu',
@@ -61,6 +62,7 @@ export const ComponentsRoutes: Routes = [
         path: 'Evaluation.For',
         component: EvalutionFormComponent,
       },
+
     ],
   },
 ];
