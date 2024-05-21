@@ -1,123 +1,120 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Evaluation } from 'src/app/modeles/evaluation';
 import { QReponse } from 'src/app/modeles/qreponse';
 import { EvaluationService } from '../../services/evaluation/evaluation.service';
 import { ToastrService } from 'ngx-toastr';
+import { Thematique } from 'src/app/modeles/Thematique';
+import { ThematiqueService } from '../../services/Thematique/thematique.service';
+import { Utilisateur } from 'src/app/modeles/Utilisateur';
+import { animate, style, transition, trigger } from '@angular/animations';
 declare var $: any;
-
+export interface test {
+  Utilisateur: Utilisateur[];
+  ideva: number;
+}
 @Component({
   selector: 'app-list-evaluation',
   templateUrl: './list-evaluation.component.html',
-  styleUrls: ['./list-evaluation.component.scss']
+  styleUrls: ['./list-evaluation.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('0.5s ease-out', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class ListEvaluationComponent implements OnInit {
-
   evaluation: Evaluation | undefined;
+  allevaluation: Evaluation[] = [];
   responses: QReponse[] = [];
+  who: any;
+  title: string = '';
+  thematiques: Thematique[] = [];
+  currentView: 'thematique' | 'evaluation' | 'responses' = 'thematique';
 
-  constructor(private evaluationService: EvaluationService,
-    private toastr: ToastrService) { }
+  constructor(
+    private evaluationService: EvaluationService,
+    private toastr: ToastrService,
+    private thematiqueService: ThematiqueService
+  ) {}
 
   ngOnInit(): void {
+    this.loadThematiques();
   }
-
-  addEvaluation(userId: number, thematiqueId: number, responses: string[]): void {
-    this.evaluationService.addEvaluation(userId, thematiqueId, responses).subscribe({
-      next: (data) => {
-        this.evaluation = data;
-        console.log('Evaluation added:', data);
-        this.toastr.success("Bien évaluer", 'success');
-
-
+  loadevaluationflr(id: number, titre: string) {
+    this.title = titre;
+    this.evaluationService.getAllEvaluations().subscribe(
+      (evaluat: Evaluation[]) => {
+        this.allevaluation = evaluat.filter(
+          (response: Evaluation) => response.thematique.id === id
+        );
       },
-      error: (err) => {
-        this.toastr.error(err.error, 'Erreur');
-        console.error('Error adding evaluation:', err)}
-    });
+      (error) => {
+        console.error('Erreur lors du chargement des thématiques:', error);
+      }
+    );
+    this.currentView = 'evaluation';
+  }
+  loadThematiques(): void {
+    this.thematiqueService.getAllThematiques().subscribe(
+      (thematiques: Thematique[]) => {
+        this.thematiques = thematiques;
+        console.log('Thematiques:', this.thematiques);
+        // Réinitialiser DataTables une fois que les données sont chargées
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des thématiques:', error);
+      }
+    );
+  }
+  addEvaluation(
+    userId: number,
+    thematiqueId: number,
+    responses: string[]
+  ): void {
+    this.evaluationService
+      .addEvaluation(userId, thematiqueId, responses)
+      .subscribe({
+        next: (data) => {
+          this.evaluation = data;
+          console.log('Evaluation added:', data);
+          this.toastr.success('Bien évaluer', 'success');
+        },
+        error: (err) => {
+          this.toastr.error(err.error, 'Erreur');
+          console.error('Error adding evaluation:', err);
+        },
+      });
   }
 
-  getResponses(evaluationId: number): void {
+  getResponses(evaluationId: number, user: any): void {
+    this.who = user;
     this.evaluationService.getResponses(evaluationId).subscribe({
       next: (data) => {
         this.responses = data;
         console.log('Responses:', data);
       },
-      error: (err) => console.error('Error fetching responses:', err)
+      error: (err) => console.error('Error fetching responses:', err),
     });
-    
-
+    this.currentView = 'responses';
+  }
+  backToThematique() {
+    this.currentView = 'thematique';
   }
 
+  backToEvaluation() {
+    this.currentView = 'evaluation';
+  }
   ngAfterViewInit(): void {
     setTimeout(() => {
       $('#example').DataTable({
-        "lengthMenu": [[5, 8], [5, 8]] // Customize the number of entries shown
+        lengthMenu: [
+          [5, 8],
+          [5, 8],
+        ], // Customize the number of entries shown
       });
     }, 0);
   }
-
 }
-// consulterevaluationparthematique(thematiquetitle:string) {
-
-//   // console.log(thematiqueid);
-// this.router.navigate(['/component/evaluationlist',{Thematiqueid:thematiquetitle}])
-
-
-// }
-//   apiData: any;
-
-//   constructor(private http: HttpClient,private router:Router) {
-//     // Static data definition
-//     this.apiData = [
-//       {
-//         id: 1,
-//         title: 'Formation en Leadership',
-//         body: 'Description de la formation en leadership',
-//         startDate: '2024-04-21',
-//         endDate: '2024-04-30',
-//         thematique: 'Leadership',
-//       },
-//       {
-//         id: 2,
-//         title: 'Formation en Soft Skills',
-//         body: 'Description de la formation en soft skills',
-//         startDate: '2024-05-12',
-//         endDate: '2024-05-19',
-//         thematique: 'Soft Skills',
-//       },
-//       {
-//         id: 3,
-//         title: 'Formation en Management',
-//         body: 'Description de la formation en management',
-//         startDate: '2024-05-10',
-//         endDate: '2024-05-20',
-//         thematique: 'Management',
-//       },
-//       {
-//         id: 4,
-//         title: 'Formation en Communication interpersonnelle',
-//         body: 'Description de la formation en communication interpersonnelle',
-//         startDate: '2024-04-11',
-//         endDate: '2024-04-30',
-//         thematique: 'Communication interpersonnelle',
-//       },
-//       {
-//         id: 5,
-//         title: 'Formation en Développement personnel',
-//         body: 'Description de la formation en développement personnel',
-//         startDate: '2024-05-01',
-//         endDate: '2024-05-10',
-//         thematique: 'Développement personnel',
-//       },
-//       {
-//         id: 6,
-//         title: 'Formation en Gestion du temps',
-//         body: 'Description de la formation en gestion du temps',
-//         startDate: '2024-05-15',
-//         endDate: '2024-05-20',
-//         thematique: 'Gestion du temps',
-//       },
-//     ];
-//   }

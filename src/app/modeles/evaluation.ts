@@ -1,5 +1,5 @@
 export interface Evaluation {
   id: number;
-  Utilisateur: any;
+  beneficiare: any;
   thematique: any;
 }
