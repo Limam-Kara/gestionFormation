@@ -4,11 +4,20 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/component/services/User/user.service';
 import { Utilisateur } from 'src/app/modeles/Utilisateur';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 
 @Component({
   selector: 'app-feeds',
-  templateUrl: './feeds.component.html'
+  templateUrl: './feeds.component.html',
+  animations: [
+    trigger('fadeInAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class FeedsComponent implements OnInit {
   apiData: Utilisateur[] = [];

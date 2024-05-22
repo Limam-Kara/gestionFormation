@@ -31,4 +31,7 @@ export class EvaluationService {
       `${this.baseUrl}/${evaluationId}/responses`
     );
   }
+  getAllEvaluations(): Observable<Evaluation[]> {
+    return this.http.get<Evaluation[]>(`${this.baseUrl}/evaluations`);
+  }
 }

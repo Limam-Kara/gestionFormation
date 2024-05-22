@@ -32,4 +32,4 @@ export const topcards: topcard[] = [
         subtitle: 'Weekly Sales'
     },
 
-] 
+]

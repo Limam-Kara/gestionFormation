@@ -24,7 +24,7 @@ interface Them {
   groupe: any;
   isPresent: boolean;
   idabsence: number;
-  role?:any[];
+  role?: any[];
 }
 @Component({
   selector: 'app-list-fiche-presence',
@@ -74,9 +74,8 @@ export class ListFichePresenceComponent {
     if (this.selectedThematique) {
       this.selectedGroupe = this.selectedThematique.groupes; // Assuming you want to select the first groupe by default
     }
-    this.selecteddate=new Date();
+    this.selecteddate = new Date();
     this.themfltr = [];
-
   }
   ngOnInit(): void {
     this.loadThematiques();
@@ -84,7 +83,7 @@ export class ListFichePresenceComponent {
     this.getAllAbsences();
   }
   ff() {
-    this.selecteddate=new Date();
+    this.selecteddate = new Date();
     this.themfltr = [];
 
     console.log(this.selectedGroupe);
@@ -179,184 +178,196 @@ export class ListFichePresenceComponent {
       }
     );
   }
-//  getuserbygroupe() {
-//     if (this.selectedGroupe && this.selectedThematique && this.selecteddate) {
-//       let i = 0;
-//       this.themfltr = [];
-//       this.title =""
-//       this.absences.forEach((absence) => {
-//         if (
-//           this.selectedThematique.id == absence.thematique.id &&
-//           this.selecteddate == absence.dateAbsence
-//         ) {
+  //  getuserbygroupe() {
+  //     if (this.selectedGroupe && this.selectedThematique && this.selecteddate) {
+  //       let i = 0;
+  //       this.themfltr = [];
+  //       this.title =""
+  //       this.absences.forEach((absence) => {
+  //         if (
+  //           this.selectedThematique.id == absence.thematique.id &&
+  //           this.selecteddate == absence.dateAbsence
+  //         ) {
 
+  //             this.title = 'Déja existe cette list ';
+  //           absence.thematique.groupes!.forEach((groupe) => {
+  //             if (groupe.id == this.selectedGroupe.id  ) {
+  //               i++;
+  //               this.user = {
+  //                 id: absence.utilisateur.id || 0,
+  //                 ppr: absence.utilisateur.ppr,
+  //                 nom: absence.utilisateur.nom,
+  //                 prenom: absence.utilisateur.prenom,
+  //                 intitule: absence.thematique.intitule,
+  //                 groupe: groupe.numGroupe,
+  //                 isPresent: absence.etatAbsence,
+  //                 idabsence: absence.id||0 ,
+  //               };
+  //               console.log('deja existe',
+  //                 `PPR: ${absence.utilisateur.ppr}, Nom: ${ absence.utilisateur.nom},
+  //                  Prénom: ${absence.utilisateur.prenom},
+  //                  thrmatique: ${absence.thematique.intitule},Groupe: ${groupe.numGroupe},
+  //                  idabsence:${this.user.idabsence} isPresent: ${absence.etatAbsence}`
+  //               );              console.log(i);
+  //               this.themfltr.push(this.user)
+  //             }
+  //           }); }
 
-//             this.title = 'Déja existe cette list ';
-//           absence.thematique.groupes!.forEach((groupe) => {
-//             if (groupe.id == this.selectedGroupe.id  ) {
-//               i++;
-//               this.user = {
-//                 id: absence.utilisateur.id || 0,
-//                 ppr: absence.utilisateur.ppr,
-//                 nom: absence.utilisateur.nom,
-//                 prenom: absence.utilisateur.prenom,
-//                 intitule: absence.thematique.intitule,
-//                 groupe: groupe.numGroupe,
-//                 isPresent: absence.etatAbsence,
-//                 idabsence: absence.id||0 ,
-//               };
-//               console.log('deja existe',
-//                 `PPR: ${absence.utilisateur.ppr}, Nom: ${ absence.utilisateur.nom},
-//                  Prénom: ${absence.utilisateur.prenom},
-//                  thrmatique: ${absence.thematique.intitule},Groupe: ${groupe.numGroupe},
-//                  idabsence:${this.user.idabsence} isPresent: ${absence.etatAbsence}`
-//               );              console.log(i);
-//               this.themfltr.push(this.user)
-//             }
-//           }); }
+  //       });
 
-//       });
+  //       if (i == 0) {
 
-//       if (i == 0) {
+  //         this.themfltr = [];
+  //         this.title = 'Nouvelle fiche absence';
+  //         this.groupservice.getAllGroups().subscribe(
+  //           (Group: Group[]) => {
+  //             this.apiDatagroup = Group;
 
-//         this.themfltr = [];
-//         this.title = 'Nouvelle fiche absence';
-//         this.groupservice.getAllGroups().subscribe(
-//           (Group: Group[]) => {
-//             this.apiDatagroup = Group;
-
-//             // //console.log('Group:', this.apiDatagroup);
-//             this.apiDatagroup.forEach((group) => {
-//               // Iterate over utilisateurs array within each group
-//               group.utilisateurs.forEach((utilisateur) => {
-//                 this.thematiqueService
-//                   .getThematiqueByGroupeId(group.id)
-//                   .subscribe((int: Thematique) => {
-//                     // Log the required properties
-//                     if (
-//                       this.selectedThematique.id == int.id &&
-//                       this.selectedGroupe.id == group.id
-//                     ) {
-//                       this.themfltr.push({
-//                         id: utilisateur.id || 0,
-//                         ppr: utilisateur.ppr,
-//                         nom: utilisateur.nom,
-//                         prenom: utilisateur.prenom,
-//                         intitule: int.intitule,
-//                         groupe: group.numGroupe,
-//                         idabsence: i + group.id + (utilisateur.id || 0),
-//                         isPresent: true,
-//                       });
-//                       console.log(
-//                         `PPR: ${utilisateur.ppr}, Nom: ${utilisateur.nom}, Prénom: ${utilisateur.prenom}, thrmatique: ${int.intitule},Groupe: ${group.numGroupe}`
-//                       );
-//                       console.log(i);
-//                     }
-//                     //console.log(this.them.length);
-//                     // this.initializeDataTables();
-//                   });
-//               });
-//             });
-//           },
-//           (error) => {
-//             console.error('Erreur lors du chargement des thématiques:', error);
-//           }
-//         );
-//       }
-//     }
-//   }
-getuserbygroupe() {
-  if (this.selectedGroupe && this.selectedThematique && this.selecteddate) {
-    let i = 0;
-    this.themfltr = [];
-    this.title = "";
-    const absencePromises = this.absences.map(async (absence) => {
-      if (
-        this.selectedThematique.id == absence.thematique.id &&
-        this.selecteddate == absence.dateAbsence
-      ) {
-        this.title = 'Déja existe cette list';
-        const groupPromises = absence.thematique.groupes!.map(async (groupe) => {
-          if (groupe.id == this.selectedGroupe.id) {
-            i++;
-            this.user = {
-              id: absence.utilisateur.id || 0,
-              ppr: absence.utilisateur.ppr,
-              nom: absence.utilisateur.nom,
-              prenom: absence.utilisateur.prenom,
-              intitule: absence.thematique.intitule,
-              groupe: groupe.numGroupe,
-              isPresent: absence.etatAbsence,
-              idabsence: absence.id || 0,
-            };
-            console.log('deja existe',
-              `PPR: ${absence.utilisateur.ppr}, Nom: ${absence.utilisateur.nom},
+  //             // //console.log('Group:', this.apiDatagroup);
+  //             this.apiDatagroup.forEach((group) => {
+  //               // Iterate over utilisateurs array within each group
+  //               group.utilisateurs.forEach((utilisateur) => {
+  //                 this.thematiqueService
+  //                   .getThematiqueByGroupeId(group.id)
+  //                   .subscribe((int: Thematique) => {
+  //                     // Log the required properties
+  //                     if (
+  //                       this.selectedThematique.id == int.id &&
+  //                       this.selectedGroupe.id == group.id
+  //                     ) {
+  //                       this.themfltr.push({
+  //                         id: utilisateur.id || 0,
+  //                         ppr: utilisateur.ppr,
+  //                         nom: utilisateur.nom,
+  //                         prenom: utilisateur.prenom,
+  //                         intitule: int.intitule,
+  //                         groupe: group.numGroupe,
+  //                         idabsence: i + group.id + (utilisateur.id || 0),
+  //                         isPresent: true,
+  //                       });
+  //                       console.log(
+  //                         `PPR: ${utilisateur.ppr}, Nom: ${utilisateur.nom}, Prénom: ${utilisateur.prenom}, thrmatique: ${int.intitule},Groupe: ${group.numGroupe}`
+  //                       );
+  //                       console.log(i);
+  //                     }
+  //                     //console.log(this.them.length);
+  //                     // this.initializeDataTables();
+  //                   });
+  //               });
+  //             });
+  //           },
+  //           (error) => {
+  //             console.error('Erreur lors du chargement des thématiques:', error);
+  //           }
+  //         );
+  //       }
+  //     }
+  //   }
+  getuserbygroupe() {
+    if (this.selectedGroupe && this.selectedThematique && this.selecteddate) {
+      let i = 0;
+      this.themfltr = [];
+      this.title = '';
+      const absencePromises = this.absences.map(async (absence) => {
+        if (
+          this.selectedThematique.id == absence.thematique.id &&
+          this.selecteddate == absence.dateAbsence
+        ) {
+          this.title = 'Déja existe cette list';
+          const groupPromises = absence.thematique.groupes!.map(
+            async (groupe) => {
+              if (groupe.id == this.selectedGroupe.id) {
+                i++;
+                this.user = {
+                  id: absence.utilisateur.id || 0,
+                  ppr: absence.utilisateur.ppr,
+                  nom: absence.utilisateur.nom,
+                  prenom: absence.utilisateur.prenom,
+                  intitule: absence.thematique.intitule,
+                  groupe: groupe.numGroupe,
+                  isPresent: absence.etatAbsence,
+                  idabsence: absence.id || 0,
+                };
+                console.log(
+                  'deja existe',
+                  `PPR: ${absence.utilisateur.ppr}, Nom: ${absence.utilisateur.nom},
                Prénom: ${absence.utilisateur.prenom},
                thrmatique: ${absence.thematique.intitule}, Groupe: ${groupe.numGroupe},
                idabsence: ${this.user.idabsence}, isPresent: ${absence.etatAbsence}`
-            );
-            console.log(i);
-            this.themfltr.push(this.user);
-          }
-        });
-        await Promise.all(groupPromises);
-      }
-    });
+                );
+                console.log(i);
+                this.themfltr.push(this.user);
+              }
+            }
+          );
+          await Promise.all(groupPromises);
+        }
+      });
 
-    Promise.all(absencePromises).then(() => {
-      if (i == 0) {
-        this.themfltr = [];
-        this.title = 'Nouvelle fiche absence';
-        this.groupservice.getAllGroups().subscribe(
-          (Group: Group[]) => {
-            this.apiDatagroup = Group;
+      Promise.all(absencePromises)
+        .then(() => {
+          if (i == 0) {
+            this.themfltr = [];
+            this.title = 'Nouvelle fiche absence';
+            this.groupservice.getAllGroups().subscribe(
+              (Group: Group[]) => {
+                this.apiDatagroup = Group;
 
-            const userPromises = this.apiDatagroup.map(group => {
-              const utilisateurPromises = group.utilisateurs.map(utilisateur => {
-                return firstValueFrom(this.thematiqueService.getThematiqueByGroupeId(group.id))
-                  .then((int: Thematique) => {
-                    if (
-                      this.selectedThematique.id == int.id &&
-                      this.selectedGroupe.id == group.id
-                    ) {
-                      this.themfltr.push({
-                        id: utilisateur.id || 0,
-                        ppr: utilisateur.ppr,
-                        nom: utilisateur.nom,
-                        prenom: utilisateur.prenom,
-                        intitule: int.intitule,
-                        groupe: group.numGroupe,
-                        idabsence: i + group.id + (utilisateur.id || 0),
-                        isPresent: true,
+                const userPromises = this.apiDatagroup.map((group) => {
+                  const utilisateurPromises = group.utilisateurs.map(
+                    (utilisateur) => {
+                      return firstValueFrom(
+                        this.thematiqueService.getThematiqueByGroupeId(group.id)
+                      ).then((int: Thematique) => {
+                        if (
+                          this.selectedThematique.id == int.id &&
+                          this.selectedGroupe.id == group.id
+                        ) {
+                          this.themfltr.push({
+                            id: utilisateur.id || 0,
+                            ppr: utilisateur.ppr,
+                            nom: utilisateur.nom,
+                            prenom: utilisateur.prenom,
+                            intitule: int.intitule,
+                            groupe: group.numGroupe,
+                            idabsence: i + group.id + (utilisateur.id || 0),
+                            isPresent: true,
+                          });
+                          console.log(
+                            `PPR: ${utilisateur.ppr}, Nom: ${utilisateur.nom}, Prénom: ${utilisateur.prenom}, thrmatique: ${int.intitule}, Groupe: ${group.numGroupe}`
+                          );
+                          console.log(i);
+                        }
                       });
-                      console.log(
-                        `PPR: ${utilisateur.ppr}, Nom: ${utilisateur.nom}, Prénom: ${utilisateur.prenom}, thrmatique: ${int.intitule}, Groupe: ${group.numGroupe}`
-                      );
-                      console.log(i);
                     }
+                  );
+                  return Promise.all(utilisateurPromises);
+                });
+
+                Promise.all(userPromises)
+                  .then(() => {
+                    console.log('All users processed');
+
+                    // Optionally: Initialize data tables or any other operations after all users are processed
+                  })
+                  .catch((error) => {
+                    console.error('Error processing users:', error);
                   });
-              });
-              return Promise.all(utilisateurPromises);
-            });
-
-            Promise.all(userPromises).then(() => {
-              console.log('All users processed');
-
-              // Optionally: Initialize data tables or any other operations after all users are processed
-            }).catch(error => {
-              console.error('Error processing users:', error);
-            });
-          },
-          (error) => {
-            console.error('Erreur lors du chargement des thématiques:', error);
+              },
+              (error) => {
+                console.error(
+                  'Erreur lors du chargement des thématiques:',
+                  error
+                );
+              }
+            );
           }
-        );
-      }
-    }).catch(error => {
-      console.error('Error processing absences:', error);
-    });
+        })
+        .catch((error) => {
+          console.error('Error processing absences:', error);
+        });
+    }
   }
-}
   toggleAttendance(id: string | undefined) {
     if (!id) {
       return; // Exit the function if 'id' is undefined
@@ -382,7 +393,7 @@ getuserbygroupe() {
     console.log(this.themfltr[beneficiaryIndexFltr], id);
     console.log(this.absentss[beneficiaryIndexAbsentss], id);
   }
- getAllAbsences(): void {
+  getAllAbsences(): void {
     this.absenceService.getAllAbsences().subscribe(
       (absences: Absence[]) => {
         this.absences = absences;
@@ -442,12 +453,11 @@ getuserbygroupe() {
       dateAbsence: new Date(),
       utilisateur: {},
       thematique: {},
-      id_group:0,
-
+      id_group: 0,
     };
     const abs: Absence[] = [];
-    let  role: Utilisateur[] = [];
-role=this.selectedGroupe.Utilisateur;
+    let role: Utilisateur[] = [];
+    role = this.selectedGroupe.Utilisateur;
     // this.themfltr.forEach((dt) => {
     //  const t= role.find(rl=>rl.id==dt.id);
     //   ab = {
@@ -460,28 +470,30 @@ role=this.selectedGroupe.Utilisateur;
     //   abs.push(ab);
     // });
     // if (role && role.length > 0) {
-      this.themfltr.forEach((dt) => {
+    this.themfltr.forEach((dt) => {
+      ab = {
+        id: dt.idabsence,
+        etatAbsence: dt.isPresent,
+        dateAbsence: this.selecteddate,
+        utilisateur: {
+          id: dt.id,
+          idRole: {
+            id: 2,
+            nom: 'USER',
+            description: 'GFGFG',
+          },
+        },
+        thematique: { id: this.selectedThematique.id },
+        id_group: this.selectedGroupe.id,
+      };
+      abs.push(ab);
+    });
+    //  else {
+    //     console.error('Role array is empty or undefined.');
+    // }
+    console.info(' list :', this.themfltr);
 
-              ab = {
-                  id: dt.idabsence,
-                  etatAbsence: dt.isPresent,
-                  dateAbsence: this.selecteddate,
-                  utilisateur: { id: dt.id, idRole: {
-                    id: 2,
-                    nom: "USER",
-                    description: "GFGFG"
-                }},
-                  thematique: { id: this.selectedThematique.id },
-                  id_group:this.selectedGroupe.id
-              };
-              abs.push(ab);
-          })
-  //  else {
-  //     console.error('Role array is empty or undefined.');
-  // }
-  console.info(' list :', this.themfltr);
-
-      console.info(' add list :', abs);
+    console.info(' add list :', abs);
 
     this.absenceService.saveAbsences(abs).subscribe(
       (response) => {
@@ -495,8 +507,7 @@ role=this.selectedGroupe.Utilisateur;
         this.toastr.error("Erreur lors de l'enregistrement ", error.error);
       }
     );
-   }
-
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -551,13 +562,12 @@ role=this.selectedGroupe.Utilisateur;
           <tbody>
       `;
 
-      this.themfltr.forEach(utilisateur => {
+      this.themfltr.forEach((utilisateur) => {
         let etat;
-        if(utilisateur.isPresent==true){
-          etat="Present"
-        }else{
-          etat="Absent"
-
+        if (utilisateur.isPresent == true) {
+          etat = 'Present';
+        } else {
+          etat = 'Absent';
         }
         tableHTML += `
           <tr>
@@ -622,5 +632,6 @@ role=this.selectedGroupe.Utilisateur;
       printWindow.document.write('</body></html>');
       printWindow.document.close();
       printWindow.print();
-    }}}
-
+    }
+  }
+}

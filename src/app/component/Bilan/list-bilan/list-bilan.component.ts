@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { Thematique } from 'src/app/modeles/Thematique';
 import { ThematiqueService } from '../../services/Thematique/thematique.service';
 
@@ -12,6 +10,8 @@ import { ThematiqueService } from '../../services/Thematique/thematique.service'
 export class ListBilanComponent implements OnInit {
   apiData: Thematique[] = [];
   currentYearData: Thematique[] = [];
+  years: number[] = [];
+  selectedYear: number = new Date().getFullYear();
   totalCoutLogistique: number = 0;
   totalCoutPedagogique: number = 0;
 
@@ -25,7 +25,10 @@ export class ListBilanComponent implements OnInit {
     this.thematiqueService.getAllThematiques().subscribe(
       (thematiques: Thematique[]) => {
         this.apiData = thematiques;
-        this.filterCurrentYearData();
+        console.log('Loaded thematiques:', this.apiData); // Debugging
+
+        this.populateYears();
+        this.filterDataByYear(this.selectedYear);
       },
       (error) => {
         console.error('Erreur lors du chargement des thématiques:', error);
@@ -33,35 +36,47 @@ export class ListBilanComponent implements OnInit {
     );
   }
 
-  filterCurrentYearData(): void {
-    const currentYear = new Date().getFullYear();
-    this.currentYearData = this.apiData.filter(thematique => {
-      return new Date(thematique.dateDebut!).getFullYear() === currentYear;
+  populateYears(): void {
+    const yearsSet = new Set<number>();
+    this.apiData.forEach(thematique => {
+      const year = new Date(thematique.dateDebut!).getFullYear();
+      yearsSet.add(year);
     });
+    this.years = Array.from(yearsSet).sort((a, b) => b - a);
+  }
+
+  filterDataByYear(year: number): void {
+    this.selectedYear = year;
+    console.log('Filtering data for year:', year); // Debugging
+
+    this.currentYearData = this.apiData.filter(thematique => {
+      return new Date(thematique.dateDebut!).getFullYear() == year;
+    });
+    console.log('Filtered data:', this.currentYearData); // Debugging
 
     this.totalCoutLogistique = this.currentYearData.reduce((sum, thematique) => sum + (thematique.coutLogistique || 0), 0);
     this.totalCoutPedagogique = this.currentYearData.reduce((sum, thematique) => sum + (thematique.coutPedagogique || 0), 0);
+    console.log('Total Cout Logistique:', this.totalCoutLogistique); // Debugging
+    console.log('Total Cout Pedagogique:', this.totalCoutPedagogique); // Debugging
   }
+
   printSection() {
     const printWindow = window.open('', '', 'height=600,width=800');
     if (printWindow) {
-      // Construct the table HTML
       let tableHTML = `
-        <div class="print-header">Bilan de l’année en cour ${(new Date()).getFullYear()}
-
-        </div>
+        <div class="print-header">Bilan de l’année ${this.selectedYear}</div>
         <table class="table table-striped table-bordered">
           <thead>
             <tr>
               <th>Cout Logistique</th>
               <th>Cout Pedagogique</th>
               <th>Nombre de Groupes</th>
-              <th>Nombre de Jours de Formation</th>
+              <th>Jours de Formation</th>
               <th>Date Debut</th>
               <th>Date Fin</th>
               <th>Domaine de Formation</th>
               <th>Prestataire</th>
-              <th>Total</th>
+              <th >Total</th>
             </tr>
           </thead>
           <tbody>
@@ -70,33 +85,36 @@ export class ListBilanComponent implements OnInit {
       this.currentYearData.forEach(thematique => {
         tableHTML += `
           <tr>
-            <td>${thematique.coutLogistique}</td>
-            <td>${thematique.coutPedagogique}</td>
+            <td>${thematique.coutLogistique} DH</td>
+            <td>${thematique.coutPedagogique} DH</td>
             <td>${thematique.nbrGroupe}</td>
             <td>${thematique.nbrJoursFormation}</td>
-            <td>${new Date(thematique.dateDebut!).toLocaleDateString()}</td>
-            <td>${new Date(thematique.dateFin!).toLocaleDateString()}</td>
+            <td>${new Date(thematique.dateDebut!).toLocaleDateString()} Jrs</td>
+            <td>${new Date(thematique.dateFin!).toLocaleDateString()} Jrs</td>
             <td>${thematique.domaineFormation}</td>
             <td>${thematique.prestataire}</td>
-            <td>${(thematique.coutLogistique ?? 0) +( thematique.coutPedagogique ?? 0)}</td>
+            <td>${(thematique.coutLogistique ?? 0) + (thematique.coutPedagogique ?? 0)} DH</td>
           </tr>
         `;
       });
 
       tableHTML += `
           <tr>
-            <td colspan="8">Total Logistique pour cette année :</td>
-            <td>${this.totalCoutLogistique}</td>
+            <td colspan="7">Total Logistique pour cette année :</td>
+            <td colspan="2">${this.totalCoutLogistique} DH</td>
           </tr>
           <tr>
-            <td colspan="8">Total Pedagogique pour cette année :</td>
-            <td>${this.totalCoutPedagogique}</td>
+            <td colspan="7">Total Pedagogique pour cette année :</td>
+            <td colspan="2">${this.totalCoutPedagogique} DH</td>
           </tr>
+          <tr>
+          <td colspan="7">Total pour cette année :</td>
+          <td colspan="2">${this.totalCoutPedagogique + this.totalCoutLogistique} DH</td>
+        </tr>
         </tbody>
         </table>
       `;
 
-      // Write the constructed HTML into the print window
       printWindow.document.write('<html><head><title>Print</title>');
       printWindow.document.write('<style>');
       printWindow.document.write(`
@@ -104,12 +122,6 @@ export class ListBilanComponent implements OnInit {
           font-family: Arial, sans-serif;
           margin: 20px;
         }
-        .text-warning { color: #ffc107; }
-        .font-medium { font-weight: 500; }
-        .fs-4 { font-size: 1.5rem; }
-        .card-title { margin-bottom: 1rem; }
-        .form-check-input { margin-right: 0.5rem; }
-        .form-check-label { margin-left: 0.5rem; }
         .print-header {
           text-align: center;
           font-size: 2rem;
@@ -136,5 +148,6 @@ export class ListBilanComponent implements OnInit {
       printWindow.document.write('</body></html>');
       printWindow.document.close();
       printWindow.print();
-    }}
+    }
+  }
 }

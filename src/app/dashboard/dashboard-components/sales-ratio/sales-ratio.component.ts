@@ -1,3 +1,4 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -44,7 +45,14 @@ export type salesChartOptions = {
 
 @Component({
   selector: 'app-sales-ratio',
-  templateUrl: './sales-ratio.component.html',
+  templateUrl: './sales-ratio.component.html',animations: [
+    trigger('fadeInAnimation', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(10px)' }),
+        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+      ]),
+    ]),
+  ],
 })
 export class SalesRatioComponent implements OnInit {
   apiData: Thematique[] = [];
