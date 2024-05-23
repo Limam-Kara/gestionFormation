@@ -15,7 +15,7 @@ export class ListBilanComponent implements OnInit {
   totalCoutLogistique: number = 0;
   totalCoutPedagogique: number = 0;
 
-  constructor(private thematiqueService: ThematiqueService) {}
+  constructor(private thematiqueService: ThematiqueService) { }
 
   ngOnInit(): void {
     this.loadThematiques();

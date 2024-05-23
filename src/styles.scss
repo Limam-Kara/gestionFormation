@@ -1,6 +1,8 @@
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-html, body{height: 100%;}
+::-webkit-scrollbar {
+  width: 0.1px;
+}
 table.dataTable.cell-border {
   border-collapse: collapse !important; /* Override border-collapse */
 }

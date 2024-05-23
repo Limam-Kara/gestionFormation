@@ -8,13 +8,11 @@
             <select class="form-select me-2" [(ngModel)]="selectedYear" (change)="filterDataByYear(selectedYear)">
               <option *ngFor="let year of years" [value]="year">{{ year }}</option>
             </select>
-            <button class="btn btn-warning m-lg-2" (click)="printSection()">
-              <i class="bi bi-file-earmark-plus"></i> Print
+            <button class="btn btn-warning" (click)="printSection()">
+              <i class="bi bi-printer-fill"></i>
             </button>
           </div>
         </div>
-
-
         <div class="card-body border-top">
           <div class="table-responsive">
             <table class="table table-striped table-bordered">
