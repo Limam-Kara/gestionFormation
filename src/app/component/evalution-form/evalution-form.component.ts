@@ -74,6 +74,37 @@ export class EvalutionFormComponent {
     // Add more questions here...
   ];
 
+  // constructor(
+  //   private evaluationService: EvaluationService,
+  //   private toastr: ToastrService
+  // ) {}
+
+  // evaluation: Evaluation | undefined;
+  // responses: QReponse[] = [];
+
+  // submitEvaluation() {
+  //   const userId = 1; // Replace with actual user ID
+  //   const thematiqueId = 2; // Replace with actual thematique ID
+  //   const responses = this.evaluationQuestions.map(q => q.selectedOption);
+
+  //   this.addEvaluation(userId, thematiqueId, responses);
+  // }
+
+  // addEvaluation(userId: number, thematiqueId: number, responses: string[]): void {
+  //   this.evaluationService.addEvaluation(userId, thematiqueId, responses).subscribe({
+  //     next: (data) => {
+  //       this.evaluation = data;
+  //       console.log('Evaluation added:', data);
+  //       this.toastr.success('Evaluation submitted successfully', 'Success');
+  //     },
+  //     error: (err) => {
+  //       this.toastr.error(err.error, 'Error');
+  //       console.error('Error adding evaluation:', err);
+  //     },
+  //   });
+  // }
+  currentStep = 0;
+
   constructor(
     private evaluationService: EvaluationService,
     private toastr: ToastrService
@@ -81,6 +112,18 @@ export class EvalutionFormComponent {
 
   evaluation: Evaluation | undefined;
   responses: QReponse[] = [];
+
+  nextStep() {
+    if (this.currentStep < this.evaluationQuestions.length - 1) {
+      this.currentStep++;
+    }
+  }
+
+  prevStep() {
+    if (this.currentStep > 0) {
+      this.currentStep--;
+    }
+  }
 
   submitEvaluation() {
     const userId = 1; // Replace with actual user ID
@@ -103,4 +146,9 @@ export class EvalutionFormComponent {
       },
     });
   }
+
+
+
+
+
 }
