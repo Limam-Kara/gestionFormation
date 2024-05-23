@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
   <div class="col-lg-8 offset-lg-2">
     <div class="card">
       <div class="card-header bg-warning">
@@ -29,6 +29,47 @@
 
           <div class="text-center">
             <button type="submit" class="btn btn-warning">Submit</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- evalution-form.component.html -->
+<div class="row">
+  <div class="col-lg-8 offset-lg-2">
+    <div class="card">
+      <div class="card-header bg-warning">
+        <h4 class="card-title mb-0 text-white">Evaluation Formation</h4>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="submitEvaluation()">
+          <ngb-progressbar type="warning" [value]="((currentStep + 1) / evaluationQuestions.length) * 100" class="mb-3"></ngb-progressbar>
+
+          <ng-container *ngFor="let question of evaluationQuestions; let i = index">
+            <div *ngIf="currentStep === i" class="question fade-in">
+              <p><strong>{{ i + 1 }}. {{ question.text }}</strong></p>
+
+              <div *ngIf="question.type === 'single-choice'" class="mb-3">
+                <div *ngFor="let option of question.options" class="form-check">
+                  <input class="form-check-input" type="radio" [name]="'question' + i" [value]="option" [(ngModel)]="question.selectedOption">
+                  <label class="form-check-label">{{ option }}</label>
+                </div>
+              </div>
+
+              <div *ngIf="question.type === 'dropdown'" class="mb-3">
+                <select class="form-select" [name]="'question' + i" [(ngModel)]="question.selectedOption">
+                  <option *ngFor="let option of question.options" [value]="option">{{ option }}</option>
+                </select>
+              </div>
+            </div>
+          </ng-container>
+
+          <div class="text-center">
+            <button type="button" class="btn btn-warning me-2" (click)="prevStep()" [disabled]="currentStep === 0">Previous</button>
+            <button type="button" class="btn btn-warning ms-2 me-2" (click)="nextStep()" *ngIf="currentStep < evaluationQuestions.length - 1">Next</button>
+            <button type="submit" class="btn btn-warning ms-2" *ngIf="currentStep === evaluationQuestions.length - 1">Submit</button>
           </div>
 
         </form>
