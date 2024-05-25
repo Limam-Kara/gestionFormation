@@ -1,3 +1,4 @@
+import { ListevaluationuserComponent } from './evalutionuser/listevaluationuser/listevaluationuser.component';
 import { SupprimerEvaluationComponent } from './evaluation/supprimer-evaluation/supprimer-evaluation.component';
 import { ModifierFichePresenceComponent } from './fiche-presence/modifier-fiche-presence/modifier-fiche-presence.component';
 import { Routes } from '@angular/router';
@@ -61,6 +62,9 @@ export const ComponentsRoutes: Routes = [
       {
         path: 'Evaluation.For',
         component: EvalutionFormComponent,
+      },{
+        path: 'Evaluation.user',
+        component: ListevaluationuserComponent,
       },
 
     ],

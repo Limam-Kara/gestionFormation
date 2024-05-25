@@ -38,42 +38,165 @@
 </div> -->
 <!-- evalution-form.component.html -->
 <div class="row">
-  <div class="col-lg-8 offset-lg-2">
-    <div class="card">
-      <div class="card-header bg-warning">
-        <h4 class="card-title mb-0 text-white">Evaluation Formation</h4>
+  <div class="col-lg-12">
+    <div class="card w-100">
+      <div class="p-3 d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0 text-warning">evaluation </h4>
+        <button
+        *ngIf="currentView === 'evaluation'" 
+           class="btn btn-outline-warning mt-2"
+              (click)="backToThematique()"
+        >
+          <i class="bi bi-file-earmark-plus"></i> back To Thematique
+        </button>
       </div>
-      <div class="card-body">
-        <form (ngSubmit)="submitEvaluation()">
-          <ngb-progressbar type="warning" [value]="((currentStep + 1) / evaluationQuestions.length) * 100" class="mb-3"></ngb-progressbar>
-
-          <ng-container *ngFor="let question of evaluationQuestions; let i = index">
-            <div *ngIf="currentStep === i" class="question fade-in">
-              <p><strong>{{ i + 1 }}. {{ question.text }}</strong></p>
-
-              <div *ngIf="question.type === 'single-choice'" class="mb-3">
-                <div *ngFor="let option of question.options" class="form-check">
-                  <input class="form-check-input" type="radio" [name]="'question' + i" [value]="option" [(ngModel)]="question.selectedOption">
-                  <label class="form-check-label">{{ option }}</label>
-                </div>
-              </div>
-
-              <div *ngIf="question.type === 'dropdown'" class="mb-3">
-                <select class="form-select" [name]="'question' + i" [(ngModel)]="question.selectedOption">
-                  <option *ngFor="let option of question.options" [value]="option">{{ option }}</option>
-                </select>
-              </div>
+        <div class="card-body border-top">
+          <div *ngIf="currentView === 'thematique'" [@fadeIn]>
+            <div class="table-responsive">
+              <table
+                id="example"
+                class="display nowrap cell-border table table-striped table-hover"
+                style="width: 100%"
+              >
+                <thead class="thead-dark">
+                  <tr>
+                    <th class="text-warning font-medium fs-4">PPR</th>
+                    <th class="text-warning font-medium fs-4">Nom</th>
+                    <th class="text-warning font-medium fs-4">Prénom</th>
+                    <th class="text-warning font-medium fs-4">Thématique</th>
+                    <th class="text-warning font-medium fs-4">Groupe</th>
+                    <th class="text-warning font-medium fs-4">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let utilisateur of themT">
+                    <td>{{ utilisateur.ppr }}</td>
+                    <td>{{ utilisateur.nom }}</td>
+                    <td>{{ utilisateur.prenom }}</td>
+                    <td>{{ utilisateur.intitule }}</td>
+                    <td>{{ utilisateur.groupe }} {{ utilisateur.dateFin }}</td>
+                    <td>
+                      <button
+                        type="submit"
+                        class="btn btn-warning ms-2"
+                        (click)="change(utilisateur.id_groupe)"
+                        [disabled]="
+                          shouldDisableDeleteButton(utilisateur.dateFin)
+                        "
+                      >
+                        Évaluer
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </ng-container>
-
-          <div class="text-center">
-            <button type="button" class="btn btn-warning me-2" (click)="prevStep()" [disabled]="currentStep === 0">Previous</button>
-            <button type="button" class="btn btn-warning ms-2 me-2" (click)="nextStep()" *ngIf="currentStep < evaluationQuestions.length - 1">Next</button>
-            <button type="submit" class="btn btn-warning ms-2" *ngIf="currentStep === evaluationQuestions.length - 1">Submit</button>
           </div>
 
-        </form>
-      </div>
+          <div *ngIf="currentView === 'evaluation'" [@fadeIn]>
+
+            <div class="row">
+              <div class="col-lg-8 offset-lg-2">
+                <div class="card shadow-lg">
+                  <div class="card-header bg-warning">
+                    <h4 class="card-title mb-0 text-white">
+                      Evaluation Formation
+                    </h4>
+                  </div>
+                  <div class="card-body">
+                    <form (ngSubmit)="submitEvaluation()">
+                      <ngb-progressbar
+                        type="warning"
+                        [value]="
+                          ((currentStep + 1) / evaluationQuestions.length) * 100
+                        "
+                        class="mb-3"
+                      ></ngb-progressbar>
+
+                      <ng-container
+                        *ngFor="
+                          let question of evaluationQuestions;
+                          let i = index
+                        "
+                      >
+                        <div *ngIf="currentStep === i" class="question fade-in">
+                          <p>
+                            <strong>{{ i + 1 }}. {{ question.text }}</strong>
+                          </p>
+
+                          <div
+                            *ngIf="question.type === 'single-choice'"
+                            class="mb-3"
+                          >
+                            <div
+                              *ngFor="let option of question.options"
+                              class="form-check"
+                            >
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                [name]="'question' + i"
+                                [value]="option"
+                                [(ngModel)]="question.selectedOption"
+                              />
+                              <label class="form-check-label">{{
+                                option
+                              }}</label>
+                            </div>
+                          </div>
+
+                          <div
+                            *ngIf="question.type === 'dropdown'"
+                            class="mb-3"
+                          >
+                            <select
+                              class="form-select"
+                              [name]="'question' + i"
+                              [(ngModel)]="question.selectedOption"
+                            >
+                              <option
+                                *ngFor="let option of question.options"
+                                [value]="option"
+                              >
+                                {{ option }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </ng-container>
+
+                      <div class="text-center">
+                        <button
+                          type="button"
+                          class="btn btn-warning me-2"
+                          (click)="prevStep()"
+                          [disabled]="currentStep === 0"
+                        >
+                          Previous
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-warning ms-2 me-2"
+                          (click)="nextStep()"
+                          *ngIf="currentStep < evaluationQuestions.length - 1"
+                        >
+                          Next
+                        </button>
+                        <button
+                          type="submit"
+                          class="btn btn-warning ms-2"
+                          *ngIf="currentStep === evaluationQuestions.length - 1"
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 </div>
