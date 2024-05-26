@@ -65,6 +65,13 @@ export const ROUTES: RouteInfo[] = [
     class: '',
     extralink: false,
     submenu: []
+  },{
+    path: '/component/Evaluation.user',
+    title: 'Evaluation.user',
+    icon: 'bi bi-pause-btn',
+    class: '',
+    extralink: false,
+    submenu: []
   },
   {
     path: '/component/Bilan',

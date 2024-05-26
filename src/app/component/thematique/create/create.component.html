@@ -96,14 +96,14 @@
               <div class="form-group mb-3">
                 <label for="dateDebut">Date du début d'action de la formation</label>
                 <input type="date" class="form-control" id="dateDebut" placeholder="Enter Date du début d'action de la formation"
-                  aria-describedby="helpId" [(ngModel)]="thematique.dateDebut" name="dateDebut">
+                  aria-describedby="helpId" [(ngModel)]="thematique.dateDebut" name="dateDebut" (change)="validateDates()">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group mb-3">
                 <label for="dateFin">Date de fin d'action de la formation</label>
                 <input type="date" class="form-control" id="dateFin" placeholder="Enter Date de fin d'action de la formation"
-                  aria-describedby="helpId" [(ngModel)]="thematique.dateFin" name="dateFin">
+                  aria-describedby="helpId" [(ngModel)]="thematique.dateFin" name="dateFin" [min]="thematique.dateDebut" [disabled]="isDateFinDisabled()">
               </div>
             </div>
           </div>

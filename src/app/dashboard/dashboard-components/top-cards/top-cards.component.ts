@@ -43,7 +43,7 @@ export class TopCardsComponent implements OnInit {
       bgcolor: 'info',
       icon: 'bi bi-people',
       title: '0',
-      subtitle: 'Total Users',
+      subtitle: 'Total Utilisateur',
     },
     {
       bgcolor: 'warning',

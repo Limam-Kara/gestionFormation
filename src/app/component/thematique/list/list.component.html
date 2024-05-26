@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
   <div class="col-lg-12">
     <div class="card w-100">
       <div class="p-3 d-flex justify-content-between align-items-center">
@@ -29,6 +29,50 @@
                   <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#DT" (click)="setSelectedThematiqueCode(item?.id)"><i class="bi bi-eye-fill"></i></button>
                   <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#MT" (click)="setSelectedThematiqueCode(item?.id)"><i class="bi bi-pencil-square"></i></button>
                   <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ST" (click)="setSelectedThematiqueCode(item?.id)"><i class="bi bi-trash3-fill"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-supprimer-thematique [selectedThematique]="selectedThematique" (thematiqueDelete)="onThematiqueDeleted()"></app-supprimer-thematique>
+<app-modifier-thematique [selectedThematique]="selectedThematique" (thematiqueUpdate)="onThematiqueUpdated()"></app-modifier-thematique>
+<app-detail-thematique [selectedThematique]="selectedThematique"></app-detail-thematique>
+<app-create-thematiques (thematiqueAdded)="onThematiqueAdded()"></app-create-thematiques> -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card w-100">
+      <div class="p-3 d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0 text-warning">Thématiques</h4>
+        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#CT">
+          <i class="bi bi-file-earmark-plus"></i> Ajouter
+        </button>
+      </div>
+      <div class="card-body border-top">
+        <div class="table-responsive">
+          <table id="example" class="display nowrap cell-border" style="width: 100%;">
+            <thead>
+              <tr>
+                <th class="text-warning font-medium fs-4">N°</th>
+                <th class="text-warning font-medium fs-4">Intitulé de la thématique</th>
+                <th class="text-warning font-medium fs-4">Date Début</th>
+                <th class="text-warning font-medium fs-4">Date Fin</th>
+                <th class="text-warning font-medium fs-4">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of apiData">
+                <td>{{ item.id }}</td>
+                <td>{{ item.intitule }}</td>
+                <td>{{ item.dateDebut | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ item.dateFin | date: 'dd/MM/yyyy' }}</td>
+                <td class="d-flex justify-content-between">
+                  <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#DT" (click)="setSelectedThematiqueCode(item?.id)"><i class="bi bi-eye-fill"></i></button>
+                  <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#MT" (click)="setSelectedThematiqueCode(item?.id)"><i class="bi bi-pencil-square"></i></button>
+                  <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ST" (click)="setSelectedThematiqueCode(item?.id)" [disabled]="shouldDisableDeleteButton(item)"><i class="bi bi-trash3-fill"></i></button>
                 </td>
               </tr>
             </tbody>

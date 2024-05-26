@@ -32,6 +32,7 @@ import { DetailThematiqueComponent } from './thematique/detail/detail.component'
 import { DetailBeneficiaiaresComponent } from './beneficiares/detail-beneficiaiares/detail-beneficiaiares.component';
 import { DetailFormationComponent } from './formation/detail-formation/detail-formation.component';
 import { ListBilanComponent } from './Bilan/list-bilan/list-bilan.component';
+import { ListevaluationuserComponent } from './evalutionuser/listevaluationuser/listevaluationuser.component';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { ListBilanComponent } from './Bilan/list-bilan/list-bilan.component';
     DetailBeneficiaiaresComponent,
     DetailFormationComponent,
     ListBilanComponent,
+    ListevaluationuserComponent,
 
   ],
 })

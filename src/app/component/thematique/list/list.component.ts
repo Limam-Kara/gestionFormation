@@ -4,6 +4,7 @@ import { Thematique } from 'src/app/modeles/Thematique';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 declare var $: any; // Déclarer jQuery
+import * as moment from 'moment'; // Importer moment.js pour manipuler les dates
 
 @Component({
   selector: 'app-list',
@@ -108,5 +109,12 @@ export class ListComponent implements OnInit {
     this.toastr.success('Thématique supprimée avec succès', 'Succès');
     this.ngOnInit();
     // $('#ST').modal('hide');
+  }
+   // Ajouter la méthode pour vérifier si le bouton doit être désactivé
+   shouldDisableDeleteButton(thematique: Thematique): boolean {
+    const today = moment(); // Obtenir la date actuelle
+    const dateDebut = moment(thematique.dateDebut); // Convertir la date de début en objet moment.js
+
+    return today.isAfter(dateDebut); // Retourner true si la date actuelle est après la date de début
   }
 }

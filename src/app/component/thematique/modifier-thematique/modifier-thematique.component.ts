@@ -3,6 +3,7 @@ import { Thematique } from 'src/app/modeles/Thematique';
 import { ThematiqueService } from '../../services/Thematique/thematique.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-modifier-thematique',
@@ -10,9 +11,26 @@ import { Router } from '@angular/router';
   styleUrls: ['./modifier-thematique.component.scss']
 })
 export class ModifierThematiqueComponent {
+  thematiques = {
+    dateDebut: 0,
+    dateFin:0
+  };
   @Input() selectedThematique: Thematique ={};
   @Output() thematiqueUpdate: EventEmitter<void> = new EventEmitter<void>();
   constructor(private thematiqueService: ThematiqueService,private toastr: ToastrService,private router: Router) {}
+  dateFinControl = new FormControl('', Validators.min(this.thematiques.dateDebut));
+  validateDates() {
+    // Update dateFinControl validity
+    if (this.thematiques.dateDebut) {
+      this.dateFinControl.setValidators([Validators.min(this.thematiques.dateDebut)]);
+    }
+    this.dateFinControl.updateValueAndValidity();
+  }
+
+  isDateFinDisabled() {
+    return !this.selectedThematique.dateDebut;
+  }
+
   onSubmit(): void {
     if (this.selectedThematique?.id !== undefined) {
       this.thematiqueService.updateThematique(this.selectedThematique.id, this.selectedThematique).subscribe(

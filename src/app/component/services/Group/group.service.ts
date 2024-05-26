@@ -61,4 +61,7 @@ export class GroupService {
     console.error('An error occurred:', error);
     return throwError(error);
   }
+  getGroupsByUserId(userId: number): Observable<Group[]> {
+    return this.http.get<Group[]>(`${this.baseUrl}/user/${userId}`);
+  }
 }
