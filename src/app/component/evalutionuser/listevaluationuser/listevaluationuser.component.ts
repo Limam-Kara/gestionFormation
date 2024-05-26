@@ -6,6 +6,7 @@ import { Evaluation } from 'src/app/modeles/evaluation';
 import { QReponse } from 'src/app/modeles/qreponse';
 import { ThematiqueService } from '../../services/Thematique/thematique.service';
 import { EvaluationService } from '../../services/evaluation/evaluation.service';
+import { UserAuthService } from '../../services/Auth/user-auth.service';
 declare var $: any;
 
 @Component({
@@ -35,8 +36,10 @@ export class ListevaluationuserComponent {
   constructor(
     private evaluationService: EvaluationService,
     private toastr: ToastrService,
-    private thematiqueService: ThematiqueService
+    private thematiqueService: ThematiqueService,
+    private userAuthService: UserAuthService
   ) {}
+  iduser = Number(this.userAuthService.getID());
 
   ngOnInit(): void {
     this.loadThematiques();
@@ -49,14 +52,14 @@ export class ListevaluationuserComponent {
         this.allevaluation = evaluat.filter(
           (response: Evaluation) =>
             // response.thematique.id === id
-          response.beneficiare.id === 1
+          response.beneficiare.id === this.iduser
         );
       },
       (error) => {
         console.error('Erreur lors du chargement des thématiques:', error);
       }
     );
-  
+
     this.currentView = 'evaluation';
   }
   loadThematiques(): void {

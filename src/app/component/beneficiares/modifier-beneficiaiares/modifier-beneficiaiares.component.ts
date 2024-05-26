@@ -14,13 +14,8 @@ export class ModifierBeneficiaiaresComponent  {
     this.loadBeneficiaiares();
   }
   apiData: Utilisateur[] = [];
-  @Input() selectedUtilisateur: Utilisateur ={
-    idRole: {
-      id: 2,
-      nom: 'user',
-      description: 'User role'
-    }
-  };
+  @Input() selectedUtilisateur: Utilisateur ={};
+  roleid=0;
   loadBeneficiaiares(): void {
     this.utilisateurService.getAllUtilisateurs().subscribe(
       (utilisateur: Utilisateur[]) => {
@@ -79,6 +74,9 @@ export class ModifierBeneficiaiaresComponent  {
     if (!this.isValidFunction(this.selectedUtilisateur.fonction)) {
       this.toastr.warning('Veuillez saisir une fonction valide', 'Fonction invalide');
       return;
+    }
+    if (this.roleid!=0&&this.selectedUtilisateur.idRole) {
+      this.selectedUtilisateur.idRole.id=this.roleid
     }
     const utilisateurUpdate: Utilisateur = {
       id: this.selectedUtilisateur.id,

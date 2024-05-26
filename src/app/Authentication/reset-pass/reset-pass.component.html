@@ -14,16 +14,16 @@
               <h3 class="login-heading text-center mb-4">Réinitialiser le mot de passe !</h3>
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
-                  name="username">
+                  name="username" [(ngModel)]="password">
                 <label for="floatingInput">Mot de passe</label>
               </div>
               <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
-                  name="username">
+                  name="username" [(ngModel)]="passwordConfirmer">
                 <label for="floatingInput">Confirmer Mot de passe</label>
               </div>
               <div class="d-grid mb-4">
-                <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2 bg-dark">ENVOYER</button>
+                <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2 bg-dark" (click)="onSubmit()">ENVOYER</button>
               </div>
             </div>
           </div>

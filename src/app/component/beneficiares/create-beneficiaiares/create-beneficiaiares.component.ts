@@ -13,13 +13,14 @@ declare var $: any;
 })
 export class CreateBeneficiaiaresComponent {
   utilisateur: Utilisateur = {
+    account:true,
     idRole: {
       id: 2,
-      nom: 'user',
-      description: 'User role'
+      nom: '',
+      description: ''
     }
   }// Initialize a new Thematique object
-
+  roleid=0;
   constructor(private utilisateurService: UserService, private toastr: ToastrService, private router: Router,) { }
   @Output() utilisateurAdded: EventEmitter<void> = new EventEmitter<void>();
   onSubmit(): void {
@@ -64,6 +65,9 @@ export class CreateBeneficiaiaresComponent {
     }
 
     console.log(this.utilisateur);
+    if (this.utilisateur.idRole) {
+      this.utilisateur.idRole.id=this.roleid
+    }
 
     // Save the Utilisateur
     this.utilisateurService.saveUtilisateur(this.utilisateur).subscribe(

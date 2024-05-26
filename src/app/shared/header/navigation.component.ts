@@ -1,5 +1,8 @@
 import { Component, AfterViewInit, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserAuthService } from 'src/app/component/services/Auth/user-auth.service';
+import { LogoutService } from 'src/app/component/services/Logout/logout.service';
 
 declare var $: any;
 
@@ -14,7 +17,19 @@ export class NavigationComponent implements AfterViewInit {
 
   public showSearch = false;
 
-  constructor(private modalService: NgbModal) {
+  constructor(private logoutService:  LogoutService,private authService: UserAuthService,private router: Router) {
+  }
+
+  logout(): void {
+    this.logoutService.logout().subscribe(
+      () => {
+        this.authService.clear();
+        this.router.navigate(['/Authentication/Login']); // Redirect to login page after successful logout
+      },
+      error => {
+        console.error('Logout failed:', error);
+      }
+    );
   }
 
   // This is for Notifications

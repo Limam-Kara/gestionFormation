@@ -8,6 +8,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'bi bi-speedometer2',
     class: '',
     extralink: false,
+    roles: ['ADMIN'],
     submenu: []
   },
   {
@@ -16,6 +17,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'bi bi-bell',
     class: '',
     extralink: false,
+    roles: ['ADMIN'],
     submenu: []
   },
   {
@@ -24,6 +26,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'bi bi-people',
     class: '',
     extralink: false,
+    roles: ['ADMIN'],
     submenu: []
   },
   {
@@ -32,6 +35,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'bi bi-hdd-stack',
     class: '',
     extralink: false,
+    roles: ['ADMIN'],
     submenu: []
   },
   {
@@ -40,6 +44,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'bi bi-menu-app',
     class: '',
     extralink: false,
+    roles: ['ADMIN'],
     submenu: []
   },
   {
@@ -48,6 +53,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'bi bi-dice-1',
     class: '',
     extralink: false,
+    roles: ['ADMIN'],
     submenu: []
   },
   {
@@ -56,6 +62,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'bi bi-pause-btn',
     class: '',
     extralink: false,
+    roles: ['ADMIN'],
     submenu: []
   },
   {
@@ -64,6 +71,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'bi bi-pause-btn',
     class: '',
     extralink: false,
+    roles: ['ADMIN', 'USER'],
     submenu: []
   },{
     path: '/component/Evaluation.user',
@@ -71,6 +79,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'bi bi-pause-btn',
     class: '',
     extralink: false,
+    roles: ['ADMIN', 'USER'],
     submenu: []
   },
   {
@@ -79,6 +88,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'bi bi-layout-split',
     class: '',
     extralink: false,
+    roles: ['ADMIN'],
     submenu: []
   },
 ];

@@ -36,7 +36,7 @@ export class CreateAffectationComponent {
   loadBeneficiaiares(): void {
     this.utilisateurService.getAllUtilisateurs().subscribe(
       (utilisateur: Utilisateur[]) => {
-        this.apiData = utilisateur;
+        this.apiData = utilisateur.filter((z)=> z.account==true);
         // console.log('Utilisateur:', this.apiData);
       },
       (error) => {

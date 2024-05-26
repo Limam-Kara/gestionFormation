@@ -15,6 +15,7 @@ export interface Utilisateur {
   adresse?: string;
   dateDeNaissance?: Date;
   // tokens: Token[];
+  account?: boolean;
   formations?: Formation[];
   idRole?: Role;
 }

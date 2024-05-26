@@ -16,7 +16,7 @@ export class ListBeneficiaiaresComponent implements OnInit {
   apiData: Utilisateur[] = [];
   selectedUtilisateur: Utilisateur = {};
   constructor(private utilisateurService: UserService, private toastr: ToastrService, private router: Router) { }
-  
+
   onUtilisateurAdded(): void {
     // Refresh the list after adding a thematique
     // this.load();
@@ -81,7 +81,7 @@ export class ListBeneficiaiaresComponent implements OnInit {
   loadBeneficiaiares(): void {
     this.utilisateurService.getAllUtilisateurs().subscribe(
       (utilisateur: Utilisateur[]) => {
-        this.apiData = utilisateur;
+        this.apiData =  utilisateur.filter((z)=> z.account==true);
         console.log('Utilisateur:', this.apiData);
         // Réinitialiser DataTables une fois que les données sont chargées
         this.initializeDataTables();
