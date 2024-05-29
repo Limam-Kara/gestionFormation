@@ -23,7 +23,15 @@ export class CreateThematiquesComponent {
   ) {}
   @Output() thematiqueAdded: EventEmitter<void> = new EventEmitter<void>();
   onSubmit(): void {
-    this.thematiqueService.saveThematique(this.thematique).subscribe(
+     // Check for required fields
+     if (!this.thematique.coutLogistique || !this.thematique.coutPedagogique || !this.thematique.dateDebut ||
+      !this.thematique.dateFin || !this.thematique.domaineFormation  ||
+      !this.thematique.intitule || !this.thematique.nbrFormateurExtr|| !this.thematique.nbrFormateurIntr || !this.thematique.nbrGroupe ||
+      !this.thematique.nbrJoursFormation || !this.thematique.objectif|| !this.thematique.populationCible|| !this.thematique.prestataire) {
+    this.toastr.warning('Veuillez remplir tous les champs obligatoires', 'Champs requis manquants');
+    return; // Stop further execution
+  }else{
+     this.thematiqueService.saveThematique(this.thematique).subscribe(
       (response) => {
         console.log('Thématique added successfully:', response);
         // this.toastr.success('Thématique ajoutée avec succès', 'Succès');
@@ -37,6 +45,9 @@ export class CreateThematiquesComponent {
         this.toastr.error("Erreur lors de l'ajout de la thématique", 'Erreur');
       }
     );
+  }
+
+
   }
   dateFinControl = new FormControl('', Validators.min(this.thematiques.dateDebut));
 

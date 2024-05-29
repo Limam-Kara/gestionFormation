@@ -73,19 +73,27 @@
                 <td>{{ utilisateur.nom }}</td>
                 <td>{{ utilisateur.prenom }}</td>
                 <td>{{ utilisateur.intitule }}</td>
-                <td>{{ utilisateur.groupe }} </td>
-                <td >
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox"
-                      [id]="utilisateur.isPresent? 'flexSwitchCheckChecked' : 'flexSwitchCheckDefault' "
-                      (change)="toggleAttendance(utilisateur.ppr)" />
+                <td>{{ utilisateur.groupe }}   {{ utilisateur.isPresent }}</td>
+                <!-- <td>
+                  <div class="form-group">
+                    <select class="form-select" [(ngModel)]="utilisateur.isPresent" (change)="toggleAttendance(utilisateur.ppr)">
+                      <option [value]="true">present</option>
+                      <option [value]="false">absence</option>
+                    </select>
+                  </div>
+                </td> -->
 
-                    <label class="form-check-label" [for]="'attendanceSwitch_' + utilisateur.ppr">
-                      {{ utilisateur.isPresent }}
-                    </label>
-
+                <td>
+                  <div class="form-group">
+                    <select class="form-select" [(ngModel)]="utilisateur.isPresent" (change)="toggleAttendance(utilisateur.ppr)">
+                      <option [ngValue]="true">present</option>
+                      <option [ngValue]="false">absence</option>
+                    </select>
                   </div>
                 </td>
+
+
+
               </tr>
             </tbody>
           </table>
