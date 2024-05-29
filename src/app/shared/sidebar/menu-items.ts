@@ -67,7 +67,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/component/Evaluation.For',
-    title: 'Evaluation.For',
+    title: 'Evaluation For ',
     icon: 'bi bi-pause-btn',
     class: '',
     extralink: false,
@@ -75,7 +75,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: []
   },{
     path: '/component/Evaluation.user',
-    title: 'Evaluation.user',
+    title: 'Evaluation pers',
     icon: 'bi bi-pause-btn',
     class: '',
     extralink: false,

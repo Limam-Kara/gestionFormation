@@ -37,3 +37,16 @@ tbody tr:hover {
   font-weight: bold;
 
 }
+// * Animation Styles */
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

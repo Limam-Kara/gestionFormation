@@ -4,11 +4,20 @@ import { ThematiqueService } from '../../services/Thematique/thematique.service'
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-modifier-thematique',
   templateUrl: './modifier-thematique.component.html',
-  styleUrls: ['./modifier-thematique.component.scss']
+  styleUrls: ['./modifier-thematique.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('1s', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class ModifierThematiqueComponent {
   thematiques = {
@@ -32,7 +41,14 @@ export class ModifierThematiqueComponent {
   }
 
   onSubmit(): void {
-    if (this.selectedThematique?.id !== undefined) {
+    if (!this.selectedThematique.coutLogistique || !this.selectedThematique.coutPedagogique || !this.selectedThematique.dateDebut ||
+      !this.selectedThematique.dateFin || !this.selectedThematique.domaineFormation  ||
+      !this.selectedThematique.intitule || !this.selectedThematique.nbrFormateurExtr|| !this.selectedThematique.nbrFormateurIntr || !this.selectedThematique.nbrGroupe ||
+      !this.selectedThematique.nbrJoursFormation || !this.selectedThematique.objectif|| !this.selectedThematique.populationCible|| !this.selectedThematique.prestataire) {
+    this.toastr.warning('Veuillez remplir tous les champs obligatoires', 'Champs requis manquants');
+    return; // Stop further execution
+  }else{
+     if (this.selectedThematique?.id !== undefined) {
       this.thematiqueService.updateThematique(this.selectedThematique.id, this.selectedThematique).subscribe(
         (response) => {
           console.log('Thématique updated successfully:', response);
@@ -48,5 +64,7 @@ export class ModifierThematiqueComponent {
     } else {
       console.warn('ID de thématique est indéfini.');
     }
+  }
+
   }
 }

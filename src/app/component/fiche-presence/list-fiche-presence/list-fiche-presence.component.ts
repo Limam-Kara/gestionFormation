@@ -1,11 +1,7 @@
-import { Role } from './../../../modeles/Role';
 import { AbsenceService } from './../../services/absence/absence.service';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Thematique } from 'src/app/modeles/Thematique';
-import { Beneficiaire } from 'src/app/modeles/beneficiaire';
 import { ToastrService } from 'ngx-toastr';
 import { ThematiqueService } from '../../services/Thematique/thematique.service';
 import { GroupService } from '../../services/Group/group.service';
@@ -129,7 +125,6 @@ export class ListFichePresenceComponent {
 
     this.thematiqueService.getAllThematiques().subscribe(
       (thematiques: Thematique[]) => {
-
         this.apiData = thematiques;
         // //console.log('Thematiques:', this.apiDatathematique);
       },
@@ -147,7 +142,8 @@ export class ListFichePresenceComponent {
       const absencePromises = this.absences.map(async (absence) => {
         if (
           this.selectedThematique.id == absence.thematique.id &&
-          this.selecteddate == absence.dateAbsence && this.selectedGroupe.id==absence.id_group
+          this.selecteddate == absence.dateAbsence &&
+          this.selectedGroupe.id == absence.id_group
         ) {
           this.title = 'Déja existe cette list';
           const groupPromises = absence.thematique.groupes!.map(
@@ -171,7 +167,7 @@ export class ListFichePresenceComponent {
                thrmatique: ${absence.thematique.intitule}, Groupe: ${groupe.numGroupe},
                idabsence: ${this.user.idabsence}, isPresent: ${absence.etatAbsence}`
                 );
-                console.log(i);
+                console.log('<<<<<<<<<<<<<<i>>>>>>>>>>>>>>',this.user);
                 this.themfltr.push(this.user);
               }
             }
@@ -249,32 +245,39 @@ export class ListFichePresenceComponent {
       return; // Exit the function if 'id' is undefined
     }
 
-    const beneficiaryIndexAbsentss = this.absentss.findIndex(
-      (b) => b.utilisateur.ppr == id
-    );
-    const beneficiaryIndexFltr = this.themfltr.findIndex((b) => b.ppr == id);
+    // const beneficiaryIndexAbsentss = this.absentss.findIndex(
+    //   (b) => b.utilisateur.ppr == id
+    // );
+    // const beneficiaryIndexFltr = this.themfltr.findIndex((b) => b.ppr == id);
 
-    // Check if the beneficiary is found in the absentss list
-    if (beneficiaryIndexAbsentss !== -1) {
-      this.absentss[beneficiaryIndexAbsentss].etatAbsence =
-        !this.absentss[beneficiaryIndexAbsentss].etatAbsence;
+    // // Check if the beneficiary is found in the absentss list
+    // if (beneficiaryIndexAbsentss !== -1) {
+    //   this.absentss[beneficiaryIndexAbsentss].etatAbsence =
+    //     !this.absentss[beneficiaryIndexAbsentss].etatAbsence;
+    // }
+
+    // // Check if the beneficiary is found in the themfltr list
+    // if (beneficiaryIndexFltr !== -1) {
+    //   this.themfltr[beneficiaryIndexFltr].isPresent =
+    //     !this.themfltr[beneficiaryIndexFltr].isPresent;
+    // }
+    const yy: Absence[] = [];
+    const y = this.absences.find((z) => z.utilisateur.ppr == id);
+    if (y) {
+      console.log('bbbbbbbbbbbb', y.etatAbsence);
+      y.etatAbsence = !y.etatAbsence;
+      console.log('aaaaaaaaaa', y.etatAbsence);
+      yy.push(y);
     }
 
-    // Check if the beneficiary is found in the themfltr list
-    if (beneficiaryIndexFltr !== -1) {
-      this.themfltr[beneficiaryIndexFltr].isPresent =
-        !this.themfltr[beneficiaryIndexFltr].isPresent;
-    }
-
-    console.log(this.themfltr[beneficiaryIndexFltr], id);
-    console.log(this.absentss[beneficiaryIndexAbsentss], id);
+    this.absenceService.saveAbsences(yy).subscribe();
   }
   getAllAbsences(): void {
     this.absenceService.getAllAbsences().subscribe(
       (absences: Absence[]) => {
         this.absences = absences;
 
-        // //console.log('Absences:', this.absences);
+        console.log('Absences:', this.absences);
       },
       (error) => {
         console.error('Error fetching absences:', error);
@@ -298,7 +301,6 @@ export class ListFichePresenceComponent {
     }, 0);
   }
   saveabsence() {
-
     let ab: Absence = {
       etatAbsence: false,
       dateAbsence: new Date(),
