@@ -8,20 +8,19 @@
       aria-haspopup="true"
       aria-expanded="false"
     >
-      <img
+      <!-- <img
         src="assets/images/users/user1.jpg"
         alt="user"
         class="rounded-circle"
         width="31"
-      />
-      <span class="ms-2">Username</span>
+      /> -->
+      <span class="ms-2">{{ fullName }}</span>
     </a>
     <div class="dropdown-menu-right" ngbDropdownMenu>
       <!-- <a class="dropdown-item" href="javascript:void(0)"> My Profile</a>
       <a class="dropdown-item" href="javascript:void(0)"> Account Setting</a>
       <div class="dropdown-divider"></div> -->
-      <a class="dropdown-item" style="cursor: pointer"
-      (click)="logout()"> Logout</a>
+      <a class="dropdown-item" style="cursor: pointer" (click)="logout()"> Logout</a>
     </div>
   </li>
 </ul>

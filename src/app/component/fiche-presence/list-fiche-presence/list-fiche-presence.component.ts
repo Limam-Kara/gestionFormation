@@ -167,7 +167,7 @@ export class ListFichePresenceComponent {
                thrmatique: ${absence.thematique.intitule}, Groupe: ${groupe.numGroupe},
                idabsence: ${this.user.idabsence}, isPresent: ${absence.etatAbsence}`
                 );
-                console.log('<<<<<<<<<<<<<<i>>>>>>>>>>>>>>',this.user);
+                // console.log('<<<<<<<<<<<<<<i>>>>>>>>>>>>>>',this.user);
                 this.themfltr.push(this.user);
               }
             }
@@ -270,7 +270,17 @@ export class ListFichePresenceComponent {
       yy.push(y);
     }
 
-    this.absenceService.saveAbsences(yy).subscribe();
+    this.absenceService.saveAbsences(yy).subscribe(
+      (response) => {
+        // this.toastr.success('Liste enregister avec succès !', 'Succès');
+        this.ngOnInit();
+        // console.info(' add list :', abs);
+      },
+      (error) => {
+        console.error('Error adding Thématique:', error);
+        // this.toastr.error("Erreur lors de l'enregistrement ", error.error);
+      }
+    );
   }
   getAllAbsences(): void {
     this.absenceService.getAllAbsences().subscribe(
@@ -338,7 +348,7 @@ export class ListFichePresenceComponent {
     this.absenceService.saveAbsences(abs).subscribe(
       (response) => {
         this.toastr.success('Liste enregister avec succès !', 'Succès');
-
+        this.ngOnInit();
         // console.info(' add list :', abs);
       },
       (error) => {

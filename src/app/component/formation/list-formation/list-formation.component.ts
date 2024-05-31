@@ -12,59 +12,93 @@ declare var $: any;
   templateUrl: './list-formation.component.html',
   styleUrls: ['./list-formation.component.scss']
 })
-export class ListFormationComponent {
+export class ListFormationComponent implements OnInit {
   selectedUtilisateur: Utilisateur = {};
-  selectedFormationId : number = 0;
-  // setSelectedFormationId (id: number | undefined): void {
-  //   if (id !== undefined) {
-  //     this.selectedFormationId=id;
-  //     console.log(this.selectedFormationId);
-  //     console.log(this.selectedUtilisateur)
-  //     if (this.selectedUtilisateur.formations) {
-  //       const selectedFormation = this.selectedUtilisateur.formations.find(
-  //         (formation) => formation.id === this.selectedFormationId
-  //       );
-  //       if (selectedFormation) {
-  //         this.formation = selectedFormation ;
-  //       } else {
-  //         this.toastr.error('Formation not found.');
-  //       }
-  //     } else {
-  //       this.toastr.error('User or formations not provided.');
-  //     }
-  //   }
-
-  // }
+  selectedFormationId: number = 0;
   formation: Formation = {};
   apiData: Utilisateur[] = [];
-  onFormationAdded(): void {
-    // Refresh the list after adding a thematique
-    // this.load();
-    $('#CT').modal('hide');
 
-    // Remove the modal backdrop manually
-    $('.modal-backdrop').remove();
+  constructor(private utilisateurService: UserService, private toastr: ToastrService, private router: Router) { }
 
-    // Optionally, you can also reset the body class to remove the modal-open class
-    $('body').removeClass('modal-open');
-
-    this.toastr.success('Formation ajoutée avec succès.', 'Succès');
-    this.ngOnInit();
+  ngOnInit(): void {
+    this.loadBeneficiaiares();
   }
-  setSelectedUtilisateurCode(id: number | undefined,idF: number | undefined): void {
 
+  loadBeneficiaiares(): void {
+    this.utilisateurService.getAllUtilisateurs().subscribe(
+      (utilisateurs: Utilisateur[]) => {
+        this.apiData = utilisateurs;
+        this.initializeDataTables();
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des Utilisateurs:', error);
+      }
+    );
+  }
+
+  initializeDataTables(): void {
+    const table = $('#example').DataTable();
+
+    if (table && $.fn.DataTable.isDataTable('#example')) {
+      // DataTable instance exists, destroy it before reinitializing
+      table.destroy();
+    }
+    // Use setTimeout to ensure DataTables is initialized after Angular view rendering
+    setTimeout(() => {
+      $('#example').DataTable({
+        lengthMenu: [
+          [5, 8],
+          [5, 8],
+        ],
+      });
+    }, 0);
+  }
+
+  onFormationAdded(): void {
+    this.hideModal('#CT');
+    this.toastr.success('Formation ajoutée avec succès.', 'Succès', { closeButton: false, timeOut: 3300 });
+    setTimeout(() => {
+      location.reload();
+    }, 3300);
+  }
+
+  onFormationUpdated(): void {
+    this.hideModal('#MT');
+    this.toastr.success('Formation mise à jour avec succès', 'Succès', { closeButton: false, timeOut: 3300 });
+    setTimeout(() => {
+      location.reload();
+    }, 3300);
+  }
+
+  onFormationDeleted(): void {
+    this.hideModal('#ST');
+    this.toastr.success('Formation supprimée avec succès', 'Succès', { closeButton: false, timeOut: 3300 });
+    setTimeout(() => {
+      location.reload();
+    }, 3300);
+  }
+
+  hideModal(modalId: string): void {
+    $(modalId).modal('hide');
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
+    $(modalId).on('hidden.bs.modal', () => {
+      $(modalId).off('hidden.bs.modal');
+    });
+  }
+
+  setSelectedUtilisateurCode(id: number | undefined, idF: number | undefined): void {
     if (id !== undefined && idF !== undefined) {
-      this.selectedFormationId=idF
+      this.selectedFormationId = idF;
       this.utilisateurService.getUtilisateurById(id).subscribe(
         (utilisateur: Utilisateur) => {
           this.selectedUtilisateur = utilisateur;
-          console.log(this.selectedUtilisateur);
           if (this.selectedUtilisateur.formations) {
             const selectedFormation = this.selectedUtilisateur.formations.find(
               (formation) => formation.id === this.selectedFormationId
             );
             if (selectedFormation) {
-              this.formation = selectedFormation ;
+              this.formation = selectedFormation;
             } else {
               this.toastr.error('Formation not found.');
             }
@@ -79,65 +113,5 @@ export class ListFormationComponent {
     } else {
       console.warn('ID de thématique est indéfini.');
     }
-  }
-  onFormationUpdated(): void {
-    // Refresh the list after adding a thematique
-    // this.load();
-    $('#MT').modal('hide');
-
-    // Remove the modal backdrop manually
-    $('.modal-backdrop').remove();
-
-    // Optionally, you can also reset the body class to remove the modal-open class
-    $('body').removeClass('modal-open');
-
-    this.toastr.success('Formation mise à jour avec succès', 'Succès');
-    this.ngOnInit();
-  }
-  onFormationDeleted(): void {
-    // Refresh the list after adding a thematique
-    // this.load();
-    $('#ST').modal('hide');
-
-    // Remove the modal backdrop manually
-    $('.modal-backdrop').remove();
-
-    // Optionally, you can also reset the body class to remove the modal-open class
-    $('body').removeClass('modal-open');
-
-    this.toastr.success('Formation supprimée avec succès', 'Succès');
-    this.ngOnInit();
-  }
-  constructor(private utilisateurService: UserService, private toastr: ToastrService, private router: Router) { }
-  ngOnInit(): void {
-    this.loadBeneficiaiares();
-  }
-
-  loadBeneficiaiares(): void {
-    this.utilisateurService.getAllUtilisateurs().subscribe(
-      (utilisateur: Utilisateur[]) => {
-        this.apiData = utilisateur;
-        // console.log('Utilisateur:', this.apiData);
-        // Réinitialiser DataTables une fois que les données sont chargées
-        this.initializeDataTables();
-      },
-      (error) => {
-        console.error('Erreur lors du chargement des Utilisateur:', error);
-      }
-    );
-  }
-  initializeDataTables(): void {
-    const table = $('#example').DataTable();
-
-    if (table && $.fn.DataTable.isDataTable('#example')) {
-      // DataTable instance exists, destroy it before reinitializing
-      table.destroy();
-    }
-    // Utiliser setTimeout pour garantir que DataTables est initialisé après le rendu de la vue Angular
-    setTimeout(() => {
-      $('#example').DataTable({
-        "lengthMenu": [[5, 8], [5, 8]],
-      });
-    }, 0);
   }
 }

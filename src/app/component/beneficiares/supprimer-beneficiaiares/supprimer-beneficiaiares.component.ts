@@ -28,7 +28,7 @@ export class SupprimerBeneficiaiaresComponent {
     if (this.selectedUtilisateur?.id !== undefined) {
       this.utilisateurService.deleteUtilisateur(this.selectedUtilisateur.id).subscribe(
         (response) => {
-          console.log('Thématique supprimée avec succès.');
+          console.log('Utilisateur supprimée avec succès.');
           // this.toastr.success('Thématique mise à jour avec succès', 'Succès');
           this.selectedUtilisateur = {}; // Reset the thematique object
           $('#ST').modal('hide');
@@ -36,12 +36,12 @@ export class SupprimerBeneficiaiaresComponent {
 
         },
         (error) => {
-          console.error('Erreur lors de la suppression de la thématique:', error);
-          this.toastr.error('Erreur lors de la suppression de la thématique', 'Erreur');
+          console.error('Erreur lors de la suppression utilisateur:', error);
+          this.toastr.error('Erreur lors de la suppression de la utilisateur', 'Erreur');
         }
       );
     } else {
-      console.warn('ID de thématique est indéfini.');
+      console.warn('ID de utilisateur est indéfini.');
     }
   }
 }

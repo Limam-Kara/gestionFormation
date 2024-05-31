@@ -1,10 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ThematiqueService } from '../../services/Thematique/thematique.service';
 import { Thematique } from 'src/app/modeles/Thematique';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-declare var $: any; // Déclarer jQuery
 import * as moment from 'moment'; // Importer moment.js pour manipuler les dates
+declare var $: any; // Déclarer jQuery
 
 @Component({
   selector: 'app-list',
@@ -13,12 +13,14 @@ import * as moment from 'moment'; // Importer moment.js pour manipuler les dates
 })
 export class ListComponent implements OnInit {
   apiData: Thematique[] = [];
-  selectedThematique:Thematique= {};
-  constructor(private thematiqueService: ThematiqueService,private toastr: ToastrService,private router: Router) {}
+  selectedThematique: Thematique = {};
+
+  constructor(private thematiqueService: ThematiqueService, private toastr: ToastrService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadThematiques();
   }
+
   setSelectedThematiqueCode(id: number | undefined): void {
     if (id !== undefined) {
       this.thematiqueService.getThematiqueById(id).subscribe(
@@ -34,10 +36,6 @@ export class ListComponent implements OnInit {
       console.warn('ID de thématique est indéfini.');
     }
   }
-
-  // ngAfterViewInit(): void {
-  //   this.initializeDataTables();
-  // }
 
   loadThematiques(): void {
     this.thematiqueService.getAllThematiques().subscribe(
@@ -63,55 +61,48 @@ export class ListComponent implements OnInit {
     // Utiliser setTimeout pour garantir que DataTables est initialisé après le rendu de la vue Angular
     setTimeout(() => {
       $('#example').DataTable({
-        "lengthMenu": [[5, 8], [5, 8]],
+        lengthMenu: [
+          [5, 8],
+          [5, 8],
+        ],
       });
     }, 0);
   }
+
   onThematiqueAdded(): void {
-    // Refresh the list after adding a thematique
-    // this.load();
-    $('#CT').modal('hide');
-
-    // Remove the modal backdrop manually
-    $('.modal-backdrop').remove();
-
-    // Optionally, you can also reset the body class to remove the modal-open class
-    $('body').removeClass('modal-open');
-
-    this.toastr.success('Thématique ajoutée avec succès', 'Succès');
-    this.ngOnInit();
+    this.hideModal('#CT');
+    this.toastr.success('Thématique ajoutée avec succès', 'Succès', { closeButton: false, timeOut: 3300 });
+    setTimeout(() => {
+      location.reload();
+    }, 3300);
   }
+
   onThematiqueUpdated(): void {
-    // Refresh the list after adding a thematique
-    // this.load();
-    $('#MT').modal('hide');
-
-    // Remove the modal backdrop manually
-    $('.modal-backdrop').remove();
-
-    // Optionally, you can also reset the body class to remove the modal-open class
-    $('body').removeClass('modal-open');
-    this.toastr.success('Thématique mise à jour avec succès', 'Succès');
-    this.ngOnInit();
+    this.hideModal('#MT');
+    this.toastr.success('Thématique mise à jour avec succès', 'Succès', { closeButton: false, timeOut: 3300 });
+    setTimeout(() => {
+      location.reload();
+    }, 3300);
   }
+
   onThematiqueDeleted(): void {
-    // Refresh the list after adding a thematique
-    // this.load();
-    // Hide the modal using jQuery
-    $('#ST').modal('hide');
-
-    // Remove the modal backdrop manually
-    $('.modal-backdrop').remove();
-
-    // Optionally, you can also reset the body class to remove the modal-open class
-    $('body').removeClass('modal-open');
-
-    this.toastr.success('Thématique supprimée avec succès', 'Succès');
-    this.ngOnInit();
-    // $('#ST').modal('hide');
+    this.hideModal('#ST');
+    this.toastr.success('Thématique supprimée avec succès', 'Succès', { closeButton: false, timeOut: 3300 });
+    setTimeout(() => {
+      location.reload();
+    }, 3300);
   }
-   // Ajouter la méthode pour vérifier si le bouton doit être désactivé
-   shouldDisableDeleteButton(thematique: Thematique): boolean {
+
+  hideModal(modalId: string): void {
+    $(modalId).modal('hide');
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
+    $(modalId).on('hidden.bs.modal', () => {
+      $(modalId).off('hidden.bs.modal');
+    });
+  }
+
+  shouldDisableDeleteButton(thematique: Thematique): boolean {
     const today = moment(); // Obtenir la date actuelle
     const dateDebut = moment(thematique.dateDebut); // Convertir la date de début en objet moment.js
 

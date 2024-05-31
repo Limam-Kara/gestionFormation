@@ -34,7 +34,7 @@ export class JwtInterceptor implements HttpInterceptor {
           this.logoutService.logout().subscribe(
             () => {
               this.authService.clear();
-              this.router.navigate(['/Login']); // Redirect to login page after successful logout
+              this.router.navigate(['/Authentication/Login']); // Redirect to login page after successful logout
             },
             error => {
               console.error('Logout failed:', error);

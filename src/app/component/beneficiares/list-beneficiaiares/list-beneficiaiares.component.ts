@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Utilisateur } from 'src/app/modeles/Utilisateur';
@@ -12,54 +11,44 @@ declare var $: any;
   styleUrls: ['./list-beneficiaiares.component.scss'],
 })
 export class ListBeneficiaiaresComponent implements OnInit {
-
   apiData: Utilisateur[] = [];
   selectedUtilisateur: Utilisateur = {};
+
   constructor(private utilisateurService: UserService, private toastr: ToastrService, private router: Router) { }
 
   onUtilisateurAdded(): void {
-    // Refresh the list after adding a thematique
-    // this.load();
-    $('#CT').modal('hide');
-
-    // Remove the modal backdrop manually
-    $('.modal-backdrop').remove();
-
-    // Optionally, you can also reset the body class to remove the modal-open class
-    $('body').removeClass('modal-open');
-
-    this.toastr.success('Utilisateur ajouté avec succès', 'Succès');
-    this.ngOnInit();
+    this.hideModal('#CT');
+    this.toastr.success('Utilisateur ajouté avec succès', 'Succès', { closeButton: false, timeOut: 3300 });
+    setTimeout(() => {
+      location.reload();
+    }, 3300);
   }
+
   onUtilisateurUpdated(): void {
-    // Refresh the list after adding a thematique
-    // this.load();
-    $('#MT').modal('hide');
-
-    // Remove the modal backdrop manually
-    $('.modal-backdrop').remove();
-
-    // Optionally, you can also reset the body class to remove the modal-open class
-    $('body').removeClass('modal-open');
-
-    this.toastr.success('Utilisateur mise à jour avec succès', 'Succès');
-    this.ngOnInit();
+    this.hideModal('#MT');
+    this.toastr.success('Utilisateur mise à jour avec succès', 'Succès', { closeButton: false, timeOut: 3300 });
+    setTimeout(() => {
+      location.reload();
+    }, 3300);
   }
+
   onUtilisateurDeleted(): void {
-    // Refresh the list after adding a thematique
-    // this.load();
-    $('#ST').modal('hide');
-
-    // Remove the modal backdrop manually
-    $('.modal-backdrop').remove();
-
-    // Optionally, you can also reset the body class to remove the modal-open class
-    $('body').removeClass('modal-open');
-
-    this.toastr.success('Utilisateur supprimée avec succès', 'Succès');
-    this.ngOnInit();
+    this.hideModal('#ST');
+    this.toastr.success('Utilisateur supprimé avec succès', 'Succès', { closeButton: false, timeOut: 3300 });
+    setTimeout(() => {
+      location.reload();
+    }, 3300);
   }
-  // Static data definition
+
+  hideModal(modalId: string): void {
+    $(modalId).modal('hide');
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
+    $(modalId).on('hidden.bs.modal', () => {
+      $(modalId).off('hidden.bs.modal');
+    });
+  }
+
   setSelectedUtilisateurCode(id: number | undefined): void {
     if (id !== undefined) {
       this.utilisateurService.getUtilisateurById(id).subscribe(
@@ -75,22 +64,25 @@ export class ListBeneficiaiaresComponent implements OnInit {
       console.warn('ID de thématique est indéfini.');
     }
   }
+
   ngOnInit(): void {
     this.loadBeneficiaiares();
   }
+
   loadBeneficiaiares(): void {
     this.utilisateurService.getAllUtilisateurs().subscribe(
-      (utilisateur: Utilisateur[]) => {
-        this.apiData =  utilisateur.filter((z)=> z.account==true);
-        console.log('Utilisateur:', this.apiData);
+      (utilisateurs: Utilisateur[]) => {
+        this.apiData = utilisateurs.filter((z) => z.account === true);
+        console.log('Utilisateurs:', this.apiData);
         // Réinitialiser DataTables une fois que les données sont chargées
         this.initializeDataTables();
       },
       (error) => {
-        console.error('Erreur lors du chargement des Utilisateur:', error);
+        console.error('Erreur lors du chargement des Utilisateurs:', error);
       }
     );
   }
+
   initializeDataTables(): void {
     const table = $('#example').DataTable();
 
@@ -101,9 +93,11 @@ export class ListBeneficiaiaresComponent implements OnInit {
     // Utiliser setTimeout pour garantir que DataTables est initialisé après le rendu de la vue Angular
     setTimeout(() => {
       $('#example').DataTable({
-        "lengthMenu": [[5, 8], [5, 8]],
+        lengthMenu: [
+          [5, 8],
+          [5, 8],
+        ],
       });
     }, 0);
   }
-
 }
