@@ -28,7 +28,7 @@ export class CreateAffectationComponent {
   apiData: Utilisateur[] = [];
   apiDatathematique: Thematique[] = [];
   apiDatagroup: Group[] = [];
-
+  test = 0;
   ngOnInit(): void {
     this.loadBeneficiaiares();
     this.loadThematiques();
@@ -36,7 +36,7 @@ export class CreateAffectationComponent {
   loadBeneficiaiares(): void {
     this.utilisateurService.getAllUtilisateurs().subscribe(
       (utilisateur: Utilisateur[]) => {
-        this.apiData = utilisateur.filter((z)=> z.account==true);
+        this.apiData = utilisateur.filter((z) => z.account == true);
         // console.log('Utilisateur:', this.apiData);
       },
       (error) => {
@@ -45,9 +45,23 @@ export class CreateAffectationComponent {
     );
   }
   loadThematiques(): void {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set the time to 00:00:00 for accurate comparison
+
     this.thematiqueService.getAllThematiques().subscribe(
       (thematiques: Thematique[]) => {
-        this.apiDatathematique = thematiques;
+        this.apiDatathematique = thematiques.filter((thematique) => {
+          if (!thematique.dateDebut) {
+            return false;
+          }
+          const dateDebut = new Date(thematique.dateDebut);
+          return dateDebut > today;
+        });
+        if (this.apiDatathematique.length == 0) {
+          this.test = 0;
+        } else {
+          this.test = 1;
+        }
         // console.log('Thematiques:', this.apiDatathematique);
       },
       (error) => {

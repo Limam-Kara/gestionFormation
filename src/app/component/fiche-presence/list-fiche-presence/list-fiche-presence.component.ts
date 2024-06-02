@@ -121,11 +121,18 @@ export class ListFichePresenceComponent {
     }
   }
   loadThematiques(): void {
-    const todayDate = new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set the time to 00:00:00 for accurate comparison
 
     this.thematiqueService.getAllThematiques().subscribe(
       (thematiques: Thematique[]) => {
-        this.apiData = thematiques;
+        this.apiData = thematiques.filter((thematique) => {
+          if (!thematique.dateDebut) {
+            return false;
+          }
+          const dateDebut = new Date(thematique.dateDebut);
+          return dateDebut > today;
+        });
         // //console.log('Thematiques:', this.apiDatathematique);
       },
       (error) => {
@@ -348,7 +355,11 @@ export class ListFichePresenceComponent {
     this.absenceService.saveAbsences(abs).subscribe(
       (response) => {
         this.toastr.success('Liste enregister avec succès !', 'Succès');
+
         this.ngOnInit();
+          setTimeout(() => {
+          location.reload();
+        }, 3300);
         // console.info(' add list :', abs);
       },
       (error) => {
@@ -369,12 +380,112 @@ export class ListFichePresenceComponent {
     }, 0);
   }
 
+  // printSection() {
+  //   const printWindow = window.open('', '', 'height=600,width=800');
+  //   if (printWindow) {
+  //     // Construct the table HTML
+  //     let tableHTML = `
+  //       <div class="print-header">List Absence</div>
+  //       <table id="lexample" class="display nowrap cell-border" style="width: 100%">
+  //         <thead>
+  //           <tr>
+  //             <th class="text-warning font-medium fs-4">PPR</th>
+  //             <th class="text-warning font-medium fs-4">Nom</th>
+  //             <th class="text-warning font-medium fs-4">Prénom</th>
+  //             <th class="text-warning font-medium fs-4">Thématique</th>
+  //             <th class="text-warning font-medium fs-4">Groupe</th>
+  //             <th class="text-warning font-medium fs-4">Actions</th>
+  //           </tr>
+  //         </thead>
+  //         <tbody>
+  //     `;
+
+  //     this.themfltr.forEach((utilisateur) => {
+  //       let etat;
+  //       if (utilisateur.isPresent == true) {
+  //         etat = 'Present';
+  //       } else {
+  //         etat = 'Absent';
+  //       }
+  //       tableHTML += `
+  //         <tr>
+  //           <td>${utilisateur.ppr}</td>
+  //           <td>${utilisateur.nom}</td>
+  //           <td>${utilisateur.prenom}</td>
+  //           <td>${utilisateur.intitule}</td>
+  //           <td>${utilisateur.groupe}</td>
+  //           <td>
+  //             <div class="form-check form-switch">
+  //               <label class="form-check-label">
+
+  //               ${etat}</label>
+  //             </div>
+  //           </td>
+  //         </tr>
+  //       `;
+  //     });
+
+  //     tableHTML += `
+  //         </tbody>
+  //       </table>
+  //     `;
+
+  //     // Write the constructed HTML into the print window
+  //     printWindow.document.write('<html><head><title>Print</title>');
+  //     printWindow.document.write('<style>');
+  //     printWindow.document.write(`
+  //       body {
+  //         font-family: Arial, sans-serif;
+  //         margin: 20px;
+  //       }
+  //       .text-warning { color: #ffc107; }
+  //       .font-medium { font-weight: 500; }
+  //       .fs-4 { font-size: 1.5rem; }
+  //       .card-title { margin-bottom: 1rem; }
+  //       .form-check-input { margin-right: 0.5rem; }
+  //       .form-check-label { margin-left: 0.5rem; }
+  //       .print-header {
+  //         text-align: center;
+  //         font-size: 2rem;
+  //         font-weight: bold;
+  //         margin-bottom: 20px;
+  //       }
+  //       table {
+  //         width: 100%;
+  //         border-collapse: collapse;
+  //         margin-bottom: 20px;
+  //       }
+  //       th, td {
+  //         border: 1px solid #000;
+  //         padding: 8px;
+  //         text-align: left;
+  //       }
+  //       th {
+  //         background-color: #f2f2f2;
+  //       }
+  //     `);
+  //     printWindow.document.write('</style>');
+  //     printWindow.document.write('</head><body>');
+  //     printWindow.document.write(tableHTML);
+  //     printWindow.document.write('</body></html>');
+  //     printWindow.document.close();
+  //     printWindow.print();
+  //   }
+  // }
   printSection() {
     const printWindow = window.open('', '', 'height=600,width=800');
     if (printWindow) {
       // Construct the table HTML
       let tableHTML = `
-        <div class="print-header">List Absence</div>
+        <div class="print-header">
+          <img src="/assets/images/logos/logo.png" alt="Logo" class="header-logo" />
+          <h1 class="print-title">Liste des Absences</h1>
+          <p class="print-subtitle">
+            pour le jour <strong>${this.selecteddate}</strong>,
+            thématique <strong>${this.selectedThematique.intitule}</strong>,
+            et groupe <strong>${this.selectedGroupe.numGroupe}</strong>
+          </p>
+        </div>
         <table id="lexample" class="display nowrap cell-border" style="width: 100%">
           <thead>
             <tr>
@@ -392,7 +503,7 @@ export class ListFichePresenceComponent {
       this.themfltr.forEach((utilisateur) => {
         let etat;
         if (utilisateur.isPresent == true) {
-          etat = 'Present';
+          etat = 'Présent';
         } else {
           etat = 'Absent';
         }
@@ -406,7 +517,6 @@ export class ListFichePresenceComponent {
             <td>
               <div class="form-check form-switch">
                 <label class="form-check-label">
-
                 ${etat}</label>
               </div>
             </td>
@@ -435,9 +545,24 @@ export class ListFichePresenceComponent {
         .form-check-label { margin-left: 0.5rem; }
         .print-header {
           text-align: center;
-          font-size: 2rem;
-          font-weight: bold;
           margin-bottom: 20px;
+        }
+        .header-logo {
+          max-width: 100%;
+          margin-bottom: 10px;
+        }
+        .print-title {
+          font-size: 2.5rem;
+          font-weight: bold;
+          margin: 10px 0;
+        }
+        .print-subtitle {
+          font-size: 1.5rem;
+          margin: 10px 0;
+        }
+        .highlight {
+          font-weight: bold;
+          color: #007bff;
         }
         table {
           width: 100%;
@@ -461,4 +586,6 @@ export class ListFichePresenceComponent {
       printWindow.print();
     }
   }
+
+
 }

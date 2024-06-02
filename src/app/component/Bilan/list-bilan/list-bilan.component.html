@@ -2,11 +2,21 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="card w-100">
-        <div class="p-3 d-flex flex-column flex-md-row justify-content-between align-items-center">
-          <h4 class="card-title mb-3 mb-md-0 text-warning">Bilan de l’année en cours</h4>
+        <div
+          class="p-3 d-flex flex-column flex-md-row justify-content-between align-items-center"
+        >
+          <h4 class="card-title mb-3 mb-md-0 text-warning">
+            Bilan de l’année en cours
+          </h4>
           <div class="d-flex mt-3 mt-md-0 align-items-center">
-            <select class="form-select me-2" [(ngModel)]="selectedYear" (change)="filterDataByYear(selectedYear)">
-              <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+            <select
+              class="form-select me-2"
+              [(ngModel)]="selectedYear"
+              (change)="filterDataByYear(selectedYear)"
+            >
+              <option *ngFor="let year of years" [value]="year">
+                {{ year }}
+              </option>
             </select>
             <button class="btn btn-warning" (click)="printSection()">
               <i class="bi bi-printer-fill"></i>
@@ -15,7 +25,7 @@
         </div>
         <div class="card-body border-top">
           <div class="table-responsive">
-            <table class="table table-striped table-bordered">
+            <!-- <table class="table table-striped table-bordered">
               <thead>
                 <tr>
                   <th>Cout Logistique</th>
@@ -52,7 +62,51 @@
                   <td>{{ totalCoutPedagogique + totalCoutLogistique }}</td>
                 </tr>
               </tbody>
+            </table> -->
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th colspan="4" class="text-center">Détails de la Formation</th>
+                  <th colspan="2" class="text-center">Dates</th>
+                  <th colspan="2" class="text-center">Coûts</th>
+                </tr>
+                <tr>
+                  <th>Domain de Formation</th>
+                  <th>Prestataire</th>
+                  <th>Nombre de Groupes</th>
+                  <th>Nombre de Jours</th>
+                  <th>Date Début</th>
+                  <th>Date Fin</th>
+                  <th>Coût Logistique</th>
+                  <th>Coût Pédagogique</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let thematique of currentYearData">
+                  <td>{{ thematique.domaineFormation }}</td>
+                  <td>{{ thematique.prestataire }}</td>
+                  <td>{{ thematique.nbrGroupe }}</td>
+                  <td>{{ thematique.nbrJoursFormation }}</td>
+                  <td>{{ thematique.dateDebut | date }}</td>
+                  <td>{{ thematique.dateFin | date }}</td>
+                  <td  class="text-right">{{ thematique.coutLogistique }} DH</td>
+                  <td  class="text-right">{{ thematique.coutPedagogique }} DH</td>
+                </tr>
+                <tr>
+                  <td colspan="6">Total Logistique pour cette année :</td>
+                  <td colspan="2"  class="text-right">{{ totalCoutLogistique }} DH</td>
+                </tr>
+                <tr>
+                  <td colspan="6" >Total Pédagogique pour cette année :</td>
+                  <td colspan="2" class="text-right">{{ totalCoutPedagogique }} DH</td>
+                </tr>
+                <tr>
+                  <td colspan="6" >Total pour cette année :</td>
+                  <td colspan="2" class="text-right">{{ totalCoutPedagogique + totalCoutLogistique }} DH</td>
+                </tr>
+              </tbody>
             </table>
+
           </div>
         </div>
       </div>

@@ -33,10 +33,16 @@
           <div class="col">
             <div class="form-group mb-3">
               <label for="code">Thématique</label>
-              <select class="form-select" id="beneficiarePpr" [(ngModel)]="selectedThematique" (change)="onThematiqueChange()">
+              <select *ngIf="test === 1" class="form-select" id="beneficiarePpr" [(ngModel)]="selectedThematique" (change)="onThematiqueChange()">
+
                 <option *ngFor="let them of apiDatathematique" [ngValue]="them"  >
                   {{ them.intitule }}
                 </option>
+              </select>
+              <select *ngIf="test === 0" class="form-select" id="beneficiarePpr" [(ngModel)]="selectedThematique" (change)="onThematiqueChange()">
+
+                <option > Non thématique disponible</option>
+
               </select>
             </div>
           </div>

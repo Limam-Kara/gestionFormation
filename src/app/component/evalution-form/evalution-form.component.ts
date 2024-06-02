@@ -40,63 +40,140 @@ export class EvalutionFormComponent {
   them: Them[] = [];
   themT: Them[] = [];
   user: Them = {};
+  // evaluationQuestions: any[] = [
+  //   {
+  //     text: 'Quelle est votre spécialité en ingénierie et pourquoi avez-vous choisi ce domaine ?',
+  //     type: 'single-choice',
+  //     options: [
+  //       'Génie civil',
+  //       'Génie électrique',
+  //       'Génie mécanique',
+  //       'Génie industriel',
+  //       'Autre',
+  //     ],
+  //     selectedOption: '',
+  //   },
+  //   {
+  //     text: "Quels sont, selon vous, les défis actuels les plus pressants dans le domaine de l'ingénierie ?",
+  //     type: 'single-choice',
+  //     options: [
+  //       'Changement climatique',
+  //       'Urbanisation rapide',
+  //       'Ressources énergétiques',
+  //       'Technologie et innovation',
+  //       'Autre',
+  //     ],
+  //     selectedOption: '',
+  //   },
+  //   {
+  //     text: "Pouvez-vous décrire un projet d'ingénierie sur lequel vous avez travaillé récemment ?",
+  //     type: 'single-choice',
+  //     options: [
+  //       'Infrastructure de transport',
+  //       'Énergie renouvelable',
+  //       'Bâtiment durable',
+  //       'Technologie de l information et de la communication',
+  //       'Autre',
+  //     ],
+  //     selectedOption: '',
+  //   },
+  //   {
+  //     text: "Comment intégrez-vous les considérations environnementales dans vos projets d'ingénierie ?",
+  //     type: 'dropdown',
+  //     options: ['Toujours', 'Souvent', 'Parfois', 'Rarement', 'Jamais'],
+  //     selectedOption: '',
+  //   },
+  //   {
+  //     text: "Quelles compétences techniques et non techniques sont essentielles pour réussir dans le domaine de l'ingénierie ?",
+  //     type: 'single-choice',
+  //     options: [
+  //       'Résolution de problèmes',
+  //       'Communication',
+  //       'Leadership',
+  //       'Gestion de projet',
+  //       'Autre',
+  //     ],
+  //     selectedOption: '',
+  //   },
+  //   {
+  //     text: "Avez-vous besoin d'une formation complémentaire ?",
+  //     type: "single-choice",
+  //     options: [
+  //       "Oui, dans un domaine spécifique",
+  //       "Oui, pour approfondir les sujets abordés",
+  //       "Non, la formation était suffisante",
+  //     ],
+  //     selectedOption: "",
+  //   },
+  //   // Add more questions here...
+  // ];
   evaluationQuestions: any[] = [
     {
-      text: 'Quelle est votre spécialité en ingénierie et pourquoi avez-vous choisi ce domaine ?',
-      type: 'single-choice',
+      text: "Pensez-vous que cette formation a répondu à vos attentes et correspond à votre métier ?",
+      type: "single-choice",
       options: [
-        'Génie civil',
-        'Génie électrique',
-        'Génie mécanique',
-        'Génie industriel',
-        'Autre',
+        "Tout à fait",
+        "Plutôt oui",
+        "Pas vraiment",
+        "Pas du tout",
       ],
-      selectedOption: '',
+      selectedOption: "",
     },
     {
-      text: "Quels sont, selon vous, les défis actuels les plus pressants dans le domaine de l'ingénierie ?",
-      type: 'single-choice',
+      text: "Les acquis de la formation sont-ils utiles dans votre activité professionnelle ?",
+      type: "single-choice",
       options: [
-        'Changement climatique',
-        'Urbanisation rapide',
-        'Ressources énergétiques',
-        'Technologie et innovation',
-        'Autre',
+        "Tout à fait",
+        "Plutôt oui",
+        "Pas vraiment",
+        "Pas du tout",
       ],
-      selectedOption: '',
+      selectedOption: "",
     },
     {
-      text: "Pouvez-vous décrire un projet d'ingénierie sur lequel vous avez travaillé récemment ?",
-      type: 'single-choice',
+      text: "Que pensez-vous de la qualité et de l'expertise des intervenants ?",
+      type: "single-choice",
       options: [
-        'Infrastructure de transport',
-        'Énergie renouvelable',
-        'Bâtiment durable',
-        'Technologie de l information et de la communication',
-        'Autre',
+        "Très bonne",
+        "Bonne",
+        "Moyenne",
+        "Médiocre",
       ],
-      selectedOption: '',
+      selectedOption: "",
     },
     {
-      text: "Comment intégrez-vous les considérations environnementales dans vos projets d'ingénierie ?",
-      type: 'dropdown',
-      options: ['Toujours', 'Souvent', 'Parfois', 'Rarement', 'Jamais'],
-      selectedOption: '',
+      text: "Que pensez-vous du contenu des ateliers pratiques ?",
+      type: "single-choice",
+      options: [
+        "Très intéressant",
+        "Intéressant",
+        "Peu intéressant",
+        "Pas du tout intéressant",
+      ],
+      selectedOption: "",
     },
     {
-      text: "Quelles compétences techniques et non techniques sont essentielles pour réussir dans le domaine de l'ingénierie ?",
-      type: 'single-choice',
+      text: "Que pensez-vous de la durée de cette formation ?",
+      type: "single-choice",
       options: [
-        'Résolution de problèmes',
-        'Communication',
-        'Leadership',
-        'Gestion de projet',
-        'Autre',
+        "À prolonger",
+        "À maintenir",
+        "À raccourcir",
       ],
-      selectedOption: '',
+      selectedOption: "",
     },
-    // Add more questions here...
-  ];
+    {
+      text: "Avez-vous besoin d'une formation complémentaire ?",
+      type: "single-choice",
+      options: [
+        "Oui, dans un domaine spécifique",
+        "Oui, pour approfondir les sujets abordés",
+        "Non, la formation était suffisante",
+      ],
+      selectedOption: "",
+    },
+];
+
   dataTableInitialized = false;
 
   // constructor(
@@ -163,10 +240,16 @@ export class EvalutionFormComponent {
   }
 
   submitEvaluation() {
-    const userId = this.iduser; // Replace with actual user ID
-    // const thematiqueId = 1; // Replace with actual thematique ID
-    const responses = this.evaluationQuestions.map((q) => q.selectedOption);
+    const userId = this.iduser;
 
+    const responses = this.evaluationQuestions.map((q) => q.selectedOption);
+  // Check if any question is unanswered
+  const incomplete = responses.includes('');
+
+  if (incomplete) {
+    this.toastr.error('Veuillez répondre à toutes les questions avant de soumettre.', 'Erreur');
+    return;
+  }
     this.addEvaluation(userId, this.thematiqueId, responses);
     this.backToThematique();
 

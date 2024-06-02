@@ -71,7 +71,7 @@
                 <td>{{ item.dateFin | date: 'dd/MM/yyyy' }}</td>
                 <td class="d-flex justify-content-between">
                   <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#DT" (click)="setSelectedThematiqueCode(item?.id)"><i class="bi bi-eye-fill"></i></button>
-                  <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#MT" (click)="setSelectedThematiqueCode(item?.id)"><i class="bi bi-pencil-square"></i></button>
+                  <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#MT" (click)="setSelectedThematiqueCode(item?.id)" [disabled]="shouldDisableDeleteButton(item)"><i class="bi bi-pencil-square"></i></button>
                   <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ST" (click)="setSelectedThematiqueCode(item?.id)" [disabled]="shouldDisableDeleteButton(item)"><i class="bi bi-trash3-fill"></i></button>
                 </td>
               </tr>
